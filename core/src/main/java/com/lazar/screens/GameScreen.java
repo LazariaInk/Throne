@@ -22,6 +22,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lazar.StartGame;
 import com.lazar.config.BackendDecisionResolver;
 import com.lazar.config.DecisionResolver;
 import com.lazar.engine.GameEngine;
@@ -33,6 +34,7 @@ import com.lazar.ui.background.BlurBackgroundRenderer;
 import com.lazar.ui.card.CardPresenter;
 import com.lazar.ui.card.CardRenderResources;
 import com.lazar.ui.card.CardRenderer;
+import jdk.javadoc.internal.tool.Start;
 
 public class GameScreen implements Screen {
 
@@ -94,11 +96,14 @@ public class GameScreen implements Screen {
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f;
     private static final float CARD_SWAP_VOLUME = 0.75f;
 
-    public GameScreen() {
-        this(new BackendDecisionResolver(), new GameEngine());
+    private final StartGame game;
+
+    public GameScreen(StartGame game) {
+        this(game, new BackendDecisionResolver(), new GameEngine());
     }
 
-    public GameScreen(DecisionResolver decisionResolver, GameEngine gameEngine) {
+    public GameScreen(StartGame game, DecisionResolver decisionResolver, GameEngine gameEngine) {
+        this.game = game;
         this.decisionResolver = decisionResolver;
         this.gameEngine = gameEngine;
     }
@@ -282,7 +287,13 @@ public class GameScreen implements Screen {
 
                 gameOverType = gameEngine.checkGameOver();
                 if (gameOverType != null) {
-                    uiMessage = buildGameOverMessage(gameOverType);
+                    if (backgroundMusic != null) {
+                        backgroundMusic.stop();
+                    }
+
+                    game.setScreen(new GameOverScreen(game, gameOverType));
+                    dispose();
+                    return;
                 } else {
                     uiMessage = buildResolutionMessage(resolution);
                 }
@@ -329,9 +340,7 @@ public class GameScreen implements Screen {
         drawTopStats(gameEngine.getRunState().getStats(), viewport.getWorldWidth(), viewport.getWorldHeight());
         cardPresenter.render(batch, viewport.getWorldWidth(), viewport.getWorldHeight());
 
-        if (gameOverType != null) {
-            drawGameOverHint(viewport.getWorldWidth());
-        } else if (cardPresenter.canAdvanceCard()) {
+        if (cardPresenter.canAdvanceCard()) {
             drawNextHint(viewport.getWorldWidth());
         } else if (cardPresenter.canTypeMessage()) {
             drawBottomInput(viewport.getWorldWidth());
