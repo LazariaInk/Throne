@@ -1,0 +1,297 @@
+{
+  "events": [
+    {
+      "id": "event_001",
+      "title": "Turneu în Piața Castelului",
+      "description": "Căpitanul cere organizarea unui turneu pentru a ridica moralul armatei, dar episcopul cheamă la post și rugăciune. Poporul așteaptă judecata ta, Majestate.",
+      "imagePath": "images/events/tournament.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "COMMON",
+      "arcId": "arc_church",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": ["church", "army", "court"],
+      "requires": [],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "church_humiliated" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "church_favored" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "crown_indecisive" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_002",
+      "title": "Biserica cere privilegii fiscale",
+      "description": "Episcopii cer scutire de taxe și dreptul de a judeca problemele în propriile tribunale ecleziastice. Trezorierul oftează, dar clerul vorbește despre datoria sfântă a coroanei.",
+      "imagePath": "images/events/church_tax.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_church",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": ["church", "tax", "privileges"],
+      "requires": [
+        { "type": "FLAG", "flag": "church_favored", "expected": true }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "church_privileges_granted" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "church_denied" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "church_confusion" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_003",
+      "title": "Predicatorii denunță decadența curții",
+      "description": "În piețe și pe treptele bisericilor se rostesc cuvinte aspre despre ospețele și vanitatea nobililor. Poporul ascultă.",
+      "imagePath": "images/events/preachers.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "RARE",
+      "arcId": "arc_church",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.2,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": ["church", "preachers", "court"],
+      "requires": [
+        { "type": "FLAG", "flag": "church_denied", "expected": true }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "preachers_silenced" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "preachers_tolerated" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "religious_confusion" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_004",
+      "title": "O erezie înflorește în provincie",
+      "description": "Un predicator local susține că episcopii au uitat adevărata credință. Satele din vale îi ascultă vocea.",
+      "imagePath": "images/events/heresy.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "CRISIS",
+      "arcId": "arc_church",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.2,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": ["church", "heresy", "crisis"],
+      "requires": [
+        { "type": "STAT", "stat": "RELIGION", "op": "LT", "value": 35 }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "heresy_crushed" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "heresy_tolerated" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "heresy_spreads" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_101",
+      "title": "Seceta lovește satele din sud",
+      "description": "Țăranii cer deschiderea grânarelor regale. Sfetnicii tăi avertizează că iarna următoare ar putea fi și mai grea dacă dai prea mult acum.",
+      "imagePath": "images/events/drought.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "COMMON",
+      "arcId": "arc_famine",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": ["famine", "peasants", "grain"],
+      "requires": [],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "grain_opened" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "grain_withheld" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "southern_unrest" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_102",
+      "title": "Negustorii măresc prețul pâinii",
+      "description": "Breslele cumpără grâne și le revând în orașe la prețuri mai mari. Poporul începe să murmure.",
+      "imagePath": "images/events/bread_price.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_famine",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": ["famine", "bread", "guilds"],
+      "requires": [
+        { "type": "FLAG", "flag": "grain_withheld", "expected": true }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "bread_capped" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "bread_market_free" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "bread_confusion" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_103",
+      "title": "Satele își părăsesc câmpurile",
+      "description": "Familii întregi pleacă spre orașe în căutare de hrană. Drumurile devin nesigure, iar piețele devin supraaglomerate.",
+      "imagePath": "images/events/migration.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_famine",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": ["famine", "migration", "peasants"],
+      "requires": [
+        { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 35 }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "migrants_resettled" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "roads_abandoned" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "vagrancy_spreads" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_104",
+      "title": "Foamete și jafuri pe drumuri",
+      "description": "Carele sunt atacate, grânarele sparte, iar satele părăsite. Vechea ordine începe să se clatine.",
+      "imagePath": "images/events/famine_crisis.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "CRISIS",
+      "arcId": "arc_famine",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.5,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": ["famine", "crisis", "bandits"],
+      "requires": [
+        { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 20 }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "famine_crushed_by_force" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "famine_aid_sent" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "famine_ignored" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_201",
+      "title": "Vistieria se golește",
+      "description": "Cheltuielile curții, ale gărzilor și ale grânarelor au secătuit aproape complet vistieria regală. Trezorierul cere măsuri urgente.",
+      "imagePath": "images/events/treasury_empty.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "COMMON",
+      "arcId": "arc_debt",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": ["debt", "treasury", "money"],
+      "requires": [
+        { "type": "STAT", "stat": "MONEY", "op": "LT", "value": 35 }
+      ],
+      "blockedBy": [],
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "taxes_raised" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "spending_cut" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "treasury_neglected" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import com.lazar.dto.ResolveDecisionResponse;
 import com.lazar.logic.EventDecisionCatalog;
 import com.lazar.logic.EventDecisionSet;
 import com.lazar.model.Consequence;
+import com.lazar.model.DecisionOption;
+import com.lazar.model.DecisionResolution;
 import com.lazar.model.EventCard;
 
 public class BackendDecisionResolver implements DecisionResolver {
@@ -60,7 +62,6 @@ public class BackendDecisionResolver implements DecisionResolver {
                     Gdx.app.log("BackendDecisionResolver", "Response body: " + responseText);
 
                     if (statusCode < 200 || statusCode >= 300) {
-                        Gdx.app.error("BackendDecisionResolver", "Resolve failed: " + responseText);
                         callback.onError("Backend error " + statusCode);
                         return;
                     }
@@ -69,7 +70,7 @@ public class BackendDecisionResolver implements DecisionResolver {
                         ResolveDecisionResponse response =
                             json.fromJson(ResolveDecisionResponse.class, responseText);
 
-                        if (response == null || response.consequence == null) {
+                        if (response == null || response.consequence == null || response.resolvedOption == null) {
                             callback.onError("Raspuns invalid de la server");
                             return;
                         }
@@ -80,7 +81,15 @@ public class BackendDecisionResolver implements DecisionResolver {
                             return;
                         }
 
-                        callback.onSuccess(consequence);
+                        DecisionOption option;
+                        try {
+                            option = DecisionOption.valueOf(response.resolvedOption.trim().toUpperCase());
+                        } catch (Exception ex) {
+                            callback.onError("Optiune invalida primita de la server");
+                            return;
+                        }
+
+                        callback.onSuccess(new DecisionResolution(option, consequence));
                     } catch (Exception e) {
                         Gdx.app.error("BackendDecisionResolver", "JSON parse error", e);
                         callback.onError("Parsare JSON esuata");

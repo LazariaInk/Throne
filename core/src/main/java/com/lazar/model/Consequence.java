@@ -17,4 +17,3 @@ public class Consequence {
         this.money = money;
     }
 }
-

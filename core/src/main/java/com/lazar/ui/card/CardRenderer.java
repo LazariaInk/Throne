@@ -26,6 +26,10 @@ public class CardRenderer {
         CardTransform transform,
         boolean isFrontCard
     ) {
+        if (event == null) {
+            return;
+        }
+
         Matrix4 oldTransform = applyCardTransform(batch, transform);
 
         drawCardFaceLocal(batch, transform.alpha, transform.width, transform.height);
@@ -62,7 +66,6 @@ public class CardRenderer {
 
         float textWidth = cardWidth - paddingX * 2f;
 
-        // TITLU
         float titleTopY = ovalY - 12f;
         float titleMaxHeight = 52f;
 
@@ -81,7 +84,6 @@ public class CardRenderer {
             0.72f
         );
 
-        // BODY
         float bodyTopY = ovalY - 72f;
         float bodyMaxHeight = bodyTopY - (cardY + paddingBottom);
 
@@ -124,10 +126,13 @@ public class CardRenderer {
         String title = consequence != null && consequence.title != null && !consequence.title.isEmpty()
             ? consequence.title
             : "Consecinta";
+
         String body = consequence != null && consequence.text != null && !consequence.text.isEmpty()
             ? consequence.text
             : "Consilierii delibereaza asupra hotararii tale.";
-        //String statsLine = buildStatsLine(consequence);
+
+//        String statsLine = buildStatsLine(consequence);
+        String statsLine = "";
 
         batch.setColor(0.32f, 0.21f, 0.11f, 0.12f * transform.alpha);
         batch.draw(resources.whiteRegion, cardX + 20f, topY - 96f, cardWidth - 40f, 54f);
@@ -135,7 +140,6 @@ public class CardRenderer {
         batch.setColor(0.55f, 0.40f, 0.22f, 0.16f * transform.alpha);
         batch.draw(resources.whiteRegion, cardX + 28f, topY - 124f, cardWidth - 56f, 2f);
 
-        // TITLU
         resources.titleFont.setColor(0.14f, 0.08f, 0.04f, transform.alpha);
         drawFittedWrappedText(
             batch,
@@ -151,7 +155,6 @@ public class CardRenderer {
             0.72f
         );
 
-        // BOX FIX JOS
         float boxHeight = 84f;
         float boxY = cardY + 32f;
 
@@ -174,7 +177,7 @@ public class CardRenderer {
 
         layout.setText(
             resources.bodyFont,
-            "",
+            statsLine,
             resources.bodyFont.getColor(),
             cardWidth - 80f,
             Align.center,

@@ -1,0 +1,14 @@
+package com.lazar.model;
+
+public enum EventCategory {
+    CHURCH_FAITH,
+    NOBILITY_COURT,
+    PEASANTRY_COMMON_FOLK,
+    ARMY_WAR,
+    TREASURY_TRADE,
+    JUSTICE_LAW,
+    PLAGUE_HEALTH,
+    DIPLOMACY_FOREIGN_POWERS,
+    OMENS_SUPERSTITION,
+    SUCCESSION_CROWN
+}

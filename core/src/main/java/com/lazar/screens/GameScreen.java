@@ -24,9 +24,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.config.BackendDecisionResolver;
 import com.lazar.config.DecisionResolver;
-import com.lazar.logic.EventDeckFactory;
+import com.lazar.engine.GameEngine;
+import com.lazar.engine.GameOverType;
 import com.lazar.logic.GameStats;
-import com.lazar.model.Consequence;
+import com.lazar.model.DecisionResolution;
 import com.lazar.model.EventCard;
 import com.lazar.ui.background.BlurBackgroundRenderer;
 import com.lazar.ui.card.CardPresenter;
@@ -67,7 +68,7 @@ public class GameScreen implements Screen {
     private CardPresenter cardPresenter;
 
     private final DecisionResolver decisionResolver;
-    private final EventDeckFactory eventDeckFactory;
+    private final GameEngine gameEngine;
 
     private final StringBuilder typedMessage = new StringBuilder();
     private final Rectangle sendButtonBounds = new Rectangle();
@@ -79,6 +80,7 @@ public class GameScreen implements Screen {
 
     private boolean requestInFlight = false;
     private String uiMessage = null;
+    private GameOverType gameOverType = null;
 
     private static final Color STAT_FILL_COLOR = new Color(0x8B572Aff);
     private static final Color STAT_EMPTY_TINT = new Color(0.22f, 0.17f, 0.12f, 0.28f);
@@ -93,12 +95,12 @@ public class GameScreen implements Screen {
     private static final float CARD_SWAP_VOLUME = 0.75f;
 
     public GameScreen() {
-        this(new BackendDecisionResolver(), new EventDeckFactory());
+        this(new BackendDecisionResolver(), new GameEngine());
     }
 
-    public GameScreen(DecisionResolver decisionResolver, EventDeckFactory eventDeckFactory) {
+    public GameScreen(DecisionResolver decisionResolver, GameEngine gameEngine) {
         this.decisionResolver = decisionResolver;
-        this.eventDeckFactory = eventDeckFactory;
+        this.gameEngine = gameEngine;
     }
 
     @Override
@@ -149,13 +151,12 @@ public class GameScreen implements Screen {
         );
 
         CardRenderer cardRenderer = new CardRenderer(cardRenderResources);
-
-        cardPresenter = new CardPresenter(
-            eventDeckFactory.createDefaultDeck(),
-            cardRenderer
-        );
+        cardPresenter = new CardPresenter(cardRenderer);
 
         backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, blurShader);
+
+        EventCard firstCard = gameEngine.nextCard();
+        cardPresenter.showNewEvent(firstCard, gameEngine.getRunState().getStats());
 
         installInputProcessor();
     }
@@ -194,7 +195,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean keyTyped(char character) {
-                if (!cardPresenter.canTypeMessage()) {
+                if (!cardPresenter.canTypeMessage() || gameOverType != null) {
                     return false;
                 }
 
@@ -210,8 +211,8 @@ public class GameScreen implements Screen {
                     return true;
                 }
 
-                if (character >= 32 && character < 127) {
-                    if (typedMessage.length() < 64) {
+                if (!Character.isISOControl(character)) {
+                    if (typedMessage.length() < 120) {
                         typedMessage.append(character);
                     }
                     return true;
@@ -255,7 +256,7 @@ public class GameScreen implements Screen {
     }
 
     private void submitPlayerMessage() {
-        if (!cardPresenter.canTypeMessage() || requestInFlight) {
+        if (!cardPresenter.canTypeMessage() || requestInFlight || gameOverType != null) {
             return;
         }
 
@@ -264,22 +265,27 @@ public class GameScreen implements Screen {
             return;
         }
 
-        EventCard currentEvent = cardPresenter.getCurrentEvent();
-        if (currentEvent == null) {
-            return;
-        }
-
         requestInFlight = true;
         uiMessage = null;
         cardPresenter.markSubmitting();
 
-        decisionResolver.resolveDecision(currentEvent, message, new DecisionResolver.Callback() {
+        gameEngine.submitPlayerText(decisionResolver, message, new DecisionResolver.Callback() {
             @Override
-            public void onSuccess(Consequence consequence) {
+            public void onSuccess(DecisionResolution resolution) {
                 requestInFlight = false;
                 playCardSwapSound();
-                cardPresenter.resolveFromBackend(consequence);
-                uiMessage = null;
+
+                cardPresenter.resolveFromBackend(
+                    resolution,
+                    gameEngine.getRunState().getStats()
+                );
+
+                gameOverType = gameEngine.checkGameOver();
+                if (gameOverType != null) {
+                    uiMessage = buildGameOverMessage(gameOverType);
+                } else {
+                    uiMessage = buildResolutionMessage(resolution);
+                }
             }
 
             @Override
@@ -292,12 +298,15 @@ public class GameScreen implements Screen {
     }
 
     private void advanceToNextCard() {
-        if (!cardPresenter.canAdvanceCard()) {
+        if (!cardPresenter.canAdvanceCard() || gameOverType != null) {
             return;
         }
 
         playCardSwapSound();
-        cardPresenter.advanceCard();
+
+        EventCard nextCard = gameEngine.nextCard();
+        cardPresenter.showNewEvent(nextCard, gameEngine.getRunState().getStats());
+
         typedMessage.setLength(0);
         uiMessage = null;
     }
@@ -317,10 +326,12 @@ public class GameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        drawTopStats(cardPresenter.getGameStats(), viewport.getWorldWidth(), viewport.getWorldHeight());
+        drawTopStats(gameEngine.getRunState().getStats(), viewport.getWorldWidth(), viewport.getWorldHeight());
         cardPresenter.render(batch, viewport.getWorldWidth(), viewport.getWorldHeight());
 
-        if (cardPresenter.canAdvanceCard()) {
+        if (gameOverType != null) {
+            drawGameOverHint(viewport.getWorldWidth());
+        } else if (cardPresenter.canAdvanceCard()) {
             drawNextHint(viewport.getWorldWidth());
         } else if (cardPresenter.canTypeMessage()) {
             drawBottomInput(viewport.getWorldWidth());
@@ -457,10 +468,17 @@ public class GameScreen implements Screen {
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
     }
 
+    private void drawGameOverHint(float worldWidth) {
+        String hint = "Partida s-a incheiat";
+        hintFont.setColor(0.55f, 0.12f, 0.08f, 0.95f);
+        layout.setText(hintFont, hint);
+        hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
+    }
+
     private void drawUiMessage(float worldWidth) {
         hintFont.setColor(0.55f, 0.12f, 0.08f, 0.95f);
-        layout.setText(hintFont, uiMessage);
-        hintFont.draw(batch, uiMessage, (worldWidth - layout.width) / 2f, 74f);
+        layout.setText(hintFont, uiMessage, hintFont.getColor(), worldWidth - 120f, Align.center, true);
+        hintFont.draw(batch, layout, 60f, 92f);
     }
 
     private void drawBottomInput(float worldWidth) {
@@ -520,6 +538,50 @@ public class GameScreen implements Screen {
         batch.draw(sendButtonTexture, x + pad, y + pad, w - pad * 2f, h - pad * 2f);
     }
 
+    private String buildResolutionMessage(DecisionResolution resolution) {
+        if (resolution == null || resolution.option == null) {
+            return null;
+        }
+
+        switch (resolution.option) {
+            case A:
+                return "AI-ul a judecat raspunsul tau ca optiunea A.";
+            case B:
+                return "AI-ul a judecat raspunsul tau ca optiunea B.";
+            case C:
+                return "AI-ul a judecat raspunsul tau ca raspuns neclar sau in afara contextului (C).";
+            default:
+                return null;
+        }
+    }
+
+    private String buildGameOverMessage(GameOverType type) {
+        if (type == null) {
+            return null;
+        }
+
+        switch (type) {
+            case INVASION:
+                return "Armata s-a prabusit. Regatul ramane fara aparare si este zdrobit de invazie.";
+            case MILITARY_COUP:
+                return "Armata a devenit mai puternica decat coroana. Generalii iti iau tronul.";
+            case BANKRUPTCY:
+                return "Vistieria este goala. Coroana cade in ruina si neplata.";
+            case OLIGARCHY:
+                return "Aurul a corupt totul. Coroana devine marioneta negustorilor.";
+            case RELIGIOUS_REVOLT:
+                return "Legitimitatea sacra s-a frant. Regatul este inghitit de revolta religioasa.";
+            case THEOCRACY:
+                return "Credinta a inghitit coroana. Tronul tau este redus la umbra unei teocratii.";
+            case DEAD_KINGDOM:
+                return "Tinuturile s-au golit. Regatul a murit.";
+            case OVERCROWDED_COLLAPSE:
+                return "Supraaglomerarea si haosul au rupt ordinea regatului.";
+            default:
+                return "Regatul tau a cazut.";
+        }
+    }
+
     private BitmapFont generateFont(int size, Color color) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/medieval.ttf"));
 
@@ -535,6 +597,7 @@ public class GameScreen implements Screen {
         parameter.borderWidth = 0f;
         parameter.shadowOffsetX = 0;
         parameter.shadowOffsetY = 0;
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "ĂÂÎȘȚăâîșț";
 
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
