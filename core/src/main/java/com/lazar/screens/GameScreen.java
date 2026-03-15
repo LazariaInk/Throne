@@ -25,6 +25,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
 import com.lazar.config.BackendDecisionResolver;
 import com.lazar.config.DecisionResolver;
+import com.lazar.data.RecordEntry;
+import com.lazar.data.RecordsManager;
 import com.lazar.engine.GameEngine;
 import com.lazar.engine.GameOverType;
 import com.lazar.logic.GameStats;
@@ -34,7 +36,6 @@ import com.lazar.ui.background.BlurBackgroundRenderer;
 import com.lazar.ui.card.CardPresenter;
 import com.lazar.ui.card.CardRenderResources;
 import com.lazar.ui.card.CardRenderer;
-import jdk.javadoc.internal.tool.Start;
 
 public class GameScreen implements Screen {
 
@@ -97,13 +98,23 @@ public class GameScreen implements Screen {
     private static final float CARD_SWAP_VOLUME = 0.75f;
 
     private final StartGame game;
+    private final String emperorName;
 
     public GameScreen(StartGame game) {
-        this(game, new BackendDecisionResolver(), new GameEngine());
+        this(game, "Fara Nume", new BackendDecisionResolver(), new GameEngine());
+    }
+
+    public GameScreen(StartGame game, String emperorName) {
+        this(game, emperorName, new BackendDecisionResolver(), new GameEngine());
     }
 
     public GameScreen(StartGame game, DecisionResolver decisionResolver, GameEngine gameEngine) {
+        this(game, "Fara Nume", decisionResolver, gameEngine);
+    }
+
+    public GameScreen(StartGame game, String emperorName, DecisionResolver decisionResolver, GameEngine gameEngine) {
         this.game = game;
+        this.emperorName = emperorName;
         this.decisionResolver = decisionResolver;
         this.gameEngine = gameEngine;
     }
@@ -112,6 +123,8 @@ public class GameScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal("images/background.png"));
+
+        gameEngine.setEmperorName(emperorName);
 
         moneyIcon = new Texture(Gdx.files.internal("images/ui/money.png"));
         armyIcon = new Texture(Gdx.files.internal("images/ui/army.png"));
@@ -285,18 +298,36 @@ public class GameScreen implements Screen {
                     gameEngine.getRunState().getStats()
                 );
 
+                gameEngine.onTurnCompleted();
+
                 gameOverType = gameEngine.checkGameOver();
                 if (gameOverType != null) {
                     if (backgroundMusic != null) {
                         backgroundMusic.stop();
                     }
 
-                    game.setScreen(new GameOverScreen(game, gameOverType));
+                    RecordsManager recordsManager = new RecordsManager();
+                    recordsManager.saveRecord(
+                        new RecordEntry(
+                            gameEngine.getEmperorName(),
+                            gameEngine.getYearsRuledText(),
+                            gameOverType.name()
+                        )
+                    );
+
+                    game.setScreen(
+                        new GameOverScreen(
+                            game,
+                            gameOverType,
+                            gameEngine.getEmperorName(),
+                            gameEngine.getYearsRuledText()
+                        )
+                    );
                     dispose();
                     return;
-                } else {
-                    uiMessage = buildResolutionMessage(resolution);
                 }
+
+                uiMessage = buildResolutionMessage(resolution);
             }
 
             @Override
@@ -338,6 +369,7 @@ public class GameScreen implements Screen {
         batch.begin();
 
         drawTopStats(gameEngine.getRunState().getStats(), viewport.getWorldWidth(), viewport.getWorldHeight());
+        drawReignInfo(viewport.getWorldWidth(), viewport.getWorldHeight());
         cardPresenter.render(batch, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         if (cardPresenter.canAdvanceCard()) {
@@ -385,6 +417,13 @@ public class GameScreen implements Screen {
         drawStatBadge(startX + (badgeSize + gap), badgeY, badgeSize, peopleIcon, stats.getPeople());
         drawStatBadge(startX + (badgeSize + gap) * 2f, badgeY, badgeSize, armyIcon, stats.getArmy());
         drawStatBadge(startX + (badgeSize + gap) * 3f, badgeY, badgeSize, moneyIcon, stats.getMoney());
+    }
+
+    private void drawReignInfo(float worldWidth, float worldHeight) {
+        String reignText = "Imparat: " + emperorName + "   |   Ani domniti: " + gameEngine.getYearsRuledText();
+        hudFont.setColor(0.20f, 0.13f, 0.07f, 0.95f);
+        layout.setText(hudFont, reignText);
+        hudFont.draw(batch, reignText, (worldWidth - layout.width) / 2f, worldHeight - 120f);
     }
 
     private void drawHudPanel(float x, float y, float w, float h) {
@@ -477,13 +516,6 @@ public class GameScreen implements Screen {
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
     }
 
-    private void drawGameOverHint(float worldWidth) {
-        String hint = "Partida s-a incheiat";
-        hintFont.setColor(0.55f, 0.12f, 0.08f, 0.95f);
-        layout.setText(hintFont, hint);
-        hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
-    }
-
     private void drawUiMessage(float worldWidth) {
         hintFont.setColor(0.55f, 0.12f, 0.08f, 0.95f);
         layout.setText(hintFont, uiMessage, hintFont.getColor(), worldWidth - 120f, Align.center, true);
@@ -561,33 +593,6 @@ public class GameScreen implements Screen {
                 return "AI-ul a judecat raspunsul tau ca raspuns neclar sau in afara contextului (C).";
             default:
                 return null;
-        }
-    }
-
-    private String buildGameOverMessage(GameOverType type) {
-        if (type == null) {
-            return null;
-        }
-
-        switch (type) {
-            case INVASION:
-                return "Armata s-a prabusit. Regatul ramane fara aparare si este zdrobit de invazie.";
-            case MILITARY_COUP:
-                return "Armata a devenit mai puternica decat coroana. Generalii iti iau tronul.";
-            case BANKRUPTCY:
-                return "Vistieria este goala. Coroana cade in ruina si neplata.";
-            case OLIGARCHY:
-                return "Aurul a corupt totul. Coroana devine marioneta negustorilor.";
-            case RELIGIOUS_REVOLT:
-                return "Legitimitatea sacra s-a frant. Regatul este inghitit de revolta religioasa.";
-            case THEOCRACY:
-                return "Credinta a inghitit coroana. Tronul tau este redus la umbra unei teocratii.";
-            case DEAD_KINGDOM:
-                return "Tinuturile s-au golit. Regatul a murit.";
-            case OVERCROWDED_COLLAPSE:
-                return "Supraaglomerarea si haosul au rupt ordinea regatului.";
-            default:
-                return "Regatul tau a cazut.";
         }
     }
 

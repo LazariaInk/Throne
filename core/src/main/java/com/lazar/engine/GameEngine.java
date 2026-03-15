@@ -15,6 +15,8 @@ public class GameEngine {
     private final EventResolutionProcessor resolutionProcessor;
     private final GameOverEvaluator gameOverEvaluator;
     private final Array<EventDefinition> allEvents;
+    private int turnsSurvived = 0;
+    private String emperorName;
 
     private EventDefinition currentEvent;
 
@@ -61,5 +63,32 @@ public class GameEngine {
 
     public GameOverType checkGameOver() {
         return gameOverEvaluator.evaluate(runState.getStats());
+    }
+
+    public void setEmperorName(String emperorName) {
+        this.emperorName = emperorName;
+    }
+
+    public String getEmperorName() {
+        return emperorName;
+    }
+
+    public int getTurnsSurvived() {
+        return turnsSurvived;
+    }
+
+    public void onTurnCompleted() {
+        turnsSurvived++;
+    }
+
+    public float getYearsRuled() {
+        return turnsSurvived * 0.5f;
+    }
+
+    public String getYearsRuledText() {
+        if (turnsSurvived % 2 == 0) {
+            return String.valueOf(turnsSurvived / 2);
+        }
+        return turnsSurvived / 2 + ".5";
     }
 }

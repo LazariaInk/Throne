@@ -34,6 +34,8 @@ public class GameOverScreen implements Screen {
 
     private final StartGame game;
     private final GameOverType type;
+    private final String emperorName;
+    private final String yearsRuled;
 
     private SpriteBatch batch;
     private Texture background;
@@ -58,9 +60,11 @@ public class GameOverScreen implements Screen {
     private final Rectangle menuBounds = new Rectangle();
     private final Vector3 touchPoint = new Vector3();
 
-    public GameOverScreen(StartGame game, GameOverType type) {
+    public GameOverScreen(StartGame game, GameOverType type, String emperorName, String yearsRuled) {
         this.game = game;
         this.type = type;
+        this.emperorName = emperorName;
+        this.yearsRuled = yearsRuled;
     }
 
     @Override
@@ -161,13 +165,13 @@ public class GameOverScreen implements Screen {
                 viewport.unproject(touchPoint.set(screenX, screenY, 0f));
 
                 if (restartBounds.contains(touchPoint.x, touchPoint.y)) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, emperorName));
                     dispose();
                     return true;
                 }
 
                 if (menuBounds.contains(touchPoint.x, touchPoint.y)) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new StartScreen(game));
                     dispose();
                     return true;
                 }
@@ -178,10 +182,17 @@ public class GameOverScreen implements Screen {
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.SPACE || keycode == Input.Keys.ENTER) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, emperorName));
                     dispose();
                     return true;
                 }
+
+                if (keycode == Input.Keys.ESCAPE) {
+                    game.setScreen(new StartScreen(game));
+                    dispose();
+                    return true;
+                }
+
                 return false;
             }
         });
@@ -222,6 +233,7 @@ public class GameOverScreen implements Screen {
 
         String title = GameOverContent.title(type);
         String body = GameOverContent.body(type);
+        String reignText = emperorName + " a domnit " + yearsRuled + " ani.";
 
         titleFont.setColor(0.16f, 0.08f, 0.04f, 1f);
         layout.setText(titleFont, title, titleFont.getColor(), cardW - 80f, Align.center, true);
@@ -230,6 +242,10 @@ public class GameOverScreen implements Screen {
         bodyFont.setColor(0.22f, 0.13f, 0.07f, 1f);
         layout.setText(bodyFont, body, bodyFont.getColor(), cardW - 90f, Align.center, true);
         bodyFont.draw(batch, layout, x + 45f, y + cardH - 120f);
+
+        bodyFont.setColor(0.30f, 0.18f, 0.09f, 1f);
+        layout.setText(bodyFont, reignText, bodyFont.getColor(), cardW - 90f, Align.center, true);
+        bodyFont.draw(batch, layout, x + 45f, y + 140f);
 
         float buttonW = 180f;
         float buttonH = 48f;
@@ -290,7 +306,7 @@ public class GameOverScreen implements Screen {
     }
 
     private void drawBottomHint(float worldWidth) {
-        String hint = "ENTER / SPACE pentru a incepe din nou";
+        String hint = "ENTER / SPACE = joaca din nou, ESC = meniu";
         hintFont.setColor(0.95f, 0.90f, 0.78f, 0.95f);
         layout.setText(hintFont, hint);
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 38f);
