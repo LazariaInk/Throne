@@ -15,6 +15,32 @@
       "tags": ["church", "army", "court"],
       "requires": [],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Turnirul are loc",
+          "text": "Ai poruncit sa fie ridicata arena chiar in piata cetatii. Nobilii aplauda, oamenii se aduna, iar soldatii isi recapata mandria. Episcopul mustra curtea pentru trufie.",
+          "religion": -1,
+          "population": 1,
+          "army": 2,
+          "money": -2
+        },
+        "B": {
+          "title": "Regatul intra in post",
+          "text": "Ai ascultat glasul episcopului si ai chemat regatul la post si rugaciune. Biserica iti binecuvanteaza tronul, dar soldatii murmura, iar curtea ramane fara sarbatoare.",
+          "religion": 2,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Majestatea ramane neclara",
+          "text": "Curtea ramane uluita de raspunsul tau nehotarat. Nobilii, clerul si poporul pleaca mai nelinistiti decat au venit.",
+          "religion": -1,
+          "population": -1,
+          "army": -1,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "church_humiliated" }],
         "nextArcStage": "COMMITMENT",
@@ -48,6 +74,32 @@
         { "type": "FLAG", "flag": "church_favored", "expected": true }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Privilegiile sunt acordate",
+          "text": "Ai intarit pozitia Bisericii. Clerul te binecuvanteaza, dar vistieria simte imediat povara concesiilor.",
+          "religion": 2,
+          "population": 0,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Privilegiile sunt refuzate",
+          "text": "Ai aparat tezaurul si autoritatea coroanei, dar episcopii vorbesc deja despre mandria lumii.",
+          "religion": -2,
+          "population": 0,
+          "army": 1,
+          "money": 1
+        },
+        "C": {
+          "title": "Biserica pleaca nelamurita",
+          "text": "Raspunsul tau a fost atat de alunecos incat nimeni nu stie daca ai promis ceva sau ai refuzat totul.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "church_privileges_granted" }],
         "nextArcStage": "ESCALATION",
@@ -81,6 +133,32 @@
         { "type": "FLAG", "flag": "church_denied", "expected": true }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Predicatorii sunt redusi la tacere",
+          "text": "Garzile i-au imprastiat, iar curtea rasufla usurata. Totusi, unii ii socotesc deja martiri.",
+          "religion": -1,
+          "population": -1,
+          "army": 1,
+          "money": 0
+        },
+        "B": {
+          "title": "Predicatorii sunt tolerati",
+          "text": "Ai lasat cuvintele sa curga. Unii te cred intelept, altii slab.",
+          "religion": 1,
+          "population": 1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Curtea raspunde in dodii",
+          "text": "Nici predicatorii, nici episcopii, nici poporul nu stiu ce ai vrut sa spui.",
+          "religion": -1,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "preachers_silenced" }],
         "nextArcStage": "CRISIS",
@@ -114,6 +192,32 @@
         { "type": "STAT", "stat": "RELIGION", "op": "LT", "value": 35 }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Erezia este zdrobita",
+          "text": "Ai trimis sabia acolo unde cuvantul nu a mai fost ascultat. Linistea se intoarce, dar satele nu uita.",
+          "religion": 1,
+          "population": -2,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Erezia este tolerata",
+          "text": "Ai preferat pacea de moment in locul sabiei. Tensiunea scade acum, dar unitatea credintei se fisureaza.",
+          "religion": -2,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Nehotararea hraneste erezia",
+          "text": "Lipsa unei directii limpezi face ca glasurile neascultarii sa para mai puternice in fiecare sat.",
+          "religion": -2,
+          "population": -1,
+          "army": -1,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "heresy_crushed" }],
         "nextArcStage": "OUTCOME",
@@ -145,6 +249,32 @@
       "tags": ["famine", "peasants", "grain"],
       "requires": [],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Granarele se deschid",
+          "text": "Ai deschis hambarele coroanei si ai trimis care cu grau spre sud. Taranii se roaga pentru tine, dar rezervele scad.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Granarele raman inchise",
+          "text": "Ai ales prudenta pentru iarna ce vine. Satele simt insa ca au fost parasite.",
+          "religion": 0,
+          "population": -2,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Sudul ramane fara raspuns limpede",
+          "text": "Ai rostit cuvinte care nu lamuresc daca hambarele se deschid ori raman zavorate.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "grain_opened" }],
         "nextArcStage": "COMMITMENT",
@@ -178,6 +308,32 @@
         { "type": "FLAG", "flag": "grain_withheld", "expected": true }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Pretul painii este plafonat",
+          "text": "Ai lovit specula, iar orasenii te lauda. Breslele privesc insa hotararea ca pe un atac.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Piata ramane libera",
+          "text": "Ai aparat comertul, dar poporul simte greutatea preturilor in fiecare zi.",
+          "religion": 0,
+          "population": -2,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Negustorii pleaca fara raspuns clar",
+          "text": "Nimeni nu intelege daca ai amenintat, ai promis sau doar ai amanat hotararea.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "bread_capped" }],
         "nextArcStage": "ESCALATION",
@@ -211,6 +367,32 @@
         { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 35 }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Migratii sunt asezati cu forta",
+          "text": "Ai redirectionat oamenii si ai impus ordine. Drumurile se limpezesc, dar nemultumirea ramane.",
+          "religion": 0,
+          "population": 1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Ii lasi sa plece unde pot",
+          "text": "Ai evitat constrangerea, dar ogoarele raman goale si ordinea se subtiaza.",
+          "religion": 0,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Nehotararea imprastie si mai mult lumea",
+          "text": "Satele se golesc, orasele se umplu, iar nimeni nu stie cine raspunde pentru haos.",
+          "religion": -1,
+          "population": -2,
+          "army": -1,
+          "money": 0
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "migrants_resettled" }],
         "nextArcStage": "CRISIS",
@@ -244,6 +426,32 @@
         { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 20 }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Jafurile sunt zdrobite prin forta",
+          "text": "Ai trimis soldatii pe drumuri si ai spanzurat talharii. Linistea revine, dar foametea ramane.",
+          "religion": 0,
+          "population": -2,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Trimiti ajutor si paza",
+          "text": "Ai incercat sa hranesti si sa protejezi in acelasi timp. Curtea ofteaza, dar oamenii traiesc inca.",
+          "religion": 0,
+          "population": 2,
+          "army": -1,
+          "money": -2
+        },
+        "C": {
+          "title": "Regatul priveste, iar drumurile ard",
+          "text": "Neclaritatea ta lasa loc foamei si sabiei sa lucreze impreuna.",
+          "religion": -1,
+          "population": -2,
+          "army": -1,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "famine_crushed_by_force" }],
         "nextArcStage": "OUTCOME",
@@ -277,6 +485,32 @@
         { "type": "STAT", "stat": "MONEY", "op": "LT", "value": 35 }
       ],
       "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Taxele cresc",
+          "text": "Ai strans aur pentru coroana, dar targurile si hanurile murmura.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 2
+        },
+        "B": {
+          "title": "Cheltuielile sunt taiate",
+          "text": "Ai salvat tezaurul pe moment, dar oamenii curtii si garnizoanele simt imediat lipsurile.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 1
+        },
+        "C": {
+          "title": "Vistieria ramane in suspin",
+          "text": "Raspunsul tau nu a multumit pe nimeni si nu a inchis nicio gaura in tezaur.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        }
+      },
       "onA": {
         "flags": [{ "action": "ADD", "flag": "taxes_raised" }],
         "nextArcStage": "COMMITMENT",

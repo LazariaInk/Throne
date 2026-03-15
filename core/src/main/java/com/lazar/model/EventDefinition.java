@@ -28,10 +28,12 @@ public class EventDefinition {
     public OptionEffects onB;
     public OptionEffects onC;
 
+    public EventDecisionData decisions;
+
     public EventDefinition() {
     }
 
     public EventCard toEventCard() {
-        return new EventCard(id, title, description, imagePath);
+        return new EventCard(id, title, description, imagePath, decisions);
     }
 }

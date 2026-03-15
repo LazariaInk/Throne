@@ -7,8 +7,6 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.lazar.dto.ResolveDecisionRequest;
 import com.lazar.dto.ResolveDecisionResponse;
-import com.lazar.logic.EventDecisionCatalog;
-import com.lazar.logic.EventDecisionSet;
 import com.lazar.model.Consequence;
 import com.lazar.model.DecisionOption;
 import com.lazar.model.DecisionResolution;
@@ -17,7 +15,6 @@ import com.lazar.model.EventCard;
 public class BackendDecisionResolver implements DecisionResolver {
 
     private final Json json;
-    private final EventDecisionCatalog decisionCatalog;
     private final DecisionRequestMapper requestMapper;
     private final ConsequenceMapper consequenceMapper;
 
@@ -27,15 +24,13 @@ public class BackendDecisionResolver implements DecisionResolver {
         this.json.setOutputType(JsonWriter.OutputType.json);
         this.json.setUsePrototypes(false);
 
-        this.decisionCatalog = new EventDecisionCatalog();
         this.requestMapper = new DecisionRequestMapper();
         this.consequenceMapper = new ConsequenceMapper();
     }
 
     @Override
     public void resolveDecision(EventCard event, String playerInput, Callback callback) {
-        EventDecisionSet decisionSet = decisionCatalog.getFor(event.id);
-        ResolveDecisionRequest requestBody = requestMapper.toRequest(event, decisionSet, playerInput);
+        ResolveDecisionRequest requestBody = requestMapper.toRequest(event, playerInput);
         String requestJson = json.toJson(requestBody);
 
         Gdx.app.log("BackendDecisionResolver", "Request JSON: " + requestJson);
