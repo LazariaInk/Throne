@@ -43,33 +43,39 @@ public class CardRenderer {
         float paddingTop = 22f;
         float paddingBottom = 24f;
 
-        float ovalW = Math.min(200f, cardWidth - 80f);
-        float ovalH = 210f;
-        float ovalX = -ovalW / 2f;
-        float ovalY = cardY + cardHeight - paddingTop - ovalH;
+        // Fixed oval size, regardless of card size
+        float ovalDiameter = 200f; // consistent size for the image, fixed diameter
+        float ovalX = -ovalDiameter / 2f;
+        float ovalY = cardY + cardHeight - paddingTop - ovalDiameter;
 
+        // Draw the background color and layers for the oval
         batch.setColor(0f, 0f, 0f, 0.10f * transform.alpha);
-        batch.draw(resources.whiteRegion, ovalX + 4f, ovalY - 4f, ovalW, ovalH);
+        batch.draw(resources.whiteRegion, ovalX + 4f, ovalY - 4f, ovalDiameter, ovalDiameter);
 
         batch.setColor(0.28f, 0.18f, 0.09f, 1f * transform.alpha);
-        batch.draw(resources.whiteRegion, ovalX - 4f, ovalY - 4f, ovalW + 8f, ovalH + 8f);
+        batch.draw(resources.whiteRegion, ovalX - 4f, ovalY - 4f, ovalDiameter + 8f, ovalDiameter + 8f);
 
         batch.setColor(0.83f, 0.76f, 0.62f, 1f * transform.alpha);
-        batch.draw(resources.whiteRegion, ovalX, ovalY, ovalW, ovalH);
+        batch.draw(resources.whiteRegion, ovalX, ovalY, ovalDiameter, ovalDiameter);
 
-        drawOvalMaskedImage(batch, image, ovalX, ovalY, ovalW, ovalH, transform.alpha);
+        drawOvalMaskedImage(batch, image, ovalX, ovalY, ovalDiameter, ovalDiameter, transform.alpha);
 
         if (isFrontCard) {
             batch.setColor(1f, 0.96f, 0.85f, 0.06f * transform.alpha);
             batch.draw(resources.whiteRegion, cardX + 12f, cardY + cardHeight - 58f, cardWidth - 24f, 26f);
         }
 
+        // Improved text height allocation
         float textWidth = cardWidth - paddingX * 2f;
 
-        float titleTopY = ovalY - 12f;
-        float titleMaxHeight = 52f;
+        // Title and description height allocation
+        float titleMaxHeight = 60f; // increased max height for the title
+        float descriptionMaxHeight = cardHeight - paddingTop - ovalDiameter - titleMaxHeight - paddingBottom;
 
         resources.titleFont.setColor(0.14f, 0.08f, 0.04f, transform.alpha);
+        float titleTopY = ovalY - 12f;
+
+        // Adjust title to ensure it fits
         drawFittedWrappedText(
             batch,
             resources.titleFont,
@@ -84,10 +90,10 @@ public class CardRenderer {
             0.72f
         );
 
-        float bodyTopY = ovalY - 72f;
-        float bodyMaxHeight = bodyTopY - (cardY + paddingBottom);
-
+        // Now ensure description fits under title without overlap
+        float bodyTopY = titleTopY - titleMaxHeight - 12f; // Adjust body position to be below title
         resources.bodyFont.setColor(0.18f, 0.11f, 0.06f, transform.alpha);
+
         drawFittedWrappedText(
             batch,
             resources.bodyFont,
@@ -95,7 +101,7 @@ public class CardRenderer {
             cardX + paddingX,
             bodyTopY,
             textWidth,
-            bodyMaxHeight,
+            descriptionMaxHeight,
             Align.left,
             transform.alpha,
             1.0f,
@@ -131,8 +137,7 @@ public class CardRenderer {
             ? consequence.text
             : "Consilierii delibereaza asupra hotararii tale.";
 
-//        String statsLine = buildStatsLine(consequence);
-        String statsLine = "";
+        String statsLine = ""; // Build stats line logic if necessary.
 
         batch.setColor(0.32f, 0.21f, 0.11f, 0.12f * transform.alpha);
         batch.draw(resources.whiteRegion, cardX + 20f, topY - 96f, cardWidth - 40f, 54f);
@@ -235,6 +240,7 @@ public class CardRenderer {
         float scale = maxScale;
         boolean fits = false;
 
+        // Ensure that the text fits within the vertical space
         while (scale >= minScale) {
             font.getData().setScale(scale);
             layout.setText(font, text, font.getColor(), width, align, true);
@@ -256,24 +262,6 @@ public class CardRenderer {
         font.draw(batch, layout, x, topY);
 
         font.getData().setScale(originalScaleX, originalScaleY);
-    }
-
-    private String buildStatsLine(Consequence consequence) {
-        if (consequence == null) {
-            return "Religie 0 | Popor 0 | Armata 0 | Aur 0";
-        }
-
-        return "Religie " + formatDelta(consequence.religion)
-            + " | Popor " + formatDelta(consequence.population)
-            + " | Armata " + formatDelta(consequence.army)
-            + " | Aur " + formatDelta(consequence.money);
-    }
-
-    private String formatDelta(int value) {
-        if (value > 0) {
-            return "+" + value;
-        }
-        return String.valueOf(value);
     }
 
     private void drawCardFaceLocal(SpriteBatch batch, float alpha, float cardWidth, float cardHeight) {
@@ -367,12 +355,18 @@ public class CardRenderer {
         resources.ovalMaskShader.setUniformf("u_radius", 0.48f, 0.48f);
         resources.ovalMaskShader.setUniformf("u_softness", 0.025f);
 
+        // Calculate the scale factor based on the smaller dimension
         float textureWidth = texture.getWidth();
         float textureHeight = texture.getHeight();
 
-        float scale = Math.max(width / textureWidth, height / textureHeight);
+        // Find the scale factor that fits the image within the oval mask (respecting aspect ratio)
+        float scale = Math.min(width / textureWidth, height / textureHeight);
+
+        // Calculate the actual width and height of the texture once it's scaled
         float drawWidth = textureWidth * scale;
         float drawHeight = textureHeight * scale;
+
+        // Position the image to center it inside the oval
         float drawX = x + (width - drawWidth) / 2f;
         float drawY = y + (height - drawHeight) / 2f;
 
