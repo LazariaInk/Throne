@@ -6,11 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -420,10 +418,28 @@ public class GameScreen implements Screen {
     }
 
     private void drawReignInfo(float worldWidth, float worldHeight) {
-        String reignText = "Imparat: " + emperorName + "   |   Ani domniti: " + gameEngine.getYearsRuledText();
+        String line1 = "Imparat: " + emperorName;
+        String line2 = "Ani domniti: " + gameEngine.getYearsRuledText();
+
+        layout.setText(hudFont, line1);
+        float w1 = layout.width;
+        layout.setText(hudFont, line2);
+        float w2 = layout.width;
+
+        float panelPadX = 18f;
+        float panelPadY = 10f;
+        float lineSpacing = 22f;
+        float panelW = Math.max(w1, w2) + panelPadX * 2f;
+        float panelH = lineSpacing * 2f + panelPadY * 2f;
+
+        float panelX = worldWidth - panelW - 18f;
+        float panelY = worldHeight - panelH - 18f;
+
+        drawHudPanel(panelX, panelY, panelW, panelH);
+
         hudFont.setColor(0.20f, 0.13f, 0.07f, 0.95f);
-        layout.setText(hudFont, reignText);
-        hudFont.draw(batch, reignText, (worldWidth - layout.width) / 2f, worldHeight - 120f);
+        hudFont.draw(batch, line1, panelX + panelPadX, panelY + panelH - panelPadY - 4f);
+        hudFont.draw(batch, line2, panelX + panelPadX, panelY + panelH - panelPadY - 4f - lineSpacing);
     }
 
     private void drawHudPanel(float x, float y, float w, float h) {
@@ -548,19 +564,40 @@ public class GameScreen implements Screen {
             fontColor = new Color(0.33f, 0.24f, 0.15f, 0.68f);
         } else {
             textToDraw = typedMessage.toString();
-            if (showCaret) {
-                textToDraw += "|";
-            }
+            if (showCaret) textToDraw += "|";
             fontColor = new Color(0.20f, 0.13f, 0.07f, 1f);
         }
 
-        inputFont.setColor(fontColor);
-        layout.setText(inputFont, textToDraw, fontColor, inputW - 26f, Align.left, false);
-        inputFont.draw(batch, layout, inputX + 14f, inputY + 34f);
+        layout.setText(inputFont, textToDraw);
+        float textWidth = layout.width;
+        float textPadding = 14f;
+        float availableW = inputW - textPadding * 2f;
+        float scrollOffset = Math.max(0f, textWidth - availableW);
 
+        inputFont.setColor(fontColor);
+
+        float clipX = inputX + textPadding;
+        float clipY = inputY + 3f;
+        float clipW = inputW - textPadding * 2f;
+        float clipH = inputH - 6f;
+
+        Rectangle scissor = new Rectangle();
+        Rectangle clipBoundsWorld = new Rectangle(clipX, clipY, clipW, clipH);
+        ScissorStack.calculateScissors(camera, viewport.getScreenX(), viewport.getScreenY(),
+            viewport.getScreenWidth(), viewport.getScreenHeight(),
+            batch.getTransformMatrix(), clipBoundsWorld, scissor);
+
+        batch.flush();
+        boolean pushed = ScissorStack.pushScissors(scissor);
+
+        inputFont.draw(batch, textToDraw, inputX + textPadding - scrollOffset, inputY + 34f);
+
+        batch.flush();
+        if (pushed) ScissorStack.popScissors();
+
+        batch.setColor(Color.WHITE);
         drawSendButton(sendButtonBounds.x, sendButtonBounds.y, sendButtonBounds.width, sendButtonBounds.height);
     }
-
     private void drawSendButton(float x, float y, float w, float h) {
         batch.setColor(0f, 0f, 0f, 0.14f);
         batch.draw(whiteRegion, x + 5f, y - 5f, w, h);
