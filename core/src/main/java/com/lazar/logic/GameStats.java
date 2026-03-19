@@ -76,4 +76,13 @@ public class GameStats {
     private int clamp(int value) {
         return MathUtils.clamp(value, 0, 100);
     }
+
+    public GameStats copy() {
+        GameStats g = new GameStats();
+        g.money = this.getMoney();
+        g.army =this.getArmy();
+        g.people = this.getPeople();
+        g.religion = this.getReligion();
+        return g;
+    }
 }

@@ -172,7 +172,7 @@ public class CardRenderer {
         resources.bodyFont.setColor(0.16f, 0.10f, 0.05f, transform.alpha);
         layout.setText(
             resources.bodyFont,
-            "Urmarile asupra regatului",
+            "",
             resources.bodyFont.getColor(),
             cardWidth - 72f,
             Align.center,
