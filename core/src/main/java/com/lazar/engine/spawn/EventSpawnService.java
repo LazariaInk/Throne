@@ -135,52 +135,63 @@ public class EventSpawnService {
     private float stateWeight(EventDefinition event, GameRunState state) {
         float weight = 1f;
 
+        int religion = state.getStats().getReligion();
+        int people = state.getStats().getPeople();
+        int army = state.getStats().getArmy();
+        int money = state.getStats().getMoney();
+        int turn = state.getTurn();
+
         switch (event.category) {
             case CHURCH_FAITH:
-                if (state.getStats().getReligion() < 35) weight *= 1.8f;
-                if (state.getStats().getReligion() > 75) weight *= 2.2f;
+                if (religion < 35) weight *= 1.8f;
+                if (religion > 75) weight *= 1.8f;
                 break;
 
             case NOBILITY_COURT:
-                if (state.getStats().getArmy() > 70) weight *= 1.4f;
-                if (state.getStats().getMoney() < 30) weight *= 1.2f;
+                if (money < 35) weight *= 1.2f;
+                if (army > 70) weight *= 1.2f;
                 break;
 
             case PEASANTRY_COMMON_FOLK:
-                if (state.getStats().getPeople() < 35) weight *= 1.8f;
-                if (state.getStats().getPeople() > 80) weight *= 1.5f;
+                if (people < 35) weight *= 1.9f;
+                if (people > 80) weight *= 1.3f;
                 break;
 
             case ARMY_WAR:
-                if (state.getStats().getArmy() < 35) weight *= 1.8f;
-                if (state.getStats().getArmy() > 80) weight *= 1.9f;
-                if (state.getStats().getMoney() < 30) weight *= 1.2f;
+                if (army < 35) weight *= 1.9f;
+                if (army > 80) weight *= 1.5f;
+                if (money < 30) weight *= 1.2f;
                 break;
 
             case TREASURY_TRADE:
-                if (state.getStats().getMoney() < 35) weight *= 1.8f;
-                if (state.getStats().getMoney() > 80) weight *= 1.6f;
+                if (money < 35) weight *= 1.9f;
+                if (money > 80) weight *= 1.3f;
                 break;
 
             case JUSTICE_LAW:
-                if (state.getStats().getPeople() < 35) weight *= 1.2f;
+                if (people < 40) weight *= 1.3f;
+                if (army < 35) weight *= 1.1f;
                 break;
 
             case PLAGUE_HEALTH:
-                if (state.getStats().getPeople() < 35) weight *= 2.0f;
+                if (people < 35) weight *= 2.0f;
                 if (state.hasFlag("plague_known")) weight *= 1.7f;
                 break;
 
-            case DIPLOMACY_FOREIGN_POWERS:
-                if (state.getStats().getArmy() < 35) weight *= 1.3f;
+            case DIPLOMACY_FOREIGN:
+                if (army < 35) weight *= 1.3f;
+                if (money < 35) weight *= 1.2f;
                 break;
 
             case OMENS_SUPERSTITION:
-                if (state.getStats().getReligion() > 70) weight *= 1.5f;
+                if (religion > 70) weight *= 1.6f;
+                if (people < 35) weight *= 1.1f;
                 break;
 
             case SUCCESSION_CROWN:
-                if (state.getTurn() > 50) weight *= 1.5f;
+                if (turn > 40) weight *= 1.4f;
+                if (people < 40) weight *= 1.2f;
+                if (army < 40) weight *= 1.2f;
                 break;
         }
 

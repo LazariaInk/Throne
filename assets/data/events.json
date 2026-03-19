@@ -526,6 +526,3398 @@
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       }
+    },
+    {
+      "id": "event_301",
+      "title": "Nobilii cer un nou privilegiu",
+      "description": "Mai multi baroni spun ca pamanturile lor ar trebui sa fie scutite de unele legi regale. Ei vorbesc despre traditii vechi si onoarea coroanei.",
+      "imagePath": "images/events/nobles_privilege.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "COMMON",
+      "arcId": "arc_nobles",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": ["nobles", "privilege", "court"],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Privilegiul este acordat",
+          "text": "Ai lasat baronii sa pastreze o parte mai mare din puterea lor. Curtea te lauda, dar coroana pare mai slaba.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Privilegiul este refuzat",
+          "text": "Ai amintit nobililor ca legea coroanei este mai veche decat orice titlu.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Curtea primeste un raspuns vag",
+          "text": "Nobilii pleaca fara sa stie daca au castigat sau au pierdut.",
+          "religion": -1,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "nobles_empowered" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "nobles_offended" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "court_uncertain" }],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_302",
+      "title": "Baronii ridica propriile garzi",
+      "description": "Unii nobili incep sa adune soldati sub propriile steaguri.",
+      "imagePath": "images/events/noble_guards.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_nobles",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": ["nobles", "army", "power"],
+      "requires": [
+        { "type": "FLAG", "flag": "nobles_empowered", "expected": true }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le permiti sa-si pastreze garzile",
+          "text": "Curtea devine un loc al steagurilor rivale.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": 0
+        },
+        "B": {
+          "title": "Le ordoni sa le desfiinteze",
+          "text": "Ai amintit tuturor cine poarta sabia regatului.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Astepti sa vezi ce se intampla",
+          "text": "Nimeni nu stie daca tronul vegheaza sau doarme.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "noble_private_armies" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "nobles_restrained" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "nobles_ignored" }],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_303",
+      "title": "O alianta de baroni se formeaza",
+      "description": "Mai multi nobili se aduna intr-un pact. Ei spun ca doresc doar stabilitate.",
+      "imagePath": "images/events/noble_alliance.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "RARE",
+      "arcId": "arc_nobles",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": ["nobles", "alliance"],
+      "requires": [
+        { "type": "FLAG", "flag": "noble_private_armies", "expected": true }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Inviti liderii la curte",
+          "text": "Incerci sa legi pactul de tron.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Declari alianta ilegala",
+          "text": "Curtea fierbe de tensiune.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Nu intervii",
+          "text": "Umbra unei ligi nobiliare creste peste regat.",
+          "religion": 0,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "nobles_coopted" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "nobles_defiant" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "noble_league_grows" }],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_304",
+      "title": "Liga nobililor sfideaza coroana",
+      "description": "Baronii refuza sa plateasca taxe si isi inchid portile.",
+      "imagePath": "images/events/noble_revolt.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "CRISIS",
+      "arcId": "arc_nobles",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.3,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": ["nobles", "rebellion"],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Trimiti armata",
+          "text": "Castelele se inchid sub asediu.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -2
+        },
+        "B": {
+          "title": "Negociezi cu liga",
+          "text": "Coroana accepta compromisuri grele.",
+          "religion": 0,
+          "population": 1,
+          "army": -1,
+          "money": -1
+        },
+        "C": {
+          "title": "Astepti",
+          "text": "Fiecare baron devine propriul sau rege.",
+          "religion": 0,
+          "population": -2,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [{ "action": "ADD", "flag": "noble_revolt_crushed" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [{ "action": "ADD", "flag": "noble_compromise" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [{ "action": "ADD", "flag": "realm_fragmenting" }],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_401",
+      "title": "Un astrolog cere loc la curte",
+      "description": "Un barbat in mantie albastra spune ca a citit semnele cerului si ca regatul tau sta pe marginea unei schimbari mari. Episcopul il numeste sarlatan, dar multi nobili il asculta deja.",
+      "imagePath": "images/events/astrologer_court.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "COMMON",
+      "arcId": "arc_prophecy",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "prophecy",
+        "court",
+        "superstition"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Il primesti la curte",
+          "text": "Astrologul primeste o camera aproape de sala tronului. Curtenii soptesc, iar episcopul priveste cu gheata in ochi.",
+          "religion": -1,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Il alungi din cetate",
+          "text": "L-ai trimis dincolo de ziduri. Biserica aproba, dar zvonul creste tocmai fiindca ai vrut sa-l opresti.",
+          "religion": 1,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Il lasi sa vorbeasca doar in piete",
+          "text": "Nu l-ai binecuvantat, dar nici nu l-ai zdrobit. Curtea il dispretuieste, poporul il cauta.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "astrologer_at_court"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "astrologer_banished"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "prophecy_in_streets"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_402",
+      "title": "Se vesteste o stea cu coada",
+      "description": "Cerul noptii este spintecat de o lumina lunga si rece. Curtenii isi fac semnul crucii, iar astrologul spune ca numai tronurile pregatite supravietuiesc.",
+      "imagePath": "images/events/comet_omen.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_prophecy",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "prophecy",
+        "omen",
+        "court"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "astrologer_at_court",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Ordoni ritualuri de purificare",
+          "text": "Ai umplut curtea de fum, psalmi si torte. Oamenii se linistesc putin, dar tezaurul plateste pentru frica lor.",
+          "religion": 1,
+          "population": 1,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Declari ca e doar o piatra pe cer",
+          "text": "Ai ras in fata panicii. Unii te numesc puternic, altii spun ca sfidezi semnele.",
+          "religion": -1,
+          "population": -1,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Il lasi pe astrolog sa talcuiasca semnul",
+          "text": "Ai dat glas unui om care traieste din spaima altora. Curtea asculta si tremura.",
+          "religion": -1,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "omen_purified"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "omen_mocked"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "astrologer_empowered"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_403",
+      "title": "Paznicii spun ca viseaza acelasi vis",
+      "description": "Mai multi oameni ai garzii sustin ca au vazut in somn portile cetatii deschizandu-se singure si un copil fara chip asezandu-se pe tron. Curtea cere raspuns.",
+      "imagePath": "images/events/shared_dream.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "RARE",
+      "arcId": "arc_prophecy",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "prophecy",
+        "dream",
+        "guards"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "astrologer_empowered",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Schimbi garda palatului",
+          "text": "Ai indepartat visatorii si ai pus oameni noi la porti. Palatul rasufla, dar zvonurile ies pe sub usi.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Chemi calugari sa-i asculte",
+          "text": "Ai tratat visul ca pe o rana a sufletului. Biserica se apropie, dar armata se simte judecata.",
+          "religion": 2,
+          "population": 0,
+          "army": -1,
+          "money": -1
+        },
+        "C": {
+          "title": "Te prefaci ca nu ai auzit",
+          "text": "Tacerea ta face visul mai mare decat orice decret. Pana si slujitorii il soptesc.",
+          "religion": -1,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "dreamers_removed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "dreams_sanctified"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "dream_panic"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_404",
+      "title": "Un copil este adus ca ales al semnului",
+      "description": "Tarani, calugari si oameni ai curtii se strang in fata palatului cu un copil mut, despre care spun ca a fost aratat de stea si de vis. Unii cer binecuvantare, altii sange.",
+      "imagePath": "images/events/chosen_child.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "CRISIS",
+      "arcId": "arc_prophecy",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.4,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "prophecy",
+        "child",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Il iei sub protectia coroanei",
+          "text": "Ai inchis copilul intre ziduri si l-ai numit oaspete al tronului. Poporul e impresionat, dar curtea vede o umbra crescand langa tine.",
+          "religion": 1,
+          "population": 2,
+          "army": -1,
+          "money": -1
+        },
+        "B": {
+          "title": "Il dai Bisericii",
+          "text": "Ai lasat altarul sa poarte greutatea semnului. Credinta se intareste, dar multi vor spune ca ai cedat din frica.",
+          "religion": 2,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Risipi multimile cu forta",
+          "text": "Ai spart profetia cu lanci si copite. Linistea se intoarce, insa nu si uitarea.",
+          "religion": -2,
+          "population": -2,
+          "army": 1,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "chosen_child_sheltered"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "chosen_child_consecrated"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "prophecy_bloodied"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_405",
+      "title": "Minele din dealuri se opresc",
+      "description": "Supraveghetorii spun ca loviturile ciocanelor nu mai scot argint, ci doar ecouri seci. Trezorierul transpira, iar negustorii miros slabiciunea.",
+      "imagePath": "images/events/silver_mines.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "COMMON",
+      "arcId": "arc_silver",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "silver",
+        "mines",
+        "money"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Investesti in mine mai adanci",
+          "text": "Ai aruncat aur dupa argintul care poate inca traieste in stanca. Muncitorii te binecuvanteaza, vistieria sughite.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Tai costurile si inchizi galerii",
+          "text": "Ai inchis porti si ai stins focuri. Tezaurul respira, dar satele miniere incep sa urasca tronul.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Astepti sa vezi daca stanca se indura",
+          "text": "Nu ai salvat nimic si nu ai taiat nimic. Nesiguranta patrunde pana in taverne.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "deep_mining_funded"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "galleries_closed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "miners_uncertain"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_406",
+      "title": "Minerii cer paine si iertare de datorii",
+      "description": "Familiile celor din galerii vin la poarta de miazazi. Spun ca fara plata si fara iertare de biruri vor cobori in pamant doar ca sa moara acolo.",
+      "imagePath": "images/events/miners_petition.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_silver",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "silver",
+        "miners",
+        "debt"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "galleries_closed",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le stergi o parte din datorii",
+          "text": "Ai dat satelor miniere o gura de aer. Trezorierul plange pe pergamente.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Le ceri sa rabde pentru regat",
+          "text": "Ai pastrat ordinea cifrelor, dar chipurile din fata portii se intuneca.",
+          "religion": 0,
+          "population": -2,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Promiti o cercetare lunga",
+          "text": "I-ai tinut in frigul curtii cu vorbe care nu umplu nici o masa.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "miners_relieved"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "miners_bitter"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "miners_delayed"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_407",
+      "title": "Se gaseste un filon nou, dar blestemat",
+      "description": "Cei coborati in adanc spun ca au gasit argint bogat, dar si un aer care ucide si statui vechi sapate in piatra. Preotii cer oprirea lucrului.",
+      "imagePath": "images/events/cursed_vein.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "RARE",
+      "arcId": "arc_silver",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.2,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "silver",
+        "curse",
+        "mine"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "deep_mining_funded",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Continui exploatarea cu orice pret",
+          "text": "Ai ales bogatia din piatra in locul fricii. Argintul urca, sicriele la fel.",
+          "religion": -1,
+          "population": -2,
+          "army": 0,
+          "money": 2
+        },
+        "B": {
+          "title": "Sigilezi galeria si chemi clerul",
+          "text": "Ai inchis comoara sub rugaciuni si lacate. Credinta se intareste, negustorii ofteaza.",
+          "religion": 2,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Lasati minerii sa aleaga singuri",
+          "text": "Ai lasat frica si foamea sa negocieze fara tine. Nimeni nu te uita pentru asta.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "cursed_vein_worked"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "cursed_vein_sealed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mine_fear_spreads"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_408",
+      "title": "Galeria mare se prabuseste",
+      "description": "Pamantul a inghitit oameni, carute si lampi. Satele miniere urla la portile tale, iar vistieria asteapta sa vada daca vei salva trupuri sau aur.",
+      "imagePath": "images/events/mine_collapse.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "CRISIS",
+      "arcId": "arc_silver",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.3,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "silver",
+        "collapse",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Trimiti salvatori si provizii",
+          "text": "Ai ales vietile, chiar daca aurul va intarzia. Poporul te priveste altfel.",
+          "religion": 1,
+          "population": 2,
+          "army": -1,
+          "money": -2
+        },
+        "B": {
+          "title": "Inchizi zona si pazesti comoara",
+          "text": "Ai aparat ce a ramas din mine, nu pe cei ingropati in ea. Randuiala sta in picioare, inimile nu.",
+          "religion": -1,
+          "population": -2,
+          "army": 1,
+          "money": 1
+        },
+        "C": {
+          "title": "Lasi stapanii minelor sa raspunda",
+          "text": "Ai impins povara spre altii. Nobilii si negustorii se cearta peste morti.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "miners_saved"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mine_hoard_protected"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mine_blame_scattered"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_409",
+      "title": "Solii de peste mare aduc daruri bogate",
+      "description": "O delegatie dintr-un regat indepartat soseste cu mirodenii, matase si zambete prea bine invatate. Ei vor un tratat de comert si un loc in porturile tale.",
+      "imagePath": "images/events/foreign_envoys.png",
+      "category": "DIPLOMACY_FOREIGN",
+      "rarity": "COMMON",
+      "arcId": "arc_foreign_trade",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "foreign",
+        "trade",
+        "envoys"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le deschizi porturile",
+          "text": "Ai ales aurul adus de valuri. Negustorii jubileaza, iar mestesugarii tai devin nelinistiti.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": 2
+        },
+        "B": {
+          "title": "Le oferi doar gazduire temporara",
+          "text": "Ai amanat mana intinsa fara sa o tai de tot. Toata lumea asteapta urmatoarea mutare.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Ii trimiti inapoi cu politeuri reci",
+          "text": "Ai pazit pamantul de influente straine. Porturile tale raman ale tale, dar pungile lor pleaca spre alt rege.",
+          "religion": 1,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_ports_opened"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_trade_delayed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_envoys_rebuffed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_410",
+      "title": "Breslele oraselor se plang de concurenta straina",
+      "description": "Stofarii, fierarii si negustorii vechi ai cetatilor spun ca marfurile noi le ruineaza munca. Ei cer taxe mari sau interdictii clare.",
+      "imagePath": "images/events/guild_complaint.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_foreign_trade",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "trade",
+        "guilds",
+        "foreign"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "foreign_ports_opened",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Impui taxe vamale",
+          "text": "Ai pastrat comertul, dar i-ai pus pinteni. Breslele rasufla, strainii zambesc mai putin.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 1
+        },
+        "B": {
+          "title": "Aperi piata libera",
+          "text": "Ai ales belsugul din porturi in locul orgoliului breslelor. Orasul castiga, atelierele scrasnesc.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Promiti o hotarare mai tarziu",
+          "text": "Ai pastrat pacea pentru o zi si ai cumparat manie pentru alta.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_tariffs_set"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "free_trade_defended"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "guilds_unsatisfied"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_411",
+      "title": "Un vas strain este prins desenand fortul din port",
+      "description": "Garzile spun ca marinarii straini au masurat zidurile si au desenat turnurile. Solii jura ca era doar o curiozitate de negustori.",
+      "imagePath": "images/events/port_spies.png",
+      "category": "DIPLOMACY_FOREIGN",
+      "rarity": "RARE",
+      "arcId": "arc_foreign_trade",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.4,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "trade",
+        "spies",
+        "port"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "free_trade_defended",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Confisti corabia si arestezi echipajul",
+          "text": "Ai aratat ca porturile tale nu sunt nevandute. Comertul ingheata pentru o clipa, respectul creste.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Accepti explicatia solilor",
+          "text": "Ai ales pacea drumurilor de apa. Unii vad intelepciune, altii slabiciune.",
+          "religion": 0,
+          "population": 1,
+          "army": -1,
+          "money": 1
+        },
+        "C": {
+          "title": "Ii urmaresti in taina",
+          "text": "Ai lasat corabia sa plece sub ochi ascunsi. Adevarul poate veni mai tarziu, dar si primejdia.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_ship_seized"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_spies_excused"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_spies_shadowed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_412",
+      "title": "Flota straina ancoreaza prea aproape de tarm",
+      "description": "La rasarit se vad vele multe si ordonate. Solii spun ca sunt doar escorte comerciale, dar oamenii din port isi ascund copiii in pivnite.",
+      "imagePath": "images/events/foreign_fleet.png",
+      "category": "DIPLOMACY_FOREIGN",
+      "rarity": "CRISIS",
+      "arcId": "arc_foreign_trade",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.5,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "foreign",
+        "fleet",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Mobilizezi portul si arcasii",
+          "text": "Ai raspuns valurilor cu fier. Comertul se opreste, dar nimeni nu iti mai rade de hotare.",
+          "religion": 0,
+          "population": -1,
+          "army": 2,
+          "money": -2
+        },
+        "B": {
+          "title": "Trimiti o delegatie cu daruri si avertismente",
+          "text": "Ai ales vorba inaintea sagetii. Tensiunea scade, dar numai daca vor si ei sa scada.",
+          "religion": 0,
+          "population": 1,
+          "army": -1,
+          "money": -1
+        },
+        "C": {
+          "title": "Lasi negustorii sa trateze",
+          "text": "Ai pus pungile orasului intre tine si tunetele marii. Daca pacea vine, nu va fi din demnitate.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "port_mobilized"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "fleet_parleyed"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "merchants_handle_threat"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_413",
+      "title": "O manastire veche cere ocrotire regala",
+      "description": "Abatele unei manastiri din munti spune ca pelerinii aduc aur si faima, dar talharii si un nobil lacom le strang cercul. El cere sigiliul si sabia coroanei.",
+      "imagePath": "images/events/monastery_protection.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "COMMON",
+      "arcId": "arc_monastery",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "church",
+        "monastery",
+        "protection"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Pui manastirea sub pavaza coroanei",
+          "text": "Ai trimis sigiliu, judecatori si o mica garda. Calugarii canta numele tau, iar nobilul local se incrunta.",
+          "religion": 2,
+          "population": 0,
+          "army": -1,
+          "money": -1
+        },
+        "B": {
+          "title": "Las-o sub grija episcopiei",
+          "text": "Ai pastrat mana coroanei departe. Biserica primeste raspunderea, tu pastrezi distanta.",
+          "religion": 1,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Ceri taxa in schimbul ocrotirii",
+          "text": "Ai amestecat altarul cu registrul de plata. Manastirea poate plati, dar nu va uita.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "monastery_crowned"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "monastery_delegated"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "monastery_taxed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_414",
+      "title": "Un nobil ridica pretentii asupra pamantului sfant",
+      "description": "Stapanul tinutului spune ca padurea, izvorul si drumul pelerinilor sunt ale neamului sau din vremuri vechi. Abatele arata hrisoave si oseminte de sfinti.",
+      "imagePath": "images/events/holy_land_claim.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_monastery",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "church",
+        "nobles",
+        "land"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "monastery_crowned",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Confirmi dreptul manastirii",
+          "text": "Ai taiat pretentiile nobilului in numele sfinteniei. Clerul te lauda, curtea feudala scrasneste.",
+          "religion": 2,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        },
+        "B": {
+          "title": "Impaci partile prin impartirea veniturilor",
+          "text": "Ai vandut pacea in bucati. Nimeni nu e multumit, dar nimeni nu pleaca fara ceva.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Dai castig de cauza nobilului",
+          "text": "Ai pus sabia deasupra relicvelor. Manastirea tace, dar numai cu gura.",
+          "religion": -2,
+          "population": -1,
+          "army": 1,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_land_secured"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_land_shared"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_land_seized"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_415",
+      "title": "Pelerinii aduc povesti despre minuni si jafuri",
+      "description": "Drumul spre manastire e plin de bolnavi, negustori de relicve, calugari sinceri si hoti in haine de rugaciune. Faima locului creste mai repede decat ordinea.",
+      "imagePath": "images/events/pilgrim_chaos.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "RARE",
+      "arcId": "arc_monastery",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "church",
+        "pilgrims",
+        "bandits"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "holy_land_shared",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Trimiti judecatori si oaste pe drum",
+          "text": "Ai impus randuiala intre mir si noroi. Pelerinii ajung mai sigur, dar tronul plateste drumul.",
+          "religion": 1,
+          "population": 1,
+          "army": -1,
+          "money": -1
+        },
+        "B": {
+          "title": "Lasi manastirea sa se gospodareasca singura",
+          "text": "Ai pazit coroana de costuri, nu drumul de nelegiuiri.",
+          "religion": -1,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Taxezi pelerinii pentru paza",
+          "text": "Ai transformat evlavia in drum cu plata. Banii vin, cinstea nu neaparat.",
+          "religion": -1,
+          "population": 0,
+          "army": 0,
+          "money": 2
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "pilgrim_roads_guarded"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "pilgrim_roads_neglected"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "pilgrims_taxed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_416",
+      "title": "Mormantul sfant este gasit gol",
+      "description": "In zori, altarul lateral al manastirii este deschis, iar relicva cea mare a disparut. Pelerinii urla despre sacrilegiu, nobilul local despre inscenare, calugarii despre judecata cereasca.",
+      "imagePath": "images/events/relic_stolen.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "CRISIS",
+      "arcId": "arc_monastery",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.4,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "church",
+        "relic",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Inchizi manastirea si cauti hotul",
+          "text": "Ai pus lacate pe rugaciune ca sa salvezi credinta. Ordinea revine, pelerinii gem la porti.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Declari ca relicva a fost luata la cer",
+          "text": "Ai ales o minune in locul unei anchete. Credinta se aprinde, dar adevarul fuge de tine.",
+          "religion": 2,
+          "population": 1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Invinovatesti nobilul si ii confisti averea",
+          "text": "Ai gasit repede un vinovat si un cufar plin. Multi aplauda, multi se tem ca maine urmeaza ei.",
+          "religion": 1,
+          "population": 0,
+          "army": 1,
+          "money": 2
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "relic_hunt_begins"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "relic_ascension_declared"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "noble_blamed_for_relic"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_417",
+      "title": "Capitanul cere solda restanta",
+      "description": "Veteranii de la granita au servit in ploaie, noroi si frig, iar acum lovesc cu pumnii in usile cazarmii. Capitanul spune ca loialitatea flamanzii nu tine mult.",
+      "imagePath": "images/events/unpaid_soldiers.png",
+      "category": "ARMY_WAR",
+      "rarity": "COMMON",
+      "arcId": "arc_mercenaries",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "army",
+        "soldiers",
+        "pay"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Platesti solda din rezerva coroanei",
+          "text": "Ai cumparat liniste cu aur greu. Oastea isi tine sabia, vistieria isi tine respiratia.",
+          "religion": 0,
+          "population": 0,
+          "army": 2,
+          "money": -2
+        },
+        "B": {
+          "title": "Le promiti pamant in loc de bani",
+          "text": "Ai schimbat aurul lipsa pe pamant viitor. Unii soldati viseaza deja garduri, altii numai prada.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Le ceri rabdare pentru binele regatului",
+          "text": "Ai intins o rugaminte peste o datorie. Sabiile nu iubesc predicile.",
+          "religion": 0,
+          "population": 0,
+          "army": -2,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "soldiers_paid"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "land_promised_to_soldiers"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "soldiers_resentful"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_418",
+      "title": "Mercenarii straini cer sa fie angajati",
+      "description": "O companie cu scuturi negre ofera sabii bune si ascultare rece, dar cere plata mare si dreptul de a-si judeca singura oamenii.",
+      "imagePath": "images/events/black_company.png",
+      "category": "ARMY_WAR",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_mercenaries",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "army",
+        "mercenaries",
+        "foreign"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "soldiers_resentful",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Ii angajezi pentru un an",
+          "text": "Ai pus fier strain intre tron si propriii tai oameni. Siguranta creste, increderea scade.",
+          "religion": 0,
+          "population": -1,
+          "army": 2,
+          "money": -2
+        },
+        "B": {
+          "title": "Refuzi si mizezi pe trupele tale",
+          "text": "Ai ales mandria oastei regatului. Daca ea cade, vei cadea cu ea.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 1
+        },
+        "C": {
+          "title": "Ii platesti sa pazeasca doar drumurile",
+          "text": "Ai cumparat o sabie cu jumatate de teaca. Destul cat sa strice pacea, prea putin cat sa-ti asigure somnul.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mercenaries_hired"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mercenaries_refused"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mercenaries_limited"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_419",
+      "title": "Satul promis veteranilor refuza sa plece",
+      "description": "Taranii de pe mosia aleasa pentru rasplata armatei spun ca nu au unde merge. Veteranii, care si-au numarat deja ogoarele, se aduna cu topoare si acte de slujba.",
+      "imagePath": "images/events/veteran_settlement.png",
+      "category": "ARMY_WAR",
+      "rarity": "RARE",
+      "arcId": "arc_mercenaries",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "army",
+        "veterans",
+        "peasants"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "land_promised_to_soldiers",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Muti taranii cu despagubiri",
+          "text": "Ai tinut juramantul fata de oaste, dar cu un pret greu si lacrimi pe drum.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -2
+        },
+        "B": {
+          "title": "Rupi promisiunea facuta veteranilor",
+          "text": "Ai salvat satul si ai ranit onoarea sabiei. Soldatii nu uita astfel de rani.",
+          "religion": 0,
+          "population": 1,
+          "army": -2,
+          "money": 0
+        },
+        "C": {
+          "title": "Ii obligi sa imparta pamantul",
+          "text": "Ai presat doua mizerii sa incapa in acelasi hotar. Poate creste pace, poate numai ura.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "veterans_settled"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "veterans_betrayed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "land_shared_by_force"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_420",
+      "title": "Oastea se strange sub steaguri nelinistite",
+      "description": "In tabere se beau juraminte noi, iar vechile juraminte sunt puse sub semn. Unii soldati cer dreptate, altii solda, altii doar un motiv sa-si scoata sabiile din teaca.",
+      "imagePath": "images/events/army_muster_crisis.png",
+      "category": "ARMY_WAR",
+      "rarity": "CRISIS",
+      "arcId": "arc_mercenaries",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.5,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "army",
+        "mutiny",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Te duci singur in tabara",
+          "text": "Ai intrat intre focuri si ai vorbit cu chipul descoperit. Curajul poate stinge flacara sau poate hrani flacara cea mare.",
+          "religion": 0,
+          "population": 1,
+          "army": 1,
+          "money": 0
+        },
+        "B": {
+          "title": "Izolezi capii si trimiti mercenarii",
+          "text": "Ai raspuns necredintei cu sabii fara radacini. Tabara tace, dar tacerea are dinti.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Anunti o plata viitoare si o amnistie",
+          "text": "Ai cumparat timp cu promisiuni. Uneori timpul e rege, alteori doar amanarea caderii.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "army_faced_by_king"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mutiny_cut_down"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "mutiny_postponed"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_421",
+      "title": "Padurea regelui se strange sub topor",
+      "description": "Vanatorii si padurarii spun ca arborii mari cad prea repede, iar lemnul dispare pe drumuri de noapte. Unii arata spre sate, altii spre nobili.",
+      "imagePath": "images/events/royal_forest.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "COMMON",
+      "arcId": "arc_forest",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "forest",
+        "peasants",
+        "nobles"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Interzici taierea fara sigiliu regal",
+          "text": "Ai inchis padurea sub lege. Vanatul si lemnul raman, dar satele murmura in frig.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        },
+        "B": {
+          "title": "Permiti satelor sa ia lemn cu masura",
+          "text": "Ai dat oamenilor foc in vetre si aer pe iarna. Padurea pierde putin, tronul castiga rasuflare.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Vinzi dreptul de exploatare unui baron",
+          "text": "Ai facut aur din copaci pe care nici nu i-ai numarat. Cand padurea va geme, numele tau va fi pe secure.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": 2
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_restricted"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_shared_with_peasants"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_leased_to_baron"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_422",
+      "title": "Braconierii sunt prinsi cu un cerb alb",
+      "description": "Padurarii aduc in lanturi trei oameni slabiti si un cerb de o albeata ciudata, pe care multi il socotesc semn rau daca este varsat sangele lui.",
+      "imagePath": "images/events/white_stag_poachers.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_forest",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "forest",
+        "poachers",
+        "omen"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "forest_restricted",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Ii spanzuri si consacri locul",
+          "text": "Ai ales legea si frica. Padurea tace, dar nu neaparat din pace.",
+          "religion": 1,
+          "population": -2,
+          "army": 0,
+          "money": 0
+        },
+        "B": {
+          "title": "Ii ierti si eliberezi cerbul",
+          "text": "Ai pus mila deasupra randuielii. Satele te lauda, padurarii iti numara slabiciunile.",
+          "religion": 1,
+          "population": 2,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Ii trimiti la munca in slujba coroanei",
+          "text": "Ai schimbat sangele pe sudoare. Nimeni nu canta, nimeni nu jeleste prea tare.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "poachers_hanged"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "white_stag_released"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "poachers_conscripted"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_423",
+      "title": "Sate intregi intra in padure noaptea",
+      "description": "Focurile lor se vad printre copaci ca niste ochi rosii. Oamenii spun ca nu fura, ci iau numai ce iarna le cere si ce nobilii le-au luat inainte.",
+      "imagePath": "images/events/forest_night_raids.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_forest",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "forest",
+        "peasants",
+        "unrest"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "forest_leased_to_baron",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Rupi contractul cu baronul",
+          "text": "Ai taiat o intelegere profitabila ca sa opresti o rana mai mare. Satele te binecuvanteaza, baronul te invinovateste.",
+          "religion": 0,
+          "population": 2,
+          "army": -1,
+          "money": -2
+        },
+        "B": {
+          "title": "Trimiti strajile sa curete padurea",
+          "text": "Ai raspuns fumului cu fier. Lemnul ramane al coroanei, iar satele invata ura.",
+          "religion": 0,
+          "population": -2,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Tolerezi furtul cat tine iarna",
+          "text": "Ai ales mila pe ascuns si legea pe jumatate. Daca vei fi iertat, nu va fi de toti.",
+          "religion": 0,
+          "population": 1,
+          "army": -1,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_lease_broken"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_raids_crushed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_theft_tolerated"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_424",
+      "title": "Padurea regelui arde pe trei coline",
+      "description": "Vantul duce scantei dintr-un deal in altul, iar focul mananca stejari, colibe si stane. Unii spun ca e razbunarea naturii, altii a oamenilor.",
+      "imagePath": "images/events/forest_fire.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "CRISIS",
+      "arcId": "arc_forest",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.4,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "forest",
+        "fire",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Mobilizezi tot regatul pentru stingere",
+          "text": "Ai chemat sat, manastire si oaste la aceeasi galeata. Focul musca inca, dar regatul simte o singura porunca.",
+          "religion": 1,
+          "population": 1,
+          "army": -1,
+          "money": -2
+        },
+        "B": {
+          "title": "Salvezi doar satele si lasi padurea sa cada",
+          "text": "Ai ales oamenii in locul lemnului si vanatului. O paguba mare, un pacat mai mic.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Pazesti drumurile si lasi focul sa-si termine foamea",
+          "text": "Ai salvat ordinea, nu radacina. Cenusa va vorbi despre tine mult timp.",
+          "religion": -1,
+          "population": -2,
+          "army": 1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_fire_fought"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "villages_saved_forest_lost"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "forest_burned_unchecked"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_501",
+      "title": "Un pretendent isi arata pecetea",
+      "description": "Un tanar nobil soseste la curte cu o pecete veche, martori batrani si o poveste despre un drept uitat asupra tronului. Unii rad, altii isi pleaca deja urechea spre el.",
+      "imagePath": "images/events/claimant_seal.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "COMMON",
+      "arcId": "arc_claimant",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "claimant",
+        "court",
+        "succession"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Il primesti si ii asculti cauza",
+          "text": "Ai deschis usa unui om care poate fi doar nebun sau inceputul unei furtuni. Curtea iti lauda calmul, dar si zvonul capata scaun.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        },
+        "B": {
+          "title": "Ii rupi pretentia in fata tuturor",
+          "text": "Ai lovit repede si tare. Tronul pare neclintit, dar unii iubesc mai mult martirii decat regii.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Il trimiti intr-o manastire pana la lamurire",
+          "text": "Ai ales sa-l scoti din sala, nu si din mintea oamenilor. Tacerea poate fi lespede sau incubator.",
+          "religion": 1,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_heard"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_humiliated"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_secluded"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_502",
+      "title": "Cantaretii de drum ii canta numele",
+      "description": "In taverne si la targuri apare un cantec nou despre sange drept, stea ratacita si tronul care isi asteapta stapanul adevarat. Canteretii jura ca doar vand versuri, nu razvratire.",
+      "imagePath": "images/events/claimant_ballad.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_claimant",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "claimant",
+        "ballads",
+        "rumor"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "claimant_humiliated",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Interzici cantecul sub pedeapsa",
+          "text": "Ai vrut sa tai limba zvonului. El sangereaza putin, dar se inmulteste in soapte.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": 0
+        },
+        "B": {
+          "title": "Platesti cantareti sa cante despre tine",
+          "text": "Ai raspuns povestii cu alta poveste. Curtea zambeste, vistieria ofteaza, iar poporul decide singur ce refren tine minte.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Lasi cantecul sa se stinga singur",
+          "text": "Ai ales sa dispretuiesti un foc mic. Uneori el moare in cenusa, alteori gaseste uscaciune.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_song_banned"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "royal_song_spread"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_song_ignored"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_503",
+      "title": "Un castel mic isi inchide portile in numele lui",
+      "description": "Stapanul unei cetati de margine refuza sa mai primeasca dregatori regali si spune ca asteapta porunca mostenitorului adevarat. Vamesii tai stau afara in ploaie.",
+      "imagePath": "images/events/claimant_castle.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "RARE",
+      "arcId": "arc_claimant",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "claimant",
+        "castle",
+        "rebellion"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "claimant_song_ignored",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Asediezi cetatea imediat",
+          "text": "Ai ales sa zdrobesti samanta inainte sa devina padure. Fierul costa, dar nepasarea ar costa mai mult.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -2
+        },
+        "B": {
+          "title": "Promiti iertare daca deschid portile",
+          "text": "Ai lasat mila sa mearga inaintea tunetului. Poate intoarce oameni, dar si incuraja incercari noi.",
+          "religion": 0,
+          "population": 1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Trimiti spioni, nu osti",
+          "text": "Ai vrut sa cunosti radacina inainte sa lovesti trunchiul. Adevarul vine mai incet decat o flacara.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_castle_besieged"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_pardon_offered"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_spied_on"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_504",
+      "title": "Pretendentul este ridicat pe scut",
+      "description": "La marginea regatului, oameni inarmați, cativa preoti si mai multi nobili neinsemnati l-au ridicat pe tanar pe un scut si i-au jurat credinta. Acum are chip, steag si nume strigat cu voce tare.",
+      "imagePath": "images/events/claimant_raised.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "CRISIS",
+      "arcId": "arc_claimant",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.5,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "claimant",
+        "usurper",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Pornesti o campanie de nimicire",
+          "text": "Ai ales sa raspunzi coroanei false cu toata greutatea celei adevarate. Daca vei castiga, vei domni peste o rana adanca.",
+          "religion": 0,
+          "population": -2,
+          "army": 2,
+          "money": -2
+        },
+        "B": {
+          "title": "Propui casatorie si impacare de sange",
+          "text": "Ai incercat sa inghiti otrava ca pe un leac. Unii vor vedea intelepciune, altii capitulare.",
+          "religion": 1,
+          "population": 1,
+          "army": -1,
+          "money": -1
+        },
+        "C": {
+          "title": "Chemi Biserica sa-l anathematizeze",
+          "text": "Ai pus altarul intre tine si sabia lui. Daca sufletele il parasesc, trupurile il vor urma poate.",
+          "religion": 2,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_war_declared"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_blood_compromise"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "claimant_anathematized"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_505",
+      "title": "Ciuma oilor urca dinspre pasuni",
+      "description": "Pastorii spun ca turma cade intr-o zi cat pentru o iarna rea. Langa stane se ard carcase, iar targurile incep sa miroasa a spaima si a piei stricate.",
+      "imagePath": "images/events/sheep_plague.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "COMMON",
+      "arcId": "arc_sheep_plague",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "plague",
+        "sheep",
+        "peasants"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Inchizi targurile de animale",
+          "text": "Ai oprit drumul bolii, dar si drumul banilor. Pastorii plang, dregatorii aproba.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Lasi schimburile sa continue",
+          "text": "Ai ales painea de azi in fata fricii de maine. Daca boala calatoreste, va calatori pe sub sigiliul tau.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Chemi preoti si tamaduitori in pasuni",
+          "text": "Ai raspuns cu rugaciune si ierburi unei morti care poate asculta doar focul. Oamenii se simt vazuti, nu neaparat salvati.",
+          "religion": 1,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "livestock_markets_closed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "livestock_trade_open"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "shepherds_blessed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_506",
+      "title": "Macelarii ascund boala sub sare",
+      "description": "Se spune ca in orase se vinde carne din turme bolnave, sarata bine si binecuvantata prost. Negustorii jura ca-i calomnie, dar poporul incepe sa miroasa moarte in supa.",
+      "imagePath": "images/events/salted_meat_scandal.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_sheep_plague",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "plague",
+        "meat",
+        "guilds"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "livestock_trade_open",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Pecetluiesti macelariile suspecte",
+          "text": "Ai inchis usi si ai deschis scandaluri. Oamenii se simt aparati, breslele te socotesc dusman.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Ceri doar inspectii si amenzi",
+          "text": "Ai ales mana usoara pe un gat poate putred. Poti pastra comertul, dar nu si increderea deplina.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        },
+        "C": {
+          "title": "Negi zvonurile ca sa eviti panica",
+          "text": "Ai acoperit o masa urata cu o fata de masa frumoasa. Daca putreziciunea iese, va iesi mai tare.",
+          "religion": -1,
+          "population": -2,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "butchers_sealed"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "meat_inspections_ordered"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "plague_denied"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_507",
+      "title": "Ciobanii coboara flamanzi spre cetati",
+      "description": "Turmele au murit, datoriile nu. Pastorii isi vand uneltele, isi duc copiii de mana si cer fie munca, fie mila. Portile oraselor se umfla de lume.",
+      "imagePath": "images/events/shepherd_refugees.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_sheep_plague",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "plague",
+        "shepherds",
+        "migration"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "livestock_markets_closed",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le dai lucru la drumuri si poduri",
+          "text": "Ai schimbat mila in munca si foamea in datorie catre coroana. Costisitor, dar curat.",
+          "religion": 0,
+          "population": 2,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Ii impingi inapoi spre pasuni",
+          "text": "Ai pastrat orasele linistite si campiile disperate. Foamea merge prost pe jos, dar merge.",
+          "religion": 0,
+          "population": -2,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Lasi cetatile sa se descurce singure",
+          "text": "Ai rupt legatura dintre tron si poarta. Orasele vor tine minte cine i-a lasat sa aleaga singure intre mila si teama.",
+          "religion": 0,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "shepherds_employed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "shepherds_driven_off"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "city_gates_abandoned"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_508",
+      "title": "Foamea aprinde targul de lana",
+      "description": "In orasul unde se vindea candva cea mai buna lana, hambarele ard, breslele se inarmeaza, iar ciobanii disperați sparg depozite in cautare de hrana si dreptate.",
+      "imagePath": "images/events/wool_market_riot.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "CRISIS",
+      "arcId": "arc_sheep_plague",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.4,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "plague",
+        "riot",
+        "wool"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Trimiti garda si restabilesti ordinea",
+          "text": "Ai pus fier peste o piata flamanda. Negustorii iti multumesc, mamele nu.",
+          "religion": 0,
+          "population": -2,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Deschizi provizii si ierti unele datorii",
+          "text": "Ai incercat sa stingi focul cu paine si iertare. Scump, dar mai bland decat cenusa.",
+          "religion": 1,
+          "population": 2,
+          "army": -1,
+          "money": -2
+        },
+        "C": {
+          "title": "Lasati breslele sa negocieze cu multimea",
+          "text": "Ai pus pungile in fata furiei. Daca va fi pace, va fi cumparata, nu castigata.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "wool_riot_crushed"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "wool_riot_appeased"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "wool_riot_bargained"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_509",
+      "title": "Mesterii ceasului cer turn si bronz",
+      "description": "Doi mesteri veniti din tari de departe arata o roata dintata ce poate masura orele fara calugar si fara soare. Ei cer un turn in cetate, bronz mult si protectia ta.",
+      "imagePath": "images/events/clockmakers.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "COMMON",
+      "arcId": "arc_clocktower",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "clock",
+        "craft",
+        "city"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le finantezi turnul",
+          "text": "Ai ales noutatea si prestigiul. Orasul viseaza mare, vistieria viseaza mai putin.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": -2
+        },
+        "B": {
+          "title": "Le ceri sa lucreze pentru breasla locala",
+          "text": "Ai legat mintea lor de obiceiurile cetatii. Poate iesi lucru trainic sau doar invidie mestesugareasca.",
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Ii refuzi ca pe o frivolitate scumpa",
+          "text": "Ai aparat punga de minuni mecanice. Unii iti spun cumpatat, altii orb la vremuri noi.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clocktower_funded"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clockmakers_guild_bound"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clockmakers_refused"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_510",
+      "title": "Clopotele se plang de noua masina",
+      "description": "Preotii spun ca ceasul va fura timpul de la manastiri si va da orasului o inima de metal. Mesterii raspund ca Dumnezeu nu se teme de rotite.",
+      "imagePath": "images/events/clock_vs_bells.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_clocktower",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "clock",
+        "church",
+        "city"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "clocktower_funded",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Asezi ceasul sub binecuvantarea Bisericii",
+          "text": "Ai uns noutatea cu ulei sfant. Clerul ofteaza, dar nu mai poate spune ca e o fiara fara altar.",
+          "religion": 1,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Spui ca orasul va bate orele lui",
+          "text": "Ai ridicat cetatea alaturi de clopot, nu sub el. Mesterii te iubesc, preotii te masoara rece.",
+          "religion": -1,
+          "population": 1,
+          "army": 0,
+          "money": 0
+        },
+        "C": {
+          "title": "Amani lucrarile pana la pace intre parti",
+          "text": "Ai oprit rotile inainte sa porneasca. Toti castiga timp si toti pierd avantul.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clock_consecrated"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clock_declared_civic"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clock_work_delayed"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_511",
+      "title": "Ucenicii mesterilor se bat pe schele",
+      "description": "Breasla locala si oamenii straini isi sparg unii altora uneltele, iar pe jumatate de turn spanzura acum funii taiate si orgolii intregi. Orasul rade, apoi se teme.",
+      "imagePath": "images/events/clocktower_scaffold_fight.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "RARE",
+      "arcId": "arc_clocktower",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.2,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "clock",
+        "guild",
+        "violence"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "clockmakers_guild_bound",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Alegi mesterii straini si alungi breasla",
+          "text": "Ai pus lucrarea mai presus de mandria orasului. Ceasul poate urca mai repede, pacea nu.",
+          "religion": 0,
+          "population": -1,
+          "army": 0,
+          "money": 0
+        },
+        "B": {
+          "title": "Dai lucrarea breslei locale",
+          "text": "Ai mangaiat orgoliul cetatii, dar ai riscat sa faci din minune o copie greoaie.",
+          "religion": 0,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Pui garda sa supravegheze ambele tabere",
+          "text": "Ai cumparat disciplina pentru un santier care voia inspiratie. Fierul pazeste, dar nu construieste.",
+          "religion": 0,
+          "population": 0,
+          "army": -1,
+          "money": -1
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "foreign_clockmasters_chosen"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "local_guild_chosen"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clocktower_guarded"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_512",
+      "title": "Turnul suna in miez de noapte fara maini omenesti",
+      "description": "Inainte de sfintire ori inaugurare, clopotul nou bate singur de treisprezece ori. Oamenii ies in camasi de noapte, preotii soptesc despre semn, iar mesterii despre sabotaj.",
+      "imagePath": "images/events/clocktower_midnight.png",
+      "category": "NOBILITY_COURT",
+      "rarity": "CRISIS",
+      "arcId": "arc_clocktower",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.3,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "clock",
+        "omen",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Deschizi turnul si arati mecanismul tuturor",
+          "text": "Ai raspuns fricii cu roti, axe si maini murdare de ulei. Adevarul convinge unii, pe ceilalti doar ii jigneste.",
+          "religion": -1,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "B": {
+          "title": "Chemi clerul sa exorcizeze locul",
+          "text": "Ai pus tamaie peste bronz si rugaciune peste zgomot. Orasul se linisteste, mesterii se simt scuipati.",
+          "religion": 2,
+          "population": 1,
+          "army": 0,
+          "money": -1
+        },
+        "C": {
+          "title": "Darami partea superioara a turnului",
+          "text": "Ai ales sa omori mandria orasului ca sa ingropi teama. Sigur, brutal si imposibil de uitat.",
+          "religion": 0,
+          "population": -2,
+          "army": 1,
+          "money": -2
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clocktower_explained"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clocktower_exorcised"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "clocktower_broken"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "event_513",
+      "title": "Un cavaler se intoarce cu ramasitele unui steag sfant",
+      "description": "Un om ars de soare si razboi cade in genunchi in fata tronului si depune o bucata rupta de stindard sfant. El spune ca fratii sai au murit departe, iar juramantul lor cere raspuns.",
+      "imagePath": "images/events/holy_banner_return.png",
+      "category": "ARMY_WAR",
+      "rarity": "COMMON",
+      "arcId": "arc_holy_banner",
+      "arcStage": "SEED",
+      "crisisBias": 0.0,
+      "cooldownTurns": 3,
+      "baseWeight": 1.0,
+      "tags": [
+        "holy",
+        "banner",
+        "knights"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Ridici steagul in sala tronului",
+          "text": "Ai adus rana aceea de departe in inima curtii. Credinta se inflameaza, pacea nu.",
+          "religion": 2,
+          "population": 0,
+          "army": 1,
+          "money": 0
+        },
+        "B": {
+          "title": "Il trimiti la altar, nu la tron",
+          "text": "Ai mutat povara spre sfinti si preoti. Curtea respira, cavalerii se simt poate tradati.",
+          "religion": 1,
+          "population": 0,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Ascunzi relicva ca sa eviti febra",
+          "text": "Ai ales linistea palatului in fata memoriei sabiei. Ceea ce ascunzi de oameni, ei vor invata sa viseze.",
+          "religion": -1,
+          "population": -1,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_displayed"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_enshrined"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_hidden"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_514",
+      "title": "Tinerii nobili cer o campanie sfanta",
+      "description": "Fiii baronilor se aduna in zale lustruite si cer sa fie lasati sa spele rusinea vechii infrangeri cu sange nou. Batranii vad glorie, vistieria vede morminte scumpe.",
+      "imagePath": "images/events/young_lords_crusade.png",
+      "category": "ARMY_WAR",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_holy_banner",
+      "arcStage": "COMMITMENT",
+      "crisisBias": 0.0,
+      "cooldownTurns": 4,
+      "baseWeight": 1.0,
+      "tags": [
+        "holy",
+        "nobles",
+        "war"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "holy_banner_displayed",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Le dai binecuvantare si oameni",
+          "text": "Ai deschis poarta unei glorii posibile si a unei hemoragii sigure. Curtea jubileaza, satele incep sa numere fiii.",
+          "religion": 1,
+          "population": -1,
+          "army": -1,
+          "money": -2
+        },
+        "B": {
+          "title": "Le ordoni sa apere doar hotarele tale",
+          "text": "Ai intors ravna spre folosul apropiat. Cei inflacarati iti spun mic, cei isteti iti spun rege.",
+          "religion": 0,
+          "population": 0,
+          "army": 1,
+          "money": 0
+        },
+        "C": {
+          "title": "Interzici chemarea la arme",
+          "text": "Ai stins o flacara deodata. Ea poate muri sau poate cauta paie in alta parte.",
+          "religion": -1,
+          "population": 1,
+          "army": -1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_expedition_blessed"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_fervor_redirected"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_fervor_forbidden"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_515",
+      "title": "Pelerinii inarmati jefuiesc in numele steagului",
+      "description": "Pe drumurile regatului apar grupuri care poarta semnul sfant, cer hrana, cai si bani, iar cand nu primesc, spun ca iau pentru razboiul Domnului.",
+      "imagePath": "images/events/armed_pilgrims.png",
+      "category": "ARMY_WAR",
+      "rarity": "RARE",
+      "arcId": "arc_holy_banner",
+      "arcStage": "ESCALATION",
+      "crisisBias": 0.3,
+      "cooldownTurns": 5,
+      "baseWeight": 1.0,
+      "tags": [
+        "holy",
+        "pilgrims",
+        "bandits"
+      ],
+      "requires": [
+        {
+          "type": "FLAG",
+          "flag": "holy_expedition_blessed",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Pui oastea sa-i dezarmeze",
+          "text": "Ai aparat drumurile de oameni care se credeau mai aproape de cer decat de lege. Sabia ta va fi numita si dreapta, si sacrilega.",
+          "religion": -1,
+          "population": 1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Le dai provizii si ii grabesti spre hotar",
+          "text": "Ai ales sa platesti haosul ca sa-l muti mai departe. Drumurile se linistesc, precedentul ramane.",
+          "religion": 1,
+          "population": 0,
+          "army": -1,
+          "money": -2
+        },
+        "C": {
+          "title": "Ceri Bisericii sa-i disciplineze",
+          "text": "Ai dat altarului o sarcina plina de noroi. Daca reuseste, castiga el; daca esueaza, pierzi tu.",
+          "religion": 1,
+          "population": 0,
+          "army": 0,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_pilgrims_desarmed"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_pilgrims_supplied"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_pilgrims_delegated_to_church"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "event_516",
+      "title": "Steagul sfant dispare din altar",
+      "description": "In zori, relicva sau ramasita de steag nu mai e unde era pusa. Unii spun furt, altii semn ceresc, altii complot de curte. Multimile se strang inainte sa afli tu insuti adevarul.",
+      "imagePath": "images/events/holy_banner_missing.png",
+      "category": "CHURCH_FAITH",
+      "rarity": "CRISIS",
+      "arcId": "arc_holy_banner",
+      "arcStage": "CRISIS",
+      "crisisBias": 1.4,
+      "cooldownTurns": 6,
+      "baseWeight": 1.0,
+      "tags": [
+        "holy",
+        "relic",
+        "crisis"
+      ],
+      "requires": [],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Declari furt si inchizi orasul",
+          "text": "Ai ales ordinea rece in fata extazului popular. Vei gasi poate vinovati, dar si nervi intinsi pana la rupere.",
+          "religion": 0,
+          "population": -1,
+          "army": 1,
+          "money": -1
+        },
+        "B": {
+          "title": "Declari minune si zi de post",
+          "text": "Ai facut din lipsa o prezenta si din nedumerire o procesiune. Credinta urca, adevarul coboara in pivnite.",
+          "religion": 2,
+          "population": 1,
+          "army": -1,
+          "money": 0
+        },
+        "C": {
+          "title": "Invinovatesti cavalerul care l-a adus",
+          "text": "Ai aruncat greutatea pe un singur om, repede si public. Curtea iubeste claritatea, dreptatea nu intotdeauna.",
+          "religion": -1,
+          "population": 0,
+          "army": 1,
+          "money": 0
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_hunt_ordered"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_miracle_declared"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "holy_banner_bearer_blamed"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
     }
   ]
 }

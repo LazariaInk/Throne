@@ -188,10 +188,23 @@ public class StartScreen implements Screen {
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}
-    @Override public void dispose() {
-        if (batch != null) batch.dispose();
-        if (whiteTexture != null) whiteTexture.dispose();
-        if (titleFont != null) titleFont.dispose();
-        if (bodyFont != null) bodyFont.dispose();
+    @Override
+    public void dispose() {
+        if (batch != null) {
+            batch.dispose();
+            batch = null; // Evită accesarea ulterioară
+        }
+        if (whiteTexture != null) {
+            whiteTexture.dispose();
+            whiteTexture = null; // Evită accesarea ulterioară
+        }
+        if (titleFont != null) {
+            titleFont.dispose();
+            titleFont = null; // Evită accesarea ulterioară
+        }
+        if (bodyFont != null) {
+            bodyFont.dispose();
+            bodyFont = null; // Evită accesarea ulterioară
+        }
     }
 }
