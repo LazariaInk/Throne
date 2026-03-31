@@ -67,7 +67,7 @@ public class RecordsScreen implements Screen {
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
-                    game.setScreen(new StartScreen(game));
+                    game.setScreen(new MainMenuScreen(game));
                     dispose();
                     return true;
                 }

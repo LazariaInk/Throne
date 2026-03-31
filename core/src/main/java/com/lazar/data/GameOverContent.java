@@ -7,70 +7,70 @@ public class GameOverContent {
     public static String title(GameOverType type) {
         switch (type) {
             case INVASION:
-                return "The Kingdom Falls";
+                return "Regatul Cade";
             case MILITARY_COUP:
-                return "The Crown Is Seized";
+                return "Corona este Capturată";
             case BANKRUPTCY:
-                return "The Treasury Is Empty";
+                return "Tezaurul este Gol";
             case OLIGARCHY:
-                return "Gold Rules the Realm";
+                return "Aurul Stăpânește Regatul";
             case RELIGIOUS_REVOLT:
-                return "Faith Turns to Fury";
+                return "Credința Se Transformă în Furie";
             case THEOCRACY:
-                return "The Church Takes the Throne";
+                return "Biserica Preia Tronul";
             case DEAD_KINGDOM:
-                return "A Silent Kingdom";
+                return "Un Regat Tăcut";
             case OVERCROWDED_COLLAPSE:
-                return "The Realm Cannot Bear More";
+                return "Regatul Nu Poate Suporta Mai Mult";
             default:
-                return "Game Over";
+                return "Sfârșitul Jocului";
         }
     }
 
     public static String body(GameOverType type) {
         switch (type) {
             case INVASION:
-                return "Your armies withered until the borders lay open. "
-                    + "Foreign banners now rise above your cities, and your name is remembered "
-                    + "not as a ruler, but as the king who left the gates unguarded.";
+                return "Armatele tale s-au stins până când granițele au rămas deschise. "
+                    + "Steagurile străine se ridică acum deasupra orașelor tale, iar numele tău este amintit "
+                    + "nu ca un conducător, ci ca regele care a lăsat porțile nepăzite.";
 
             case MILITARY_COUP:
-                return "The army grew too strong to obey the crown. "
-                    + "Your generals no longer asked for orders — they gave them. "
-                    + "Steel decided what law could not, and your reign ended beneath marching boots.";
+                return "Armata a devenit prea puternică pentru a asculta coroana. "
+                    + "Generalii tăi nu mai cereau ordine — ei le dădeau. "
+                    + "Oțelul a decis ce lege nu putea, iar domnia ta s-a încheiat sub pașii soldaților.";
 
             case BANKRUPTCY:
-                return "The treasury ran dry. Debts swallowed promises, soldiers went unpaid, "
-                    + "and merchants abandoned your roads. A kingdom may survive famine or war for a time, "
-                    + "but not empty coffers forever.";
+                return "Tezaurul s-a epuizat. Datoriile au înghițit promisiunile, soldații nu au mai fost plătiți, "
+                    + "iar comercianții au abandonat drumurile tale. Un regat poate supraviețui foametei sau războiului pentru o vreme, "
+                    + "dar nu golirii visteriei pentru totdeauna.";
 
             case OLIGARCHY:
-                return "Wealth gathered into too few hands, and the throne became a decoration. "
-                    + "The rich now command the realm through coin, contract, and quiet threats. "
-                    + "You still wore the crown, but power had already been sold.";
+                return "Bogăția s-a adunat în prea puține mâini, iar tronul a devenit o decorare. "
+                    + "Cei bogați comandă acum regatul prin monedă, contract și amenințări tăcute. "
+                    + "Tu încă purtai coroana, dar puterea fusese deja vândută.";
 
             case RELIGIOUS_REVOLT:
-                return "Faith collapsed into anger. Temples turned into rallying grounds, "
-                    + "priests into agitators, and the people rose against a ruler they believed abandoned by the divine. "
-                    + "The kingdom burned with holy fury.";
+                return "Credința a căzut în furie. Templele s-au transformat în locuri de adunare, "
+                    + "preoții în agitatori, iar oamenii s-au ridicat împotriva unui conducător pe care l-au crezut părăsit de divinitate. "
+                    + "Regatul a ars de furia sacră.";
 
             case THEOCRACY:
-                return "The Church grew beyond counsel and beyond restraint. "
-                    + "Scripture replaced decree, clergy replaced ministers, and the throne bowed before the altar. "
-                    + "Your kingdom endured, but it no longer belonged to kings.";
+                return "Biserica a crescut dincolo de sfat și dincolo de restricții. "
+                    + "Scriptura a înlocuit decretul, clergia a înlocuit miniștri, iar tronul a îngenuncheat înaintea altarului. "
+                    + "Regatul tău a supraviețuit, dar nu mai aparținea regilor.";
 
             case DEAD_KINGDOM:
-                return "Too many died, too many fled, and too few remained. "
-                    + "Fields emptied, markets fell silent, and even victory lost meaning in a land without people. "
-                    + "A crown rules nothing when the kingdom itself has faded away.";
+                return "Prea mulți au murit, prea mulți au fugit, și prea puțini au rămas. "
+                    + "Câmpiile s-au golit, piețele au căzut tăcute, iar chiar și victoria a pierdut sens într-o țară fără oameni. "
+                    + "O coroană nu conduce nimic atunci când regatul însuși a dispărut.";
 
             case OVERCROWDED_COLLAPSE:
-                return "The realm swelled beyond its means. Hunger spread, streets overflowed, "
-                    + "and order cracked under the weight of too many lives and too little structure. "
-                    + "What once looked like prosperity became collapse.";
+                return "Regatul a crescut dincolo de limitele sale. Foametea s-a răspândit, străzile s-au umplut, "
+                    + "iar ordinea a crăpat sub greutatea a prea multor vieți și prea puține structuri. "
+                    + "Ceea ce părea a fi prosperitate s-a transformat în colaps.";
 
             default:
-                return "Your reign has come to an end.";
+                return "Domnia ta a ajuns la sfârșit.";
         }
     }
 }

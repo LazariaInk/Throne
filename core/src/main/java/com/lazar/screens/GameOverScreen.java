@@ -295,12 +295,7 @@ public class GameOverScreen implements Screen {
 
         hintFont.setColor(0.20f, 0.13f, 0.07f, 1f);
         layout.setText(hintFont, text);
-        hintFont.draw(
-            batch,
-            text,
-            bounds.x + (bounds.width - layout.width) / 2f,
-            bounds.y + bounds.height / 2f + layout.height / 2f - 2f
-        );
+        hintFont.draw(batch, text, bounds.x + (bounds.width - layout.width) / 2f, bounds.y + bounds.height / 2f + layout.height / 2f - 2f);
 
         batch.setColor(Color.WHITE);
     }

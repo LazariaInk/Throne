@@ -21,20 +21,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
 
 public class StartScreen implements Screen {
-
     private final StartGame game;
-
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Viewport viewport;
-
     private Texture whiteTexture;
     private TextureRegion whiteRegion;
-
     private BitmapFont titleFont;
     private BitmapFont bodyFont;
     private GlyphLayout layout;
-
     private final StringBuilder emperorName = new StringBuilder();
     private final Rectangle startButton = new Rectangle();
     private final Rectangle recordsButton = new Rectangle();
@@ -184,27 +179,40 @@ public class StartScreen implements Screen {
         bodyFont.draw(batch, text, bounds.x + (bounds.width - layout.width) / 2f, bounds.y + 34f);
     }
 
-    @Override public void resize(int width, int height) { viewport.update(width, height, true); }
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width, height, true);
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
+
     @Override
     public void dispose() {
         if (batch != null) {
             batch.dispose();
-            batch = null; // Evită accesarea ulterioară
+            batch = null;
         }
         if (whiteTexture != null) {
             whiteTexture.dispose();
-            whiteTexture = null; // Evită accesarea ulterioară
+            whiteTexture = null;
         }
         if (titleFont != null) {
             titleFont.dispose();
-            titleFont = null; // Evită accesarea ulterioară
+            titleFont = null;
         }
         if (bodyFont != null) {
             bodyFont.dispose();
-            bodyFont = null; // Evită accesarea ulterioară
+            bodyFont = null;
         }
     }
 }

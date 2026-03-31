@@ -41,10 +41,6 @@ import java.util.List;
 
 public class GameScreen implements Screen {
 
-    // -------------------------------------------------------------------------
-    // Floating stat delta animation
-    // -------------------------------------------------------------------------
-
     private static class StatDelta {
         static final float DURATION = 1.8f;
 
@@ -55,22 +51,17 @@ public class GameScreen implements Screen {
         float life;
 
         StatDelta(String label, boolean positive, float x, float y) {
-            this.label    = label;
+            this.label = label;
             this.positive = positive;
-            this.x        = x;
-            this.y        = y;
-            this.alpha    = 1f;
-            this.life     = DURATION;
+            this.x = x;
+            this.y = y;
+            this.alpha = 1f;
+            this.life = DURATION;
         }
     }
 
     private final List<StatDelta> statDeltas = new ArrayList<>();
     private GameStats lastStats = null;
-
-    // -------------------------------------------------------------------------
-    // Existing fields
-    // -------------------------------------------------------------------------
-
     private SpriteBatch batch;
     private Texture background;
     private Texture whiteTexture;
@@ -81,6 +72,9 @@ public class GameScreen implements Screen {
     private Texture armyIcon;
     private Texture peopleIcon;
     private Texture religionIcon;
+    private Texture settingsButtonTexture;
+    private final Rectangle settingsButtonBounds = new Rectangle();
+    private boolean hoverSettings = false;
 
     private Music backgroundMusic;
     private Sound cardSwapSound;
@@ -105,36 +99,41 @@ public class GameScreen implements Screen {
     private final DecisionResolver decisionResolver;
     private final GameEngine gameEngine;
 
-    private final StringBuilder typedMessage  = new StringBuilder();
-    private final Rectangle sendButtonBounds  = new Rectangle();
-    private final Rectangle inputBounds       = new Rectangle();
-    private final Vector3 touchPoint          = new Vector3();
+    private final StringBuilder typedMessage = new StringBuilder();
+    private final Rectangle sendButtonBounds = new Rectangle();
+    private final Rectangle inputBounds = new Rectangle();
+    private final Vector3 touchPoint = new Vector3();
+    private boolean initialized = false;
 
-    private boolean showCaret  = true;
-    private float   caretTimer = 0f;
+    private boolean showCaret = true;
+    private float caretTimer = 0f;
 
-    private boolean      requestInFlight = false;
-    private String       uiMessage       = null;
-    private GameOverType gameOverType    = null;
+    private boolean requestInFlight = false;
+    private String uiMessage = null;
+    private GameOverType gameOverType = null;
 
-    private static final Color STAT_FILL_COLOR  = new Color(0x8B572Aff);
-    private static final Color STAT_EMPTY_TINT  = new Color(0.22f, 0.17f, 0.12f, 0.28f);
-    private static final Color HUD_PANEL_DARK   = new Color(0.16f, 0.10f, 0.05f, 0.82f);
-    private static final Color HUD_PANEL_LIGHT  = new Color(0.93f, 0.87f, 0.73f, 0.94f);
-    private static final Color BADGE_OUTER      = new Color(0.20f, 0.13f, 0.07f, 0.96f);
-    private static final Color BADGE_INNER      = new Color(0.95f, 0.90f, 0.78f, 0.98f);
-    private static final Color BADGE_SHADOW     = new Color(0f,    0f,    0f,    0.16f);
-    private static final Color BADGE_RING       = new Color(0.55f, 0.38f, 0.20f, 0.55f);
+    private static final Color STAT_FILL_COLOR = new Color(0x8B572Aff);
+    private static final Color STAT_EMPTY_TINT = new Color(0.22f, 0.17f, 0.12f, 0.28f);
+    private static final Color HUD_PANEL_DARK = new Color(0.16f, 0.10f, 0.05f, 0.82f);
+    private static final Color HUD_PANEL_LIGHT = new Color(0.93f, 0.87f, 0.73f, 0.94f);
+    private static final Color BADGE_OUTER = new Color(0.20f, 0.13f, 0.07f, 0.96f);
+    private static final Color BADGE_INNER = new Color(0.95f, 0.90f, 0.78f, 0.98f);
+    private static final Color BADGE_SHADOW = new Color(0f, 0f, 0f, 0.16f);
+    private static final Color BADGE_RING = new Color(0.55f, 0.38f, 0.20f, 0.55f);
 
     private static final float BACKGROUND_MUSIC_VOLUME = 0.35f;
-    private static final float CARD_SWAP_VOLUME        = 0.75f;
+    private static final float CARD_SWAP_VOLUME = 0.75f;
 
     private final StartGame game;
-    private final String    emperorName;
+    private final String emperorName;
+    private Texture tournamentButtonTexture;
+    private Texture warButtonTexture;
 
-    // -------------------------------------------------------------------------
-    // Constructors
-    // -------------------------------------------------------------------------
+    private final Rectangle tournamentButtonBounds = new Rectangle();
+    private final Rectangle warButtonBounds = new Rectangle();
+
+    private boolean hoverTournament = false;
+    private boolean hoverWar = false;
 
     public GameScreen(StartGame game) {
         this(game, "Fara Nume", new BackendDecisionResolver(), new GameEngine());
@@ -149,79 +148,86 @@ public class GameScreen implements Screen {
     }
 
     public GameScreen(StartGame game, String emperorName, DecisionResolver decisionResolver, GameEngine gameEngine) {
-        this.game           = game;
-        this.emperorName    = emperorName;
+        this.game = game;
+        this.emperorName = emperorName;
         this.decisionResolver = decisionResolver;
-        this.gameEngine     = gameEngine;
+        this.gameEngine = gameEngine;
     }
-
-    // -------------------------------------------------------------------------
-    // Screen lifecycle
-    // -------------------------------------------------------------------------
 
     @Override
     public void show() {
-        batch      = new SpriteBatch();
-        background = new Texture(Gdx.files.internal("images/background.png"));
+        if (!initialized) {
+            batch = new SpriteBatch();
+            background = new Texture(Gdx.files.internal("images/background.png"));
+            tournamentButtonTexture = new Texture(Gdx.files.internal("images/ui/tournament.png"));
+            warButtonTexture = new Texture(Gdx.files.internal("images/ui/war.png"));
+            settingsButtonTexture = new Texture(Gdx.files.internal("images/ui/settings.png"));
+            settingsButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        gameEngine.setEmperorName(emperorName);
+            gameEngine.setEmperorName(emperorName);
 
-        moneyIcon        = new Texture(Gdx.files.internal("images/ui/money.png"));
-        armyIcon         = new Texture(Gdx.files.internal("images/ui/army.png"));
-        peopleIcon       = new Texture(Gdx.files.internal("images/ui/people.png"));
-        religionIcon     = new Texture(Gdx.files.internal("images/ui/religion.png"));
-        sendButtonTexture = new Texture(Gdx.files.internal("images/ui/send-btn.png"));
+            tournamentButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            warButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        loadAudio();
-        startBackgroundMusic();
+            moneyIcon = new Texture(Gdx.files.internal("images/ui/money.png"));
+            armyIcon = new Texture(Gdx.files.internal("images/ui/army.png"));
+            peopleIcon = new Texture(Gdx.files.internal("images/ui/people.png"));
+            religionIcon = new Texture(Gdx.files.internal("images/ui/religion.png"));
+            sendButtonTexture = new Texture(Gdx.files.internal("images/ui/send-btn.png"));
 
-        sendButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        moneyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        armyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        peopleIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        religionIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            loadAudio();
+            startBackgroundMusic();
 
-        camera   = new OrthographicCamera();
-        viewport = new FitViewport(1280, 720, camera);
-        viewport.apply();
+            sendButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            moneyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            armyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            peopleIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            religionIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            tournamentButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            warButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            settingsButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        camera.position.set(640, 360, 0);
-        camera.update();
+            camera = new OrthographicCamera();
+            viewport = new FitViewport(1280, 720, camera);
+            viewport.apply();
 
-        whiteTexture = createWhiteTexture();
-        whiteRegion  = new TextureRegion(whiteTexture);
+            camera.position.set(640, 360, 0);
+            camera.update();
 
-        titleFont = generateFont(26, new Color(0.14f, 0.08f, 0.04f, 1f));
-        bodyFont  = generateFont(18, new Color(0.18f, 0.11f, 0.06f, 1f));
-        hintFont  = generateFont(15, new Color(0.20f, 0.13f, 0.07f, 0.95f));
-        inputFont = generateFont(17, new Color(0.20f, 0.13f, 0.07f, 1f));
-        hudFont   = generateFont(15, new Color(0.18f, 0.11f, 0.06f, 1f));
+            whiteTexture = createWhiteTexture();
+            whiteRegion = new TextureRegion(whiteTexture);
 
-        layout = new GlyphLayout();
+            titleFont = generateFont(26, new Color(0.14f, 0.08f, 0.04f, 1f));
+            bodyFont = generateFont(18, new Color(0.18f, 0.11f, 0.06f, 1f));
+            hintFont = generateFont(15, new Color(0.20f, 0.13f, 0.07f, 0.95f));
+            inputFont = generateFont(17, new Color(0.20f, 0.13f, 0.07f, 1f));
+            hudFont = generateFont(15, new Color(0.18f, 0.11f, 0.06f, 1f));
 
-        initShaders();
+            layout = new GlyphLayout();
 
-        CardRenderResources cardRenderResources = new CardRenderResources(
-            whiteRegion, titleFont, bodyFont, ovalMaskShader
-        );
+            initShaders();
 
-        CardRenderer cardRenderer = new CardRenderer(cardRenderResources);
-        cardPresenter = new CardPresenter(cardRenderer);
+            CardRenderResources cardRenderResources = new CardRenderResources(
+                whiteRegion, titleFont, bodyFont, ovalMaskShader
+            );
 
-        backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, blurShader);
+            CardRenderer cardRenderer = new CardRenderer(cardRenderResources);
+            cardPresenter = new CardPresenter(cardRenderer);
 
-        EventCard firstCard = gameEngine.nextCard();
-        cardPresenter.showNewEvent(firstCard, gameEngine.getRunState().getStats());
+            backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, blurShader);
 
-        // Snapshot initial stats so the first turn has a valid baseline to diff against
-        lastStats = gameEngine.getRunState().getStats().copy();
+            EventCard firstCard = gameEngine.nextCard();
+            cardPresenter.showNewEvent(firstCard, gameEngine.getRunState().getStats());
+
+            lastStats = gameEngine.getRunState().getStats().copy();
+
+            initialized = true;
+        } else {
+            startBackgroundMusic();
+        }
 
         installInputProcessor();
     }
-
-    // -------------------------------------------------------------------------
-    // Audio helpers
-    // -------------------------------------------------------------------------
 
     private void loadAudio() {
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background-music.mp3"));
@@ -243,10 +249,6 @@ public class GameScreen implements Screen {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // Misc helpers
-    // -------------------------------------------------------------------------
-
     private Texture createWhiteTexture() {
         Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
@@ -255,10 +257,6 @@ public class GameScreen implements Screen {
         pixmap.dispose();
         return texture;
     }
-
-    // -------------------------------------------------------------------------
-    // Input
-    // -------------------------------------------------------------------------
 
     private void installInputProcessor() {
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -303,23 +301,52 @@ public class GameScreen implements Screen {
                     return true;
                 }
 
+                if (tournamentButtonBounds.contains(worldX, worldY)) {
+                    game.setScreen(new TournamentScreen(game, GameScreen.this));
+                    return true;
+                }
+
+                if (warButtonBounds.contains(worldX, worldY)) {
+                    game.setScreen(new WarScreen(game, GameScreen.this));
+                    return true;
+                }
+                if (settingsButtonBounds.contains(worldX, worldY)) {
+                    game.setScreen(new MainMenuScreen(game, GameScreen.this));
+                    return true;
+                }
+
                 return false;
             }
 
             @Override
             public boolean keyDown(int keycode) {
+                if (keycode == Input.Keys.ESCAPE) {
+                    game.setScreen(new MainMenuScreen(game, GameScreen.this));
+                    return true;
+                }
+
                 if (cardPresenter.canAdvanceCard() && keycode == Input.Keys.SPACE) {
                     advanceToNextCard();
                     return true;
                 }
+
+                return false;
+            }
+
+            @Override
+            public boolean mouseMoved(int screenX, int screenY) {
+                viewport.unproject(touchPoint.set(screenX, screenY, 0f));
+                float worldX = touchPoint.x;
+                float worldY = touchPoint.y;
+                hoverSettings = settingsButtonBounds.contains(worldX, worldY);
+                hoverTournament = tournamentButtonBounds.contains(worldX, worldY);
+                hoverWar = warButtonBounds.contains(worldX, worldY);
+
                 return false;
             }
         });
-    }
 
-    // -------------------------------------------------------------------------
-    // Game actions
-    // -------------------------------------------------------------------------
+    }
 
     private void submitPlayerMessage() {
         if (!cardPresenter.canTypeMessage() || requestInFlight || gameOverType != null) return;
@@ -328,7 +355,7 @@ public class GameScreen implements Screen {
         if (message.isEmpty()) return;
 
         requestInFlight = true;
-        uiMessage       = null;
+        uiMessage = null;
         cardPresenter.markSubmitting();
 
         gameEngine.submitPlayerText(decisionResolver, message, new DecisionResolver.Callback() {
@@ -365,10 +392,6 @@ public class GameScreen implements Screen {
                     return;
                 }
 
-                // Spawn floating delta labels then update the snapshot.
-                // postRunnable ensures we're on the GL thread when touching
-                // statDeltas and lastStats (safe even if callback is already
-                // on the main thread — it's a no-op queue in that case).
                 final GameStats newStats = gameEngine.getRunState().getStats();
                 Gdx.app.postRunnable(() -> {
                     spawnStatDeltas(newStats, viewport.getWorldWidth(), viewport.getWorldHeight());
@@ -396,10 +419,6 @@ public class GameScreen implements Screen {
         typedMessage.setLength(0);
         uiMessage = null;
     }
-
-    // -------------------------------------------------------------------------
-    // Render
-    // -------------------------------------------------------------------------
 
     @Override
     public void render(float delta) {
@@ -429,7 +448,9 @@ public class GameScreen implements Screen {
         } else if (cardPresenter.isWaitingForBackend()) {
             drawLoadingHint(viewport.getWorldWidth());
         }
-
+        drawReignInfo(viewport.getWorldWidth(), viewport.getWorldHeight());
+        drawSideActionButtons(viewport.getWorldHeight());
+        drawBottomRightSettingsButton(viewport.getWorldHeight());
         if (uiMessage != null && !uiMessage.isEmpty()) {
             drawUiMessage(viewport.getWorldWidth());
         }
@@ -437,37 +458,89 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
-    // -------------------------------------------------------------------------
-    // Floating stat-delta animation
-    // -------------------------------------------------------------------------
+    private void drawSideActionButtons(float worldHeight) {
+        float buttonSize = 68f;
+        float gap = 16f;
 
-    /**
-     * Called once per turn after stats are updated. Computes the per-stat delta
-     * and spawns a floating label centred above the corresponding badge.
-     * Badge order matches drawTopStats: religion(0), people(1), army(2), money(3).
-     */
+        float x = 24f;
+        float totalHeight = buttonSize * 2f + gap;
+        float startY = worldHeight / 2f - totalHeight / 2f;
+
+        tournamentButtonBounds.set(x, startY + buttonSize + gap, buttonSize, buttonSize);
+        warButtonBounds.set(x, startY, buttonSize, buttonSize);
+
+        drawActionButton(
+            tournamentButtonBounds.x,
+            tournamentButtonBounds.y,
+            tournamentButtonBounds.width,
+            tournamentButtonBounds.height,
+            tournamentButtonTexture,
+            hoverTournament
+        );
+
+        drawActionButton(
+            warButtonBounds.x,
+            warButtonBounds.y,
+            warButtonBounds.width,
+            warButtonBounds.height,
+            warButtonTexture,
+            hoverWar
+        );
+    }
+
+    private void drawActionButton(float x, float y, float w, float h, Texture icon, boolean hovered) {
+        float offset = hovered ? 2f : 0f;
+        float shadowOffset = hovered ? 7f : 5f;
+
+        batch.setColor(0f, 0f, 0f, hovered ? 0.20f : 0.14f);
+        batch.draw(whiteRegion, x + shadowOffset, y - shadowOffset, w, h);
+
+        batch.setColor(
+            hovered ? 0.32f : 0.25f,
+            hovered ? 0.20f : 0.16f,
+            hovered ? 0.10f : 0.08f,
+            0.95f
+        );
+        batch.draw(whiteRegion, x, y + offset, w, h);
+
+        batch.setColor(
+            hovered ? 0.98f : 0.93f,
+            hovered ? 0.92f : 0.87f,
+            hovered ? 0.78f : 0.73f,
+            0.98f
+        );
+        batch.draw(whiteRegion, x + 3f, y + 3f + offset, w - 6f, h - 6f);
+
+        batch.setColor(1f, 1f, 1f, hovered ? 0.16f : 0.10f);
+        batch.draw(whiteRegion, x + 8f, y + h - 12f + offset, w - 16f, 3f);
+
+        float pad = hovered ? 7f : 9f;
+        batch.setColor(Color.WHITE);
+        batch.draw(icon, x + pad, y + pad + offset, w - pad * 2f, h - pad * 2f);
+    }
+
     private void spawnStatDeltas(GameStats newStats, float worldWidth, float worldHeight) {
         if (lastStats == null) return;
 
         // --- Replicate the badge layout from drawTopStats ---
-        float badgeSize     = 82f;
-        float gap           = 26f;
+        float badgeSize = 82f;
+        float gap = 26f;
         float panelPaddingX = 28f;
         float panelPaddingY = 16f;
-        float panelWidth    = badgeSize * 4f + gap * 3f + panelPaddingX * 2f;
-        float panelHeight   = badgeSize + panelPaddingY * 2f;
-        float panelX        = worldWidth / 2f - panelWidth / 2f;
-        float panelY        = worldHeight - panelHeight - 18f;
-        float startX        = panelX + panelPaddingX;
-        float badgeY        = panelY + panelPaddingY;
+        float panelWidth = badgeSize * 4f + gap * 3f + panelPaddingX * 2f;
+        float panelHeight = badgeSize + panelPaddingY * 2f;
+        float panelX = worldWidth / 2f - panelWidth / 2f;
+        float panelY = worldHeight - panelHeight - 18f;
+        float startX = panelX + panelPaddingX;
+        float badgeY = panelY + panelPaddingY;
 
         int[] oldVals = {
             lastStats.getReligion(), lastStats.getPeople(),
-            lastStats.getArmy(),     lastStats.getMoney()
+            lastStats.getArmy(), lastStats.getMoney()
         };
         int[] newVals = {
             newStats.getReligion(), newStats.getPeople(),
-            newStats.getArmy(),     newStats.getMoney()
+            newStats.getArmy(), newStats.getMoney()
         };
 
         for (int i = 0; i < 4; i++) {
@@ -475,14 +548,13 @@ public class GameScreen implements Screen {
             if (delta == 0) continue;
 
             String label = (delta > 0 ? "+" : "") + delta;
-            float cx     = startX + (badgeSize + gap) * i + badgeSize / 2f;
-            float cy     = badgeY + badgeSize + 10f;  // just above the badge top
+            float cx = startX + (badgeSize + gap) * i + badgeSize / 2f;
+            float cy = badgeY + badgeSize + 10f;
 
             statDeltas.add(new StatDelta(label, delta > 0, cx, cy));
         }
     }
 
-    /** Advances every active delta: moves it upward and fades it out. */
     private void updateStatDeltas(float delta) {
         Iterator<StatDelta> it = statDeltas.iterator();
         while (it.hasNext()) {
@@ -493,52 +565,45 @@ public class GameScreen implements Screen {
                 continue;
             }
 
-            float progress = 1f - (sd.life / StatDelta.DURATION); // 0 → 1
-            sd.y += delta * 42f;  // float upward at 42 world-units per second
+            float progress = 1f - (sd.life / StatDelta.DURATION);
+            sd.y += delta * 42f;
 
-            // Fully opaque for the first 35 % of lifetime, then linear fade to 0
             sd.alpha = progress < 0.35f ? 1f : 1f - ((progress - 0.35f) / 0.65f);
         }
     }
 
-    /** Draws all active floating delta labels. Call inside batch.begin()/end(). */
     private void drawStatDeltas() {
         for (StatDelta sd : statDeltas) {
             if (sd.positive) {
-                hudFont.setColor(0.18f, 0.62f, 0.22f, sd.alpha);  // warm green
+                hudFont.setColor(0.18f, 0.62f, 0.22f, sd.alpha);
             } else {
-                hudFont.setColor(0.75f, 0.12f, 0.08f, sd.alpha);  // deep red
+                hudFont.setColor(0.75f, 0.12f, 0.08f, sd.alpha);
             }
 
             layout.setText(hudFont, sd.label);
             hudFont.draw(batch, sd.label, sd.x - layout.width / 2f, sd.y);
         }
 
-        // Always reset font colour so subsequent draw calls are unaffected
         hudFont.setColor(0.18f, 0.11f, 0.06f, 1f);
     }
-
-    // -------------------------------------------------------------------------
-    // HUD drawing
-    // -------------------------------------------------------------------------
 
     private void updateCaret(float delta) {
         caretTimer += delta;
         if (caretTimer >= 0.45f) {
             caretTimer = 0f;
-            showCaret  = !showCaret;
+            showCaret = !showCaret;
         }
     }
 
     private void drawTopStats(GameStats stats, float worldWidth, float worldHeight) {
-        float badgeSize     = 82f;
-        float gap           = 26f;
+        float badgeSize = 82f;
+        float gap = 26f;
         float panelPaddingX = 28f;
         float panelPaddingY = 16f;
 
         float totalBadgesWidth = badgeSize * 4f + gap * 3f;
-        float panelWidth       = totalBadgesWidth + panelPaddingX * 2f;
-        float panelHeight      = badgeSize + panelPaddingY * 2f;
+        float panelWidth = totalBadgesWidth + panelPaddingX * 2f;
+        float panelHeight = badgeSize + panelPaddingY * 2f;
 
         float panelX = worldWidth / 2f - panelWidth / 2f;
         float panelY = worldHeight - panelHeight - 18f;
@@ -549,9 +614,9 @@ public class GameScreen implements Screen {
         float badgeY = panelY + panelPaddingY;
 
         drawStatBadge(startX + (badgeSize + gap) * 0f, badgeY, badgeSize, religionIcon, stats.getReligion());
-        drawStatBadge(startX + (badgeSize + gap),       badgeY, badgeSize, peopleIcon,   stats.getPeople());
-        drawStatBadge(startX + (badgeSize + gap) * 2f,  badgeY, badgeSize, armyIcon,     stats.getArmy());
-        drawStatBadge(startX + (badgeSize + gap) * 3f,  badgeY, badgeSize, moneyIcon,    stats.getMoney());
+        drawStatBadge(startX + (badgeSize + gap), badgeY, badgeSize, peopleIcon, stats.getPeople());
+        drawStatBadge(startX + (badgeSize + gap) * 2f, badgeY, badgeSize, armyIcon, stats.getArmy());
+        drawStatBadge(startX + (badgeSize + gap) * 3f, badgeY, badgeSize, moneyIcon, stats.getMoney());
     }
 
     private void drawReignInfo(float worldWidth, float worldHeight) {
@@ -563,13 +628,13 @@ public class GameScreen implements Screen {
         layout.setText(hudFont, line2);
         float w2 = layout.width;
 
-        float panelPadX  = 18f;
-        float panelPadY  = 10f;
+        float panelPadX = 18f;
+        float panelPadY = 10f;
         float lineSpacing = 22f;
-        float panelW     = Math.max(w1, w2) + panelPadX * 2f;
-        float panelH     = lineSpacing * 2f + panelPadY * 2f;
+        float panelW = Math.max(w1, w2) + panelPadX * 2f;
+        float panelH = lineSpacing * 2f + panelPadY * 2f;
 
-        float panelX = worldWidth  - panelW - 18f;
+        float panelX = worldWidth - panelW - 18f;
         float panelY = worldHeight - panelH - 18f;
 
         drawHudPanel(panelX, panelY, panelW, panelH);
@@ -597,7 +662,7 @@ public class GameScreen implements Screen {
 
     private void drawStatBadge(float x, float y, float size, Texture icon, int value) {
         float clamped = Math.max(0f, Math.min(100f, value));
-        float fill    = clamped / 100f;
+        float fill = clamped / 100f;
         drawBadgeBackground(x, y, size);
         drawFilledIcon(x, y, size, icon, fill);
     }
@@ -613,27 +678,27 @@ public class GameScreen implements Screen {
         batch.draw(whiteRegion, x + 4f, y + 4f, size - 8f, size - 8f);
 
         batch.setColor(BADGE_RING);
-        batch.draw(whiteRegion, x + 8f, y + 8f,            size - 16f, 2f);
-        batch.draw(whiteRegion, x + 8f, y + size - 10f,    size - 16f, 2f);
-        batch.draw(whiteRegion, x + 8f, y + 8f,            2f, size - 16f);
-        batch.draw(whiteRegion, x + size - 10f, y + 8f,    2f, size - 16f);
+        batch.draw(whiteRegion, x + 8f, y + 8f, size - 16f, 2f);
+        batch.draw(whiteRegion, x + 8f, y + size - 10f, size - 16f, 2f);
+        batch.draw(whiteRegion, x + 8f, y + 8f, 2f, size - 16f);
+        batch.draw(whiteRegion, x + size - 10f, y + 8f, 2f, size - 16f);
 
         batch.setColor(Color.WHITE);
     }
 
     private void drawFilledIcon(float x, float y, float badgeSize, Texture icon, float fill) {
         float iconSize = badgeSize * 0.58f;
-        float iconX    = x + (badgeSize - iconSize) / 2f;
-        float iconY    = y + (badgeSize - iconSize) / 2f;
+        float iconX = x + (badgeSize - iconSize) / 2f;
+        float iconY = y + (badgeSize - iconSize) / 2f;
 
         batch.setColor(STAT_EMPTY_TINT);
         batch.draw(icon, iconX, iconY, iconSize, iconSize);
 
         if (fill > 0f) {
-            int texW       = icon.getWidth();
-            int texH       = icon.getHeight();
-            int filledPx   = Math.max(1, Math.round(texH * fill));
-            float filledH  = iconSize * fill;
+            int texW = icon.getWidth();
+            int texH = icon.getHeight();
+            int filledPx = Math.max(1, Math.round(texH * fill));
+            float filledH = iconSize * fill;
 
             batch.setColor(STAT_FILL_COLOR);
             batch.draw(icon, iconX, iconY, iconSize, filledH,
@@ -682,25 +747,25 @@ public class GameScreen implements Screen {
         batch.draw(whiteRegion, inputX + 3f, inputY + 3f, inputW - 6f, inputH - 6f);
 
         String textToDraw;
-        Color  fontColor;
+        Color fontColor;
 
         if (typedMessage.length() == 0) {
             textToDraw = "type your message here...";
-            fontColor  = new Color(0.33f, 0.24f, 0.15f, 0.68f);
+            fontColor = new Color(0.33f, 0.24f, 0.15f, 0.68f);
         } else {
             textToDraw = typedMessage.toString();
             if (showCaret) textToDraw += "|";
-            fontColor  = new Color(0.20f, 0.13f, 0.07f, 1f);
+            fontColor = new Color(0.20f, 0.13f, 0.07f, 1f);
         }
 
         layout.setText(inputFont, textToDraw);
         float textPadding = 14f;
-        float availableW  = inputW - textPadding * 2f;
+        float availableW = inputW - textPadding * 2f;
         float scrollOffset = Math.max(0f, layout.width - availableW);
 
         inputFont.setColor(fontColor);
 
-        Rectangle scissor       = new Rectangle();
+        Rectangle scissor = new Rectangle();
         Rectangle clipBoundsWorld = new Rectangle(
             inputX + 3f, inputY + 3f,
             inputW - 6f, inputH - 6f
@@ -743,10 +808,6 @@ public class GameScreen implements Screen {
         batch.draw(sendButtonTexture, x + pad, y + pad, w - pad * 2f, h - pad * 2f);
     }
 
-    // -------------------------------------------------------------------------
-    // Misc
-    // -------------------------------------------------------------------------
-
     private BitmapFont generateFont(int size, Color color) {
         FreeTypeFontGenerator generator =
             new FreeTypeFontGenerator(Gdx.files.internal("fonts/medieval.ttf"));
@@ -754,16 +815,16 @@ public class GameScreen implements Screen {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter =
             new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size        = size;
-        parameter.color       = color;
-        parameter.kerning     = true;
-        parameter.hinting     = FreeTypeFontGenerator.Hinting.Slight;
-        parameter.minFilter   = Texture.TextureFilter.Linear;
-        parameter.magFilter   = Texture.TextureFilter.Linear;
+        parameter.size = size;
+        parameter.color = color;
+        parameter.kerning = true;
+        parameter.hinting = FreeTypeFontGenerator.Hinting.Slight;
+        parameter.minFilter = Texture.TextureFilter.Linear;
+        parameter.magFilter = Texture.TextureFilter.Linear;
         parameter.borderWidth = 0f;
         parameter.shadowOffsetX = 0;
         parameter.shadowOffsetY = 0;
-        parameter.characters  = FreeTypeFontGenerator.DEFAULT_CHARS + "ĂÂÎȘȚăâîșț";
+        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "ĂÂÎȘȚăâîșț";
 
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
@@ -841,53 +902,75 @@ public class GameScreen implements Screen {
             throw new IllegalStateException("Oval shader error:\n" + ovalMaskShader.getLog());
     }
 
-    // -------------------------------------------------------------------------
-    // Screen callbacks
-    // -------------------------------------------------------------------------
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         if (backgroundRenderer != null) backgroundRenderer.resize();
     }
 
-    @Override public void pause() {
-        if (backgroundMusic != null && backgroundMusic.isPlaying()) backgroundMusic.pause();
-    }
-
-    @Override public void resume() {
-        startBackgroundMusic();
-    }
-
-    @Override public void hide() {
+    @Override
+    public void pause() {
         if (backgroundMusic != null && backgroundMusic.isPlaying()) backgroundMusic.pause();
     }
 
     @Override
+    public void resume() {
+        startBackgroundMusic();
+    }
+
+    @Override
+    public void hide() {
+        if (backgroundMusic != null && backgroundMusic.isPlaying()) backgroundMusic.pause();
+    }
+
+    private void drawBottomRightSettingsButton(float worldWidth) {
+        float buttonSize = 68f;
+        float margin = 24f;
+
+        settingsButtonBounds.set(
+            worldWidth - buttonSize - margin,
+            margin,
+            buttonSize,
+            buttonSize
+        );
+
+        drawActionButton(
+            settingsButtonBounds.x,
+            settingsButtonBounds.y,
+            settingsButtonBounds.width,
+            settingsButtonBounds.height,
+            settingsButtonTexture,
+            hoverSettings
+        );
+    }
+
+    @Override
     public void dispose() {
-        if (cardPresenter      != null) cardPresenter.dispose();
+        if (cardPresenter != null) cardPresenter.dispose();
         if (backgroundRenderer != null) backgroundRenderer.dispose();
 
-        if (batch             != null) batch.dispose();
-        if (background        != null) background.dispose();
-        if (whiteTexture      != null) whiteTexture.dispose();
+        if (batch != null) batch.dispose();
+        if (background != null) background.dispose();
+        if (whiteTexture != null) whiteTexture.dispose();
 
-        if (moneyIcon         != null) moneyIcon.dispose();
-        if (armyIcon          != null) armyIcon.dispose();
-        if (peopleIcon        != null) peopleIcon.dispose();
-        if (religionIcon      != null) religionIcon.dispose();
+        if (moneyIcon != null) moneyIcon.dispose();
+        if (armyIcon != null) armyIcon.dispose();
+        if (peopleIcon != null) peopleIcon.dispose();
+        if (religionIcon != null) religionIcon.dispose();
         if (sendButtonTexture != null) sendButtonTexture.dispose();
-
+        if (tournamentButtonTexture != null) tournamentButtonTexture.dispose();
+        if (warButtonTexture != null) warButtonTexture.dispose();
         if (titleFont != null) titleFont.dispose();
-        if (bodyFont  != null) bodyFont.dispose();
-        if (hintFont  != null) hintFont.dispose();
+        if (bodyFont != null) bodyFont.dispose();
+        if (hintFont != null) hintFont.dispose();
         if (inputFont != null) inputFont.dispose();
-        if (hudFont   != null) hudFont.dispose();
+        if (hudFont != null) hudFont.dispose();
 
-        if (blurShader     != null) blurShader.dispose();
+        if (blurShader != null) blurShader.dispose();
         if (ovalMaskShader != null) ovalMaskShader.dispose();
+        if (settingsButtonTexture != null) settingsButtonTexture.dispose();
 
         if (backgroundMusic != null) backgroundMusic.dispose();
-        if (cardSwapSound   != null) cardSwapSound.dispose();
+        if (cardSwapSound != null) cardSwapSound.dispose();
     }
 }
