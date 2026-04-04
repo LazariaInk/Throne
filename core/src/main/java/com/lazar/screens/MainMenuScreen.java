@@ -5,16 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.lazar.StartGame;
+import com.lazar.config.LocalizationManager;
 
 public class MainMenuScreen extends BaseMenuScreen {
-
-    private final MenuButton continueButton = new MenuButton("Continue");
-    private final MenuButton newGameButton = new MenuButton("Joaca Noua");
-    private final MenuButton recordsButton = new MenuButton("Recorduri");
-    private final MenuButton optionsButton = new MenuButton("Options");
-    private final MenuButton creditsButton = new MenuButton("Credits");
-    private final MenuButton exitButton = new MenuButton("Exit");
-
+    private final MenuButton continueButton = new MenuButton(LocalizationManager.get("menu.continue"));
+    private final MenuButton newGameButton = new MenuButton(LocalizationManager.get("menu.new_game"));
+    private final MenuButton recordsButton = new MenuButton(LocalizationManager.get("menu.records"));
+    private final MenuButton optionsButton = new MenuButton(LocalizationManager.get("menu.options"));
+    private final MenuButton creditsButton = new MenuButton(LocalizationManager.get("menu.credits"));
+    private final MenuButton exitButton = new MenuButton(LocalizationManager.get("menu.exit"));
     private final Screen continueScreen;
     private final boolean showContinue;
 
@@ -46,19 +45,19 @@ public class MainMenuScreen extends BaseMenuScreen {
                 }
 
                 if (touched(recordsButton.bounds, screenX, screenY)) {
-                    game.setScreen(new RecordsScreen(game));
+                    game.setScreen(new RecordsScreen(game, continueScreen));
                     dispose();
                     return true;
                 }
 
                 if (touched(optionsButton.bounds, screenX, screenY)) {
-                    game.setScreen(new OptionsScreen(game));
+                    game.setScreen(new OptionsScreen(game, continueScreen));
                     dispose();
                     return true;
                 }
 
                 if (touched(creditsButton.bounds, screenX, screenY)) {
-                    game.setScreen(new CreditsScreen(game));
+                    game.setScreen(new CreditsScreen(game, continueScreen));
                     dispose();
                     return true;
                 }
@@ -91,60 +90,44 @@ public class MainMenuScreen extends BaseMenuScreen {
     public void render(float delta) {
         float ww = viewport.getWorldWidth();
         float wh = viewport.getWorldHeight();
-
         float panelW = 520f;
         float panelH = showContinue ? 530f : 470f;
         float panelX = ww / 2f - panelW / 2f;
         float panelY = wh / 2f - panelH / 2f;
-
         float btnW = 300f;
         float btnH = 54f;
         float btnX = ww / 2f - btnW / 2f;
         float startY = showContinue ? panelY + 330f : panelY + 270f;
         float gap = 64f;
-
         int row = 0;
-
         if (showContinue) {
             continueButton.set(btnX, startY - gap * row, btnW, btnH);
             row++;
         }
-
         newGameButton.set(btnX, startY - gap * row, btnW, btnH);
         row++;
-
         recordsButton.set(btnX, startY - gap * row, btnW, btnH);
         row++;
-
         optionsButton.set(btnX, startY - gap * row, btnW, btnH);
         row++;
-
         creditsButton.set(btnX, startY - gap * row, btnW, btnH);
         row++;
-
         exitButton.set(btnX, startY - gap * row, btnW, btnH);
-
         beginFrame();
         drawBackground();
-
         drawPanel(panelX, panelY, panelW, panelH);
-
         titleFont.setColor(TEXT_DARK);
-        drawCenteredText(titleFont, "Throne", ww / 2f, panelY + panelH - 55f);
-
+        drawCenteredText(titleFont, LocalizationManager.get("game.title"), ww / 2f, panelY + panelH - 55f);
         smallFont.setColor(new com.badlogic.gdx.graphics.Color(0.30f, 0.22f, 0.13f, 0.85f));
-        drawCenteredText(smallFont, "Meniu Principal", ww / 2f, panelY + panelH - 95f);
-
+        drawCenteredText(smallFont, LocalizationManager.get("menu.main_title"), ww / 2f, panelY + panelH - 95f);
         if (showContinue) {
             drawButton(continueButton, isHovered(continueButton.bounds));
         }
-
         drawButton(newGameButton, isHovered(newGameButton.bounds));
         drawButton(recordsButton, isHovered(recordsButton.bounds));
         drawButton(optionsButton, isHovered(optionsButton.bounds));
         drawButton(creditsButton, isHovered(creditsButton.bounds));
         drawButton(exitButton, isHovered(exitButton.bounds));
-
         endFrame();
     }
 }

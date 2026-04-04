@@ -28,34 +28,25 @@ import com.lazar.logic.GameOverAssets;
 import com.lazar.ui.background.BlurBackgroundRenderer;
 
 public class GameOverScreen implements Screen {
-
     private static final float GAME_OVER_TARGET_VOLUME = 0.28f;
     private static final float GAME_OVER_FADE_IN_SPEED = 0.22f;
-
     private final StartGame game;
     private final GameOverType type;
     private final String emperorName;
     private final String yearsRuled;
-
     private SpriteBatch batch;
     private Texture background;
     private Texture whiteTexture;
     private TextureRegion whiteRegion;
-
     private Music backgroundMusic;
     private float currentMusicVolume = 0f;
-
     private OrthographicCamera camera;
     private Viewport viewport;
-
     private BitmapFont titleFont;
     private BitmapFont bodyFont;
     private BitmapFont hintFont;
-
     private GlyphLayout layout;
-
     private BlurBackgroundRenderer backgroundRenderer;
-
     private final Rectangle restartBounds = new Rectangle();
     private final Rectangle menuBounds = new Rectangle();
     private final Vector3 touchPoint = new Vector3();
@@ -71,24 +62,18 @@ public class GameOverScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         background = new Texture(Gdx.files.internal(GameOverAssets.getBackgroundPath(type)));
-
         camera = new OrthographicCamera();
         viewport = new FitViewport(1280, 720, camera);
         viewport.apply();
-
         camera.position.set(640, 360, 0);
         camera.update();
-
         whiteTexture = createWhiteTexture();
         whiteRegion = new TextureRegion(whiteTexture);
-
         titleFont = generateFont(30, new Color(0.14f, 0.08f, 0.04f, 1f));
         bodyFont = generateFont(20, new Color(0.18f, 0.11f, 0.06f, 1f));
         hintFont = generateFont(16, new Color(0.20f, 0.13f, 0.07f, 0.95f));
         layout = new GlyphLayout();
-
         backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, null);
-
         loadAudio();
         startBackgroundMusic();
         installInputProcessor();
@@ -134,7 +119,6 @@ public class GameOverScreen implements Screen {
     private BitmapFont generateFont(int size, Color color) {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/medieval.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
         parameter.size = size;
         parameter.color = color;
         parameter.kerning = true;
@@ -142,15 +126,12 @@ public class GameOverScreen implements Screen {
         parameter.minFilter = Texture.TextureFilter.Linear;
         parameter.magFilter = Texture.TextureFilter.Linear;
         parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "ĂÂÎȘȚăâîșț";
-
         BitmapFont font = generator.generateFont(parameter);
         generator.dispose();
-
         font.setUseIntegerPositions(false);
         for (TextureRegion region : font.getRegions()) {
             region.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
-
         return font;
     }
 
@@ -202,18 +183,14 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         camera.update();
         updateMusicFadeIn(delta);
-
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-
         batch.draw(background, 0f, 0f, viewport.getWorldWidth(), viewport.getWorldHeight());
         drawDarkOverlay();
         drawGameOverCard(viewport.getWorldWidth(), viewport.getWorldHeight());
         drawBottomHint(viewport.getWorldWidth());
-
         batch.end();
     }
 
@@ -253,10 +230,8 @@ public class GameOverScreen implements Screen {
         float total = buttonW * 2f + gap;
         float startX = x + (cardW - total) / 2f;
         float buttonY = y + 34f;
-
         restartBounds.set(startX, buttonY, buttonW, buttonH);
         menuBounds.set(startX + buttonW + gap, buttonY, buttonW, buttonH);
-
         drawButton(restartBounds, "Play Again");
         drawButton(menuBounds, "Main Menu");
     }
@@ -264,39 +239,30 @@ public class GameOverScreen implements Screen {
     private void drawCardBackground(float x, float y, float w, float h) {
         batch.setColor(0f, 0f, 0f, 0.18f);
         batch.draw(whiteRegion, x + 8f, y - 8f, w, h);
-
         batch.setColor(0.24f, 0.16f, 0.08f, 0.98f);
         batch.draw(whiteRegion, x, y, w, h);
-
         batch.setColor(0.93f, 0.87f, 0.73f, 0.98f);
         batch.draw(whiteRegion, x + 6f, y + 6f, w - 12f, h - 12f);
-
         batch.setColor(1f, 1f, 1f, 0.08f);
         batch.draw(whiteRegion, x + 18f, y + h - 22f, w - 36f, 5f);
-
         batch.setColor(0.55f, 0.38f, 0.20f, 0.35f);
         batch.draw(whiteRegion, x + 18f, y + 18f, w - 36f, 2f);
         batch.draw(whiteRegion, x + 18f, y + h - 20f, w - 36f, 2f);
         batch.draw(whiteRegion, x + 18f, y + 18f, 2f, h - 36f);
         batch.draw(whiteRegion, x + w - 20f, y + 18f, 2f, h - 36f);
-
         batch.setColor(Color.WHITE);
     }
 
     private void drawButton(Rectangle bounds, String text) {
         batch.setColor(0f, 0f, 0f, 0.14f);
         batch.draw(whiteRegion, bounds.x + 5f, bounds.y - 5f, bounds.width, bounds.height);
-
         batch.setColor(0.25f, 0.16f, 0.08f, 0.95f);
         batch.draw(whiteRegion, bounds.x, bounds.y, bounds.width, bounds.height);
-
         batch.setColor(0.93f, 0.87f, 0.73f, 0.98f);
         batch.draw(whiteRegion, bounds.x + 3f, bounds.y + 3f, bounds.width - 6f, bounds.height - 6f);
-
         hintFont.setColor(0.20f, 0.13f, 0.07f, 1f);
         layout.setText(hintFont, text);
         hintFont.draw(batch, text, bounds.x + (bounds.width - layout.width) / 2f, bounds.y + bounds.height / 2f + layout.height / 2f - 2f);
-
         batch.setColor(Color.WHITE);
     }
 
@@ -340,11 +306,9 @@ public class GameOverScreen implements Screen {
         if (batch != null) batch.dispose();
         if (background != null) background.dispose();
         if (whiteTexture != null) whiteTexture.dispose();
-
         if (titleFont != null) titleFont.dispose();
         if (bodyFont != null) bodyFont.dispose();
         if (hintFont != null) hintFont.dispose();
-
         if (backgroundMusic != null) backgroundMusic.dispose();
     }
 }

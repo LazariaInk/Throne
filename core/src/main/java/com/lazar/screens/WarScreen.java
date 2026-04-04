@@ -16,7 +16,6 @@ public class WarScreen implements Screen {
 
     private final StartGame game;
     private final Screen previousScreen;
-
     private SpriteBatch batch;
     private BitmapFont font;
     private OrthographicCamera camera;
@@ -32,11 +31,9 @@ public class WarScreen implements Screen {
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.WHITE);
-
         camera = new OrthographicCamera();
         viewport = new FitViewport(1280, 720, camera);
         viewport.apply();
-
         camera.position.set(640, 360, 0);
         camera.update();
     }
@@ -47,10 +44,8 @@ public class WarScreen implements Screen {
             game.setScreen(previousScreen);
             return;
         }
-
         Gdx.gl.glClearColor(0.12f, 0.06f, 0.06f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         font.draw(batch, "War Screen", 560, 390);
