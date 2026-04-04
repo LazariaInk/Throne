@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import com.lazar.StartGame;
 import com.lazar.config.LocalizationManager;
+import com.lazar.config.SoundManager;
 
 public class OptionsScreen extends BaseMenuScreen {
     private final MenuButton backButton = new MenuButton("");
@@ -34,6 +35,7 @@ public class OptionsScreen extends BaseMenuScreen {
     private boolean draggingMusic = false;
     private boolean draggingEffects = false;
     private final Screen continueScreen;
+    private SoundManager soundManager;
 
     public OptionsScreen(StartGame game, Screen continueScreen) {
         super(game);
@@ -84,6 +86,11 @@ public class OptionsScreen extends BaseMenuScreen {
         prefs.putInteger("musicVolume", musicVolume);
         prefs.putInteger("effectsVolume", effectsVolume);
         prefs.flush();
+
+        if (soundManager != null) {
+            soundManager.setMusicVolume(musicVolume);
+            soundManager.setEffectsVolume(effectsVolume);
+        }
     }
 
     private void goBackToMenu() {
@@ -94,14 +101,18 @@ public class OptionsScreen extends BaseMenuScreen {
     @Override
     protected void onShow() {
         prefs = Gdx.app.getPreferences(StartGame.SETTINGS_PREFS);
+        soundManager = game.getSoundManager();
+
         fullscreen = prefs.getBoolean("fullscreen", false);
         vsync = prefs.getBoolean("vsync", true);
         musicVolume = prefs.getInteger("musicVolume", 70);
         effectsVolume = prefs.getInteger("effectsVolume", 70);
+
         String currentLanguage = prefs.getString("language", "en");
         LocalizationManager.loadLanguage(currentLanguage);
         selectedLanguageIndex = languageIndex(currentLanguage);
         backButton.text = LocalizationManager.get("button.back");
+
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {

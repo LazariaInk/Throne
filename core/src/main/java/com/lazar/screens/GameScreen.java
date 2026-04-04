@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -20,10 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
-import com.lazar.config.BackendDecisionResolver;
-import com.lazar.config.DecisionResolver;
-import com.lazar.config.FontManager;
-import com.lazar.config.LocalizationManager;
+import com.lazar.config.*;
 import com.lazar.data.RecordEntry;
 import com.lazar.data.RecordsManager;
 import com.lazar.engine.GameEngine;
@@ -74,8 +69,6 @@ public class GameScreen implements Screen {
     private Texture settingsButtonTexture;
     private final Rectangle settingsButtonBounds = new Rectangle();
     private boolean hoverSettings = false;
-    private Music backgroundMusic;
-    private Sound cardSwapSound;
     private OrthographicCamera camera;
     private Viewport viewport;
     private BitmapFont titleFont;
@@ -108,10 +101,9 @@ public class GameScreen implements Screen {
     private static final Color BADGE_INNER = new Color(0.95f, 0.90f, 0.78f, 0.98f);
     private static final Color BADGE_SHADOW = new Color(0f, 0f, 0f, 0.16f);
     private static final Color BADGE_RING = new Color(0.55f, 0.38f, 0.20f, 0.55f);
-    private static final float BACKGROUND_MUSIC_VOLUME = 0.35f;
-    private static final float CARD_SWAP_VOLUME = 0.75f;
     private final StartGame game;
     private final String emperorName;
+    private final SoundManager soundManager;
     private Texture tournamentButtonTexture;
     private Texture warButtonTexture;
     private final Rectangle tournamentButtonBounds = new Rectangle();
@@ -128,6 +120,7 @@ public class GameScreen implements Screen {
         this.emperorName = emperorName;
         this.decisionResolver = decisionResolver;
         this.gameEngine = gameEngine;
+        this.soundManager = game.getSoundManager();
     }
 
     @Override
@@ -147,8 +140,10 @@ public class GameScreen implements Screen {
             peopleIcon = new Texture(Gdx.files.internal("images/ui/people.png"));
             religionIcon = new Texture(Gdx.files.internal("images/ui/religion.png"));
             sendButtonTexture = new Texture(Gdx.files.internal("images/ui/send-btn.png"));
-            loadAudio();
+
+            soundManager.reloadSettings();
             startBackgroundMusic();
+
             sendButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             moneyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             armyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -180,27 +175,21 @@ public class GameScreen implements Screen {
             lastStats = gameEngine.getRunState().getStats().copy();
             initialized = true;
         } else {
+            soundManager.reloadSettings();
             startBackgroundMusic();
         }
         installInputProcessor();
     }
 
-    private void loadAudio() {
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background-music.mp3"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(BACKGROUND_MUSIC_VOLUME);
-        cardSwapSound = Gdx.audio.newSound(Gdx.files.internal("sounds/card-swap.mp3"));
-    }
-
     private void startBackgroundMusic() {
-        if (backgroundMusic != null && !backgroundMusic.isPlaying()) {
-            backgroundMusic.play();
+        if (soundManager != null) {
+            soundManager.playBackgroundMusic();
         }
     }
 
     private void playCardSwapSound() {
-        if (cardSwapSound != null) {
-            cardSwapSound.play(CARD_SWAP_VOLUME);
+        if (soundManager != null) {
+            soundManager.playCardSwap();
         }
     }
 
@@ -305,7 +294,7 @@ public class GameScreen implements Screen {
                 gameEngine.onTurnCompleted();
                 gameOverType = gameEngine.checkGameOver();
                 if (gameOverType != null) {
-                    if (backgroundMusic != null) backgroundMusic.stop();
+                    soundManager.stopBackgroundMusic();
                     RecordsManager recordsManager = new RecordsManager();
                     recordsManager.saveRecord(new RecordEntry(gameEngine.getEmperorName(), gameEngine.getYearsRuledText(), gameOverType.name()));
 
@@ -383,7 +372,6 @@ public class GameScreen implements Screen {
         warButtonBounds.set(x, startY, buttonSize, buttonSize);
 
         drawActionButton(tournamentButtonBounds.x, tournamentButtonBounds.y, tournamentButtonBounds.width, tournamentButtonBounds.height, tournamentButtonTexture, hoverTournament);
-
         drawActionButton(warButtonBounds.x, warButtonBounds.y, warButtonBounds.width, warButtonBounds.height, warButtonTexture, hoverWar);
     }
 
@@ -630,16 +618,61 @@ public class GameScreen implements Screen {
 
     private void initShaders() {
         ShaderProgram.pedantic = false;
-        String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" + "uniform mat4 u_projTrans;\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "void main() {\n" + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" + "   gl_Position = u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" + "}";
+        String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n"
+            + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n"
+            + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n"
+            + "uniform mat4 u_projTrans;\n"
+            + "varying vec4 v_color;\n"
+            + "varying vec2 v_texCoords;\n"
+            + "void main() {\n"
+            + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n"
+            + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n"
+            + "   gl_Position = u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n"
+            + "}";
 
-        String blurFragmentShader = "#ifdef GL_ES\n" + "precision mediump float;\n" + "#endif\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "uniform sampler2D u_texture;\n" + "uniform vec2 u_dir;\n" + "void main() {\n" + "    vec4 sum = vec4(0.0);\n" + "    sum += texture2D(u_texture, v_texCoords - 4.0 * u_dir) * 0.05;\n" + "    sum += texture2D(u_texture, v_texCoords - 3.0 * u_dir) * 0.09;\n" + "    sum += texture2D(u_texture, v_texCoords - 2.0 * u_dir) * 0.12;\n" + "    sum += texture2D(u_texture, v_texCoords - 1.0 * u_dir) * 0.15;\n" + "    sum += texture2D(u_texture, v_texCoords) * 0.18;\n" + "    sum += texture2D(u_texture, v_texCoords + 1.0 * u_dir) * 0.15;\n" + "    sum += texture2D(u_texture, v_texCoords + 2.0 * u_dir) * 0.12;\n" + "    sum += texture2D(u_texture, v_texCoords + 3.0 * u_dir) * 0.09;\n" + "    sum += texture2D(u_texture, v_texCoords + 4.0 * u_dir) * 0.05;\n" + "    gl_FragColor = sum * v_color;\n" + "}";
+        String blurFragmentShader = "#ifdef GL_ES\n"
+            + "precision mediump float;\n"
+            + "#endif\n"
+            + "varying vec4 v_color;\n"
+            + "varying vec2 v_texCoords;\n"
+            + "uniform sampler2D u_texture;\n"
+            + "uniform vec2 u_dir;\n"
+            + "void main() {\n"
+            + "    vec4 sum = vec4(0.0);\n"
+            + "    sum += texture2D(u_texture, v_texCoords - 4.0 * u_dir) * 0.05;\n"
+            + "    sum += texture2D(u_texture, v_texCoords - 3.0 * u_dir) * 0.09;\n"
+            + "    sum += texture2D(u_texture, v_texCoords - 2.0 * u_dir) * 0.12;\n"
+            + "    sum += texture2D(u_texture, v_texCoords - 1.0 * u_dir) * 0.15;\n"
+            + "    sum += texture2D(u_texture, v_texCoords) * 0.18;\n"
+            + "    sum += texture2D(u_texture, v_texCoords + 1.0 * u_dir) * 0.15;\n"
+            + "    sum += texture2D(u_texture, v_texCoords + 2.0 * u_dir) * 0.12;\n"
+            + "    sum += texture2D(u_texture, v_texCoords + 3.0 * u_dir) * 0.09;\n"
+            + "    sum += texture2D(u_texture, v_texCoords + 4.0 * u_dir) * 0.05;\n"
+            + "    gl_FragColor = sum * v_color;\n"
+            + "}";
 
-        String ovalMaskFragmentShader = "#ifdef GL_ES\n" + "precision mediump float;\n" + "#endif\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "uniform sampler2D u_texture;\n" + "uniform vec2 u_center;\n" + "uniform vec2 u_radius;\n" + "uniform float u_softness;\n" + "void main() {\n" + "    vec2 p = (v_texCoords - u_center) / u_radius;\n" + "    float d = dot(p, p);\n" + "    float alpha = 1.0 - smoothstep(1.0 - u_softness, 1.0, d);\n" + "    vec4 tex = texture2D(u_texture, v_texCoords);\n" + "    gl_FragColor = vec4(tex.rgb * v_color.rgb, tex.a * v_color.a * alpha);\n" + "}";
+        String ovalMaskFragmentShader = "#ifdef GL_ES\n"
+            + "precision mediump float;\n"
+            + "#endif\n"
+            + "varying vec4 v_color;\n"
+            + "varying vec2 v_texCoords;\n"
+            + "uniform sampler2D u_texture;\n"
+            + "uniform vec2 u_center;\n"
+            + "uniform vec2 u_radius;\n"
+            + "uniform float u_softness;\n"
+            + "void main() {\n"
+            + "    vec2 p = (v_texCoords - u_center) / u_radius;\n"
+            + "    float d = dot(p, p);\n"
+            + "    float alpha = 1.0 - smoothstep(1.0 - u_softness, 1.0, d);\n"
+            + "    vec4 tex = texture2D(u_texture, v_texCoords);\n"
+            + "    gl_FragColor = vec4(tex.rgb * v_color.rgb, tex.a * v_color.a * alpha);\n"
+            + "}";
 
         blurShader = new ShaderProgram(vertexShader, blurFragmentShader);
         if (!blurShader.isCompiled()) {
             throw new IllegalStateException("Blur shader error:\n" + blurShader.getLog());
         }
+
         ovalMaskShader = new ShaderProgram(vertexShader, ovalMaskFragmentShader);
         if (!ovalMaskShader.isCompiled()) {
             throw new IllegalStateException("Oval shader error:\n" + ovalMaskShader.getLog());
@@ -654,17 +687,18 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        if (backgroundMusic != null && backgroundMusic.isPlaying()) backgroundMusic.pause();
+        soundManager.pauseBackgroundMusic();
     }
 
     @Override
     public void resume() {
-        startBackgroundMusic();
+        soundManager.reloadSettings();
+        soundManager.playBackgroundMusic();
     }
 
     @Override
     public void hide() {
-        if (backgroundMusic != null && backgroundMusic.isPlaying()) backgroundMusic.pause();
+        soundManager.pauseBackgroundMusic();
     }
 
     private void drawBottomRightSettingsButton(float worldWidth) {
@@ -691,7 +725,5 @@ public class GameScreen implements Screen {
         if (blurShader != null) blurShader.dispose();
         if (ovalMaskShader != null) ovalMaskShader.dispose();
         if (settingsButtonTexture != null) settingsButtonTexture.dispose();
-        if (backgroundMusic != null) backgroundMusic.dispose();
-        if (cardSwapSound != null) cardSwapSound.dispose();
     }
 }
