@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
-
+import com.lazar.config.FontManager;
 
 public abstract class BaseMenuScreen extends ScreenAdapter {
 
@@ -37,7 +37,6 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
     protected static final Color PANEL_BORDER = new Color(0.23f, 0.15f, 0.08f, 0.96f);
     protected static final Color PANEL_FILL = new Color(0.93f, 0.87f, 0.73f, 0.97f);
     protected static final Color TEXT_DARK = new Color(0.20f, 0.13f, 0.07f, 1f);
-    protected static final Color TEXT_SOFT = new Color(0.35f, 0.28f, 0.20f, 0.70f);
     protected static final Color BUTTON_HOVER = new Color(0.86f, 0.79f, 0.62f, 1f);
 
     protected static class MenuButton {
@@ -75,12 +74,10 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
         bodyFont = generateFont(22, TEXT_DARK);
         smallFont = generateFont(18, TEXT_DARK);
         layout = new GlyphLayout();
-
         if (Gdx.files.internal("images/tournament-bg.png").exists()) {
             backgroundTexture = new Texture(Gdx.files.internal("images/tournament-bg.png"));
             backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
-
         onShow();
     }
 
@@ -88,7 +85,7 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
     }
 
     protected BitmapFont generateFont(int size, Color color) {
-        return com.lazar.config.FontManager.createFont("fonts/medieval.ttf", size, color);
+        return FontManager.get(size, color);
     }
 
     protected void beginFrame() {
@@ -98,7 +95,6 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
     }
-
     protected void endFrame() {
         batch.end();
     }
@@ -106,14 +102,12 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
     protected void drawBackground() {
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
-
         if (backgroundTexture == null) {
             batch.setColor(BG_TINT);
             batch.draw(whiteRegion, 0, 0, worldWidth, worldHeight);
             batch.setColor(Color.WHITE);
             return;
         }
-
         float bgAspect = (float) backgroundTexture.getWidth() / backgroundTexture.getHeight();
         float screenAspect = worldWidth / worldHeight;
         float drawWidth, drawHeight, drawX, drawY;
@@ -128,7 +122,6 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
             drawX = (worldWidth - drawWidth) / 2f;
             drawY = 0f;
         }
-        bodyFont.draw(batch, "Ș Ț ă î â Привет", 100, 100);
         batch.setColor(Color.WHITE);
         batch.draw(backgroundTexture, drawX, drawY, drawWidth, drawHeight);
         batch.setColor(0f, 0f, 0f, 0.35f);
@@ -161,7 +154,12 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
         batch.draw(whiteRegion, b.x + 3f, b.y + 3f, b.width - 6f, b.height - 6f);
         bodyFont.setColor(TEXT_DARK);
         layout.setText(bodyFont, button.text);
-        bodyFont.draw(batch, button.text, b.x + (b.width - layout.width) / 2f, b.y + b.height / 2f + layout.height / 2f - 2f);
+        bodyFont.draw(
+            batch,
+            button.text,
+            b.x + (b.width - layout.width) / 2f,
+            b.y + b.height / 2f + layout.height / 2f - 2f
+        );
         batch.setColor(Color.WHITE);
     }
 
@@ -171,26 +169,20 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
         viewport.unproject(touchPoint.set(x, y, 0f));
         return bounds.contains(touchPoint.x, touchPoint.y);
     }
-
     protected boolean touched(Rectangle bounds, int screenX, int screenY) {
         viewport.unproject(touchPoint.set(screenX, screenY, 0f));
         return bounds.contains(touchPoint.x, touchPoint.y);
     }
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0f);
         camera.update();
     }
-
     @Override
     public void dispose() {
         if (batch != null) batch.dispose();
         if (whiteTexture != null) whiteTexture.dispose();
         if (backgroundTexture != null) backgroundTexture.dispose();
-        if (titleFont != null) titleFont.dispose();
-        if (bodyFont != null) bodyFont.dispose();
-        if (smallFont != null) smallFont.dispose();
     }
 }

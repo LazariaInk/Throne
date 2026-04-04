@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -23,6 +22,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
 import com.lazar.config.BackendDecisionResolver;
 import com.lazar.config.DecisionResolver;
+import com.lazar.config.FontManager;
+import com.lazar.config.LocalizationManager;
 import com.lazar.data.RecordEntry;
 import com.lazar.data.RecordsManager;
 import com.lazar.engine.GameEngine;
@@ -138,9 +139,9 @@ public class GameScreen implements Screen {
             warButtonTexture = new Texture(Gdx.files.internal("images/ui/war.png"));
             settingsButtonTexture = new Texture(Gdx.files.internal("images/ui/settings.png"));
             settingsButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            gameEngine.setEmperorName(emperorName);
             tournamentButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             warButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            gameEngine.setEmperorName(emperorName);
             moneyIcon = new Texture(Gdx.files.internal("images/ui/money.png"));
             armyIcon = new Texture(Gdx.files.internal("images/ui/army.png"));
             peopleIcon = new Texture(Gdx.files.internal("images/ui/people.png"));
@@ -163,11 +164,11 @@ public class GameScreen implements Screen {
             camera.update();
             whiteTexture = createWhiteTexture();
             whiteRegion = new TextureRegion(whiteTexture);
-            titleFont = generateFont(26, new Color(0.14f, 0.08f, 0.04f, 1f));
-            bodyFont = generateFont(18, new Color(0.18f, 0.11f, 0.06f, 1f));
-            hintFont = generateFont(15, new Color(0.20f, 0.13f, 0.07f, 0.95f));
-            inputFont = generateFont(17, new Color(0.20f, 0.13f, 0.07f, 1f));
-            hudFont = generateFont(15, new Color(0.18f, 0.11f, 0.06f, 1f));
+            titleFont = FontManager.get(26, new Color(0.14f, 0.08f, 0.04f, 1f));
+            bodyFont = FontManager.get(18, new Color(0.18f, 0.11f, 0.06f, 1f));
+            hintFont = FontManager.get(15, new Color(0.20f, 0.13f, 0.07f, 0.95f));
+            inputFont = FontManager.get(17, new Color(0.20f, 0.13f, 0.07f, 1f));
+            hudFont = FontManager.get(15, new Color(0.18f, 0.11f, 0.06f, 1f));
             layout = new GlyphLayout();
             initShaders();
             CardRenderResources cardRenderResources = new CardRenderResources(whiteRegion, titleFont, bodyFont, ovalMaskShader);
@@ -217,48 +218,39 @@ public class GameScreen implements Screen {
             @Override
             public boolean keyTyped(char character) {
                 if (!cardPresenter.canTypeMessage() || gameOverType != null) return false;
-
                 if (character == '\b') {
                     if (typedMessage.length() > 0) typedMessage.deleteCharAt(typedMessage.length() - 1);
                     return true;
                 }
-
                 if (character == '\r' || character == '\n') {
                     submitPlayerMessage();
                     return true;
                 }
-
                 if (!Character.isISOControl(character)) {
                     if (typedMessage.length() < 120) typedMessage.append(character);
                     return true;
                 }
-
                 return false;
             }
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (button != Input.Buttons.LEFT) return false;
-
                 viewport.unproject(touchPoint.set(screenX, screenY, 0f));
                 float worldX = touchPoint.x;
                 float worldY = touchPoint.y;
-
                 if (cardPresenter.canTypeMessage() && sendButtonBounds.contains(worldX, worldY)) {
                     submitPlayerMessage();
                     return true;
                 }
-
                 if (cardPresenter.canAdvanceCard()) {
                     advanceToNextCard();
                     return true;
                 }
-
                 if (tournamentButtonBounds.contains(worldX, worldY)) {
                     game.setScreen(new TournamentScreen(game, GameScreen.this));
                     return true;
                 }
-
                 if (warButtonBounds.contains(worldX, worldY)) {
                     game.setScreen(new WarScreen(game, GameScreen.this));
                     return true;
@@ -267,7 +259,6 @@ public class GameScreen implements Screen {
                     game.setScreen(new MainMenuScreen(game, GameScreen.this));
                     return true;
                 }
-
                 return false;
             }
 
@@ -277,12 +268,10 @@ public class GameScreen implements Screen {
                     game.setScreen(new MainMenuScreen(game, GameScreen.this));
                     return true;
                 }
-
                 if (cardPresenter.canAdvanceCard() && keycode == Input.Keys.SPACE) {
                     advanceToNextCard();
                     return true;
                 }
-
                 return false;
             }
 
@@ -297,7 +286,6 @@ public class GameScreen implements Screen {
                 return false;
             }
         });
-
     }
 
     private void submitPlayerMessage() {
@@ -307,6 +295,7 @@ public class GameScreen implements Screen {
         requestInFlight = true;
         uiMessage = null;
         cardPresenter.markSubmitting();
+
         gameEngine.submitPlayerText(decisionResolver, message, new DecisionResolver.Callback() {
             @Override
             public void onSuccess(DecisionResolution resolution) {
@@ -319,6 +308,7 @@ public class GameScreen implements Screen {
                     if (backgroundMusic != null) backgroundMusic.stop();
                     RecordsManager recordsManager = new RecordsManager();
                     recordsManager.saveRecord(new RecordEntry(gameEngine.getEmperorName(), gameEngine.getYearsRuledText(), gameOverType.name()));
+
                     game.setScreen(new GameOverScreen(game, gameOverType, gameEngine.getEmperorName(), gameEngine.getYearsRuledText()));
                     dispose();
                     return;
@@ -375,7 +365,7 @@ public class GameScreen implements Screen {
         }
         drawReignInfo(viewport.getWorldWidth(), viewport.getWorldHeight());
         drawSideActionButtons(viewport.getWorldHeight());
-        drawBottomRightSettingsButton(viewport.getWorldHeight());
+        drawBottomRightSettingsButton(viewport.getWorldWidth());
         if (uiMessage != null && !uiMessage.isEmpty()) {
             drawUiMessage(viewport.getWorldWidth());
         }
@@ -388,9 +378,12 @@ public class GameScreen implements Screen {
         float x = 24f;
         float totalHeight = buttonSize * 2f + gap;
         float startY = worldHeight / 2f - totalHeight / 2f;
+
         tournamentButtonBounds.set(x, startY + buttonSize + gap, buttonSize, buttonSize);
         warButtonBounds.set(x, startY, buttonSize, buttonSize);
+
         drawActionButton(tournamentButtonBounds.x, tournamentButtonBounds.y, tournamentButtonBounds.width, tournamentButtonBounds.height, tournamentButtonTexture, hoverTournament);
+
         drawActionButton(warButtonBounds.x, warButtonBounds.y, warButtonBounds.width, warButtonBounds.height, warButtonTexture, hoverWar);
     }
 
@@ -490,8 +483,8 @@ public class GameScreen implements Screen {
     }
 
     private void drawReignInfo(float worldWidth, float worldHeight) {
-        String line1 = "Imparat: " + emperorName;
-        String line2 = "Ani domniti: " + gameEngine.getYearsRuledText();
+        String line1 = LocalizationManager.get("game.emperor") + ": " + emperorName;
+        String line2 = LocalizationManager.get("game.years_ruled") + ": " + gameEngine.getYearsRuledText();
         layout.setText(hudFont, line1);
         float w1 = layout.width;
         layout.setText(hudFont, line2);
@@ -554,6 +547,7 @@ public class GameScreen implements Screen {
             int texH = icon.getHeight();
             int filledPx = Math.max(1, Math.round(texH * fill));
             float filledH = iconSize * fill;
+
             batch.setColor(STAT_FILL_COLOR);
             batch.draw(icon, iconX, iconY, iconSize, filledH, 0, texH - filledPx, texW, filledPx, false, false);
         }
@@ -561,14 +555,14 @@ public class GameScreen implements Screen {
     }
 
     private void drawNextHint(float worldWidth) {
-        String hint = "SPACE / CLICK pentru urmatoarea carte";
+        String hint = LocalizationManager.get("game.next_hint");
         hintFont.setColor(0.25f, 0.16f, 0.08f, 0.95f);
         layout.setText(hintFont, hint);
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
     }
 
     private void drawLoadingHint(float worldWidth) {
-        String hint = "Consilierii judeca hotararea ta...";
+        String hint = LocalizationManager.get("game.loading_hint");
         hintFont.setColor(0.25f, 0.16f, 0.08f, 0.95f);
         layout.setText(hintFont, hint);
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
@@ -596,7 +590,7 @@ public class GameScreen implements Screen {
         String textToDraw;
         Color fontColor;
         if (typedMessage.length() == 0) {
-            textToDraw = "type your message here...";
+            textToDraw = LocalizationManager.get("game.input_placeholder");
             fontColor = new Color(0.33f, 0.24f, 0.15f, 0.68f);
         } else {
             textToDraw = typedMessage.toString();
@@ -634,38 +628,22 @@ public class GameScreen implements Screen {
         batch.draw(sendButtonTexture, x + pad, y + pad, w - pad * 2f, h - pad * 2f);
     }
 
-    private BitmapFont generateFont(int size, Color color) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/medieval.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = size;
-        parameter.color = color;
-        parameter.kerning = true;
-        parameter.hinting = FreeTypeFontGenerator.Hinting.Slight;
-        parameter.minFilter = Texture.TextureFilter.Linear;
-        parameter.magFilter = Texture.TextureFilter.Linear;
-        parameter.borderWidth = 0f;
-        parameter.shadowOffsetX = 0;
-        parameter.shadowOffsetY = 0;
-        parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "ĂÂÎȘȚăâîșț";
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-        font.setUseIntegerPositions(false);
-        for (TextureRegion region : font.getRegions()) {
-            region.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        }
-        return font;
-    }
-
     private void initShaders() {
         ShaderProgram.pedantic = false;
         String vertexShader = "attribute vec4 " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" + "attribute vec4 " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "attribute vec2 " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" + "uniform mat4 u_projTrans;\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "void main() {\n" + "   v_color = " + ShaderProgram.COLOR_ATTRIBUTE + ";\n" + "   v_texCoords = " + ShaderProgram.TEXCOORD_ATTRIBUTE + "0;\n" + "   gl_Position = u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" + "}";
+
         String blurFragmentShader = "#ifdef GL_ES\n" + "precision mediump float;\n" + "#endif\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "uniform sampler2D u_texture;\n" + "uniform vec2 u_dir;\n" + "void main() {\n" + "    vec4 sum = vec4(0.0);\n" + "    sum += texture2D(u_texture, v_texCoords - 4.0 * u_dir) * 0.05;\n" + "    sum += texture2D(u_texture, v_texCoords - 3.0 * u_dir) * 0.09;\n" + "    sum += texture2D(u_texture, v_texCoords - 2.0 * u_dir) * 0.12;\n" + "    sum += texture2D(u_texture, v_texCoords - 1.0 * u_dir) * 0.15;\n" + "    sum += texture2D(u_texture, v_texCoords) * 0.18;\n" + "    sum += texture2D(u_texture, v_texCoords + 1.0 * u_dir) * 0.15;\n" + "    sum += texture2D(u_texture, v_texCoords + 2.0 * u_dir) * 0.12;\n" + "    sum += texture2D(u_texture, v_texCoords + 3.0 * u_dir) * 0.09;\n" + "    sum += texture2D(u_texture, v_texCoords + 4.0 * u_dir) * 0.05;\n" + "    gl_FragColor = sum * v_color;\n" + "}";
+
         String ovalMaskFragmentShader = "#ifdef GL_ES\n" + "precision mediump float;\n" + "#endif\n" + "varying vec4 v_color;\n" + "varying vec2 v_texCoords;\n" + "uniform sampler2D u_texture;\n" + "uniform vec2 u_center;\n" + "uniform vec2 u_radius;\n" + "uniform float u_softness;\n" + "void main() {\n" + "    vec2 p = (v_texCoords - u_center) / u_radius;\n" + "    float d = dot(p, p);\n" + "    float alpha = 1.0 - smoothstep(1.0 - u_softness, 1.0, d);\n" + "    vec4 tex = texture2D(u_texture, v_texCoords);\n" + "    gl_FragColor = vec4(tex.rgb * v_color.rgb, tex.a * v_color.a * alpha);\n" + "}";
+
         blurShader = new ShaderProgram(vertexShader, blurFragmentShader);
-        if (!blurShader.isCompiled()) throw new IllegalStateException("Blur shader error:\n" + blurShader.getLog());
+        if (!blurShader.isCompiled()) {
+            throw new IllegalStateException("Blur shader error:\n" + blurShader.getLog());
+        }
         ovalMaskShader = new ShaderProgram(vertexShader, ovalMaskFragmentShader);
-        if (!ovalMaskShader.isCompiled())
+        if (!ovalMaskShader.isCompiled()) {
             throw new IllegalStateException("Oval shader error:\n" + ovalMaskShader.getLog());
+        }
     }
 
     @Override
@@ -710,11 +688,6 @@ public class GameScreen implements Screen {
         if (sendButtonTexture != null) sendButtonTexture.dispose();
         if (tournamentButtonTexture != null) tournamentButtonTexture.dispose();
         if (warButtonTexture != null) warButtonTexture.dispose();
-        if (titleFont != null) titleFont.dispose();
-        if (bodyFont != null) bodyFont.dispose();
-        if (hintFont != null) hintFont.dispose();
-        if (inputFont != null) inputFont.dispose();
-        if (hudFont != null) hudFont.dispose();
         if (blurShader != null) blurShader.dispose();
         if (ovalMaskShader != null) ovalMaskShader.dispose();
         if (settingsButtonTexture != null) settingsButtonTexture.dispose();

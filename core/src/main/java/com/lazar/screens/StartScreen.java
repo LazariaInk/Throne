@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
 import com.lazar.config.FontManager;
+import com.lazar.config.LocalizationManager;
 
 public class StartScreen implements Screen {
     private final StartGame game;
@@ -53,8 +54,8 @@ public class StartScreen implements Screen {
         whiteTexture = new Texture(pixmap);
         pixmap.dispose();
         whiteRegion = new TextureRegion(whiteTexture);
-        titleFont = FontManager.createFont("fonts/medieval.ttf", 34, new Color(0.14f, 0.08f, 0.04f, 1f));
-        bodyFont = FontManager.createFont("fonts/medieval.ttf", 20, new Color(0.18f, 0.11f, 0.06f, 1f));
+        titleFont = FontManager.get(34, new Color(0.14f, 0.08f, 0.04f, 1f));
+        bodyFont = FontManager.get(20, new Color(0.18f, 0.11f, 0.06f, 1f));
         layout = new GlyphLayout();
         installInput();
     }
@@ -69,17 +70,14 @@ public class StartScreen implements Screen {
                     }
                     return true;
                 }
-
                 if (character == '\r' || character == '\n') {
                     startGame();
                     return true;
                 }
-
                 if (!Character.isISOControl(character) && emperorName.length() < 24) {
                     emperorName.append(character);
                     return true;
                 }
-
                 return false;
             }
 
@@ -112,7 +110,7 @@ public class StartScreen implements Screen {
     private void startGame() {
         String name = emperorName.toString().trim();
         if (name.isEmpty()) {
-            name = "Fara Nume";
+            name = LocalizationManager.get("start.default_emperor_name");
         }
         game.setScreen(new GameScreen(game, name));
         dispose();
@@ -125,18 +123,25 @@ public class StartScreen implements Screen {
         batch.begin();
         batch.setColor(0.92f, 0.86f, 0.74f, 1f);
         batch.draw(whiteRegion, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-        titleFont.draw(batch, "Alege numele imparatului", 390, 540);
+        batch.setColor(Color.WHITE);
+        titleFont.draw(batch, LocalizationManager.get("start.title"), 390, 540);
         batch.setColor(0.25f, 0.16f, 0.08f, 1f);
         batch.draw(whiteRegion, 390, 420, 500, 56);
         batch.setColor(0.93f, 0.87f, 0.73f, 1f);
         batch.draw(whiteRegion, 393, 423, 494, 50);
-        String shown = emperorName.length() == 0 ? "Scrie numele aici..." : emperorName.toString();
-        bodyFont.setColor(emperorName.length() == 0 ? new Color(0.35f, 0.28f, 0.20f, 0.7f) : new Color(0.20f, 0.13f, 0.07f, 1f));
+        String shown = emperorName.length() == 0
+            ? LocalizationManager.get("start.placeholder")
+            : emperorName.toString();
+        bodyFont.setColor(
+            emperorName.length() == 0
+                ? new Color(0.35f, 0.28f, 0.20f, 0.7f)
+                : new Color(0.20f, 0.13f, 0.07f, 1f)
+        );
         bodyFont.draw(batch, shown, 410, 456);
         startButton.set(430, 300, 180, 54);
         recordsButton.set(670, 300, 180, 54);
-        drawButton(startButton, "Start");
-        drawButton(recordsButton, "Recorduri");
+        drawButton(startButton, LocalizationManager.get("start.button.start"));
+        drawButton(recordsButton, LocalizationManager.get("start.button.records"));
         batch.end();
     }
 
@@ -148,6 +153,7 @@ public class StartScreen implements Screen {
         bodyFont.setColor(0.20f, 0.13f, 0.07f, 1f);
         layout.setText(bodyFont, text);
         bodyFont.draw(batch, text, bounds.x + (bounds.width - layout.width) / 2f, bounds.y + 34f);
+        batch.setColor(Color.WHITE);
     }
 
     @Override
@@ -173,17 +179,10 @@ public class StartScreen implements Screen {
             batch.dispose();
             batch = null;
         }
+
         if (whiteTexture != null) {
             whiteTexture.dispose();
             whiteTexture = null;
-        }
-        if (titleFont != null) {
-            titleFont.dispose();
-            titleFont = null;
-        }
-        if (bodyFont != null) {
-            bodyFont.dispose();
-            bodyFont = null;
         }
     }
 }

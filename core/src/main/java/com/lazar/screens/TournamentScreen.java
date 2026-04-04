@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
+import com.lazar.config.FontManager;
+import com.lazar.config.LocalizationManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,6 @@ public class TournamentScreen implements Screen {
         }
 
         OnFinished onFinished;
-
         boolean finished = false;
 
         void setState(KnightState next) {
@@ -104,7 +105,9 @@ public class TournamentScreen implements Screen {
 
         private void disposeArr(Texture[] arr) {
             if (arr == null) return;
-            for (Texture t : arr) if (t != null) t.dispose();
+            for (Texture t : arr) {
+                if (t != null) t.dispose();
+            }
         }
     }
 
@@ -148,13 +151,9 @@ public class TournamentScreen implements Screen {
     public void show() {
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
-        font = new BitmapFont();
-        smallFont = new BitmapFont();
+        font = FontManager.get(28, new Color(0.20f, 0.13f, 0.07f, 1f));
+        smallFont = FontManager.get(18, new Color(0.95f, 0.92f, 0.84f, 1f));
         layout = new GlyphLayout();
-        font.getData().setScale(1.15f);
-        smallFont.getData().setScale(0.95f);
-        font.setColor(new Color(0.20f, 0.13f, 0.07f, 1f));
-        smallFont.setColor(new Color(0.95f, 0.92f, 0.84f, 1f));
         camera = new OrthographicCamera();
         viewport = new FitViewport(1280, 720, camera);
         viewport.apply();
@@ -212,7 +211,6 @@ public class TournamentScreen implements Screen {
             rings.add(new RingData(radius, gapCenter, gapSize));
             prevGapCenter = gapCenter;
         }
-
         currentRingIndex = 0;
         ballAngleDeg = normalizeAngle(rings.get(0).gapCenterDeg + 110f + random.nextFloat() * 80f);
         jumpTimer = 0f;
@@ -396,7 +394,7 @@ public class TournamentScreen implements Screen {
             float drawW = kH * aspect;
             batch.draw(rightFrame, divX + halfW * 0.5f + drawW * 0.5f, rightKnightY, -drawW, kH);
         }
-        layout.setText(smallFont, "VS");
+        layout.setText(smallFont, LocalizationManager.get("tournament.vs"));
         smallFont.setColor(new Color(0.36f, 0.24f, 0.12f, 0.80f));
         smallFont.draw(batch, layout, divX - layout.width / 2f, cardY + 24f);
         batch.end();
@@ -413,9 +411,19 @@ public class TournamentScreen implements Screen {
             Color ringColor = new Color(0.35f, 0.23f, 0.12f, 1f);
             if (i < currentRingIndex) ringColor = new Color(0.46f, 0.32f, 0.16f, 0.95f);
             if (successFlashTimer > 0f && i == currentRingIndex) ringColor = new Color(0.62f, 0.52f, 0.18f, 1f);
-            drawRingWithGap(mazeCenterX, mazeCenterY, ring.radius, thickness, ring.gapCenterDeg, ring.gapSizeDeg, ringColor);
+            drawRingWithGap(
+                mazeCenterX,
+                mazeCenterY,
+                ring.radius,
+                thickness,
+                ring.gapCenterDeg,
+                ring.gapSizeDeg,
+                ringColor
+            );
         }
-        shapeRenderer.setColor(mazeWon ? new Color(0.78f, 0.62f, 0.20f, 1f) : new Color(0.42f, 0.28f, 0.15f, 0.9f));
+        shapeRenderer.setColor(
+            mazeWon ? new Color(0.78f, 0.62f, 0.20f, 1f) : new Color(0.42f, 0.28f, 0.15f, 0.9f)
+        );
         shapeRenderer.circle(mazeCenterX, mazeCenterY, 11f, 40);
         shapeRenderer.setColor(new Color(0.93f, 0.87f, 0.73f, 1f));
         shapeRenderer.circle(mazeCenterX, mazeCenterY, 5f, 32);
@@ -445,20 +453,20 @@ public class TournamentScreen implements Screen {
     private void drawOverlayTexts() {
         batch.begin();
         smallFont.setColor(new Color(0.95f, 0.92f, 0.84f, 0.95f));
-        smallFont.draw(batch, "SPACE • R • ESC", 30f, worldHeight - 24f);
+        smallFont.draw(batch, LocalizationManager.get("tournament.controls"), 30f, worldHeight - 24f);
         if (mazeWon) {
-            layout.setText(font, "Victory!");
+            layout.setText(font, LocalizationManager.get("tournament.victory"));
             font.setColor(new Color(0.95f, 0.88f, 0.55f, 1f));
             font.draw(batch, layout, mazeCenterX - layout.width / 2f, mazeCenterY + 175f);
-            layout.setText(smallFont, "Press R to play again");
+            layout.setText(smallFont, LocalizationManager.get("tournament.play_again"));
             smallFont.setColor(new Color(0.88f, 0.84f, 0.70f, 0.80f));
             smallFont.draw(batch, layout, mazeCenterX - layout.width / 2f, mazeCenterY - 155f);
         } else if (failFlashTimer > 0f) {
-            layout.setText(smallFont, "Miss!");
+            layout.setText(smallFont, LocalizationManager.get("tournament.miss"));
             smallFont.setColor(new Color(0.88f, 0.24f, 0.14f, 0.95f));
             smallFont.draw(batch, layout, mazeCenterX - layout.width / 2f, mazeCenterY + 175f);
         } else if (successFlashTimer > 0f) {
-            layout.setText(smallFont, "Good!");
+            layout.setText(smallFont, LocalizationManager.get("tournament.good"));
             smallFont.setColor(new Color(0.20f, 0.60f, 0.20f, 0.95f));
             smallFont.draw(batch, layout, mazeCenterX - layout.width / 2f, mazeCenterY + 175f);
         }
@@ -529,8 +537,6 @@ public class TournamentScreen implements Screen {
     public void dispose() {
         if (batch != null) batch.dispose();
         if (shapeRenderer != null) shapeRenderer.dispose();
-        if (font != null) font.dispose();
-        if (smallFont != null) smallFont.dispose();
         if (backgroundTexture != null) backgroundTexture.dispose();
         if (knightLeft != null) knightLeft.dispose();
         if (knightRight != null) knightRight.dispose();

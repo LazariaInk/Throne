@@ -5,10 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.lazar.StartGame;
+import com.lazar.config.LocalizationManager;
 
 public class CreditsScreen extends BaseMenuScreen {
 
-    private final MenuButton backButton = new MenuButton("Back");
+    private final MenuButton backButton = new MenuButton(LocalizationManager.get("button.back"));
     private final Screen continueScreen;
 
     public CreditsScreen(StartGame game, Screen continueScreen) {
@@ -57,14 +58,14 @@ public class CreditsScreen extends BaseMenuScreen {
         drawBackground();
         drawPanel(panelX, panelY, panelW, panelH);
         titleFont.setColor(TEXT_DARK);
-        drawCenteredText(titleFont, "Credits", ww / 2f, panelY + panelH - 45f);
+        drawCenteredText(titleFont, LocalizationManager.get("credits.title"), ww / 2f, panelY + panelH - 45f);
         bodyFont.setColor(TEXT_DARK);
-        drawCenteredText(bodyFont, "Game Design & Programming", ww / 2f, panelY + 285f);
-        drawCenteredText(bodyFont, "Lazar", ww / 2f, panelY + 245f);
-        drawCenteredText(bodyFont, "Framework", ww / 2f, panelY + 185f);
-        drawCenteredText(bodyFont, "LibGDX", ww / 2f, panelY + 145f);
+        drawCenteredText(bodyFont, LocalizationManager.get("credits.design_programming"), ww / 2f, panelY + 285f);
+        drawCenteredText(bodyFont, LocalizationManager.get("credits.author"), ww / 2f, panelY + 245f);
+        drawCenteredText(bodyFont, LocalizationManager.get("credits.framework"), ww / 2f, panelY + 185f);
+        drawCenteredText(bodyFont, LocalizationManager.get("credits.framework_name"), ww / 2f, panelY + 145f);
         smallFont.setColor(new com.badlogic.gdx.graphics.Color(0.30f, 0.22f, 0.13f, 0.80f));
-        drawCenteredText(smallFont, "Construit in stil medieval, cu meniu modular si ecrane separate.", ww / 2f, panelY + 105f);
+        drawCenteredText(smallFont, LocalizationManager.get("credits.description"), ww / 2f, panelY + 105f);
         drawButton(backButton, isHovered(backButton.bounds));
         endFrame();
     }
