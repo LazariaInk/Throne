@@ -1,0 +1,9 @@
+{
+  "provider": "openai",
+  "openaiBaseUrl": "https://api.openai.com/v1",
+  "openaiModel": "gpt-4.1-mini",
+  "ollamaBaseUrl": "http://localhost:11434",
+  "ollamaModel": "qwen2.5:7b-instruct",
+  "ollamaKeepAlive": "30m",
+  "timeoutSeconds": 60
+}

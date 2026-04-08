@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lazar.StartGame;
+import com.lazar.ai.service.*;
 import com.lazar.config.*;
 import com.lazar.data.RecordEntry;
 import com.lazar.data.RecordsManager;
@@ -112,7 +113,7 @@ public class GameScreen implements Screen {
     private boolean hoverWar = false;
 
     public GameScreen(StartGame game, String emperorName) {
-        this(game, emperorName, new BackendDecisionResolver(), new GameEngine());
+        this(game, emperorName, createDecisionResolver(), new GameEngine());
     }
 
     public GameScreen(StartGame game, String emperorName, DecisionResolver decisionResolver, GameEngine gameEngine) {
@@ -725,5 +726,23 @@ public class GameScreen implements Screen {
         if (blurShader != null) blurShader.dispose();
         if (ovalMaskShader != null) ovalMaskShader.dispose();
         if (settingsButtonTexture != null) settingsButtonTexture.dispose();
+    }
+
+    private static DecisionResolver createDecisionResolver() {
+        String apiKey = "OPEN-AI-KEY";
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new RuntimeException("OPENAI_API_KEY lipseste");
+        }
+
+        OpenAiClient aiClient = new OpenAiClient(
+            new OpenAiConfig(
+                "https://api.openai.com/v1",
+                apiKey,
+                "gpt-4.1-mini"
+            )
+        );
+
+        GameDecisionService service = new GameDecisionService(aiClient, new PromptFactory());
+        return new AiDecisionResolver(service);
     }
 }

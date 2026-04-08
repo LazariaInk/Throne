@@ -1,4 +1,5 @@
-package com.lazar.dto;
+package com.lazar.ai.model;
+
 
 public class EventCardDto {
     public String id;

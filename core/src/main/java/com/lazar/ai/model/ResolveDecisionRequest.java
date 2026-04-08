@@ -1,4 +1,4 @@
-package com.lazar.dto;
+package com.lazar.ai.model;
 
 public class ResolveDecisionRequest {
     public EventCardDto event;

@@ -1,8 +1,8 @@
 package com.lazar.config;
 
-import com.lazar.dto.ConsequenceDto;
-import com.lazar.dto.EventCardDto;
-import com.lazar.dto.ResolveDecisionRequest;
+import com.lazar.ai.model.ConsequenceDto;
+import com.lazar.ai.model.EventCardDto;
+import com.lazar.ai.model.ResolveDecisionRequest;
 import com.lazar.model.DecisionOutcomeData;
 import com.lazar.model.EventCard;
 

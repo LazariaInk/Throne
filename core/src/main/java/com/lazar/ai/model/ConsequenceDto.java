@@ -1,4 +1,4 @@
-package com.lazar.dto;
+package com.lazar.ai.model;
 
 public class ConsequenceDto {
     public String title;

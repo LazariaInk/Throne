@@ -1,6 +1,6 @@
 package com.lazar.config;
 
-import com.lazar.dto.ConsequenceDto;
+import com.lazar.ai.model.ConsequenceDto;
 import com.lazar.model.Consequence;
 
 public class ConsequenceMapper {
