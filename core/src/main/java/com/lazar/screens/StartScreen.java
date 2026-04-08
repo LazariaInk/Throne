@@ -54,6 +54,8 @@ public class StartScreen implements Screen {
         whiteTexture = new Texture(pixmap);
         pixmap.dispose();
         whiteRegion = new TextureRegion(whiteTexture);
+        game.getSoundManager().reloadSettings();
+        game.getSoundManager().playMenuMusic();
         titleFont = FontManager.get(34, new Color(0.14f, 0.08f, 0.04f, 1f));
         bodyFont = FontManager.get(20, new Color(0.18f, 0.11f, 0.06f, 1f));
         layout = new GlyphLayout();

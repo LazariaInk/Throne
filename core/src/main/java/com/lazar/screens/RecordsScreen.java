@@ -55,6 +55,8 @@ public class RecordsScreen implements Screen {
         pixmap.fill();
         whiteTexture = new Texture(pixmap);
         pixmap.dispose();
+        game.getSoundManager().reloadSettings();
+        game.getSoundManager().playMenuMusic();
         whiteRegion = new TextureRegion(whiteTexture);
         titleFont = generateFont(32, new Color(0.14f, 0.08f, 0.04f, 1f));
         bodyFont = generateFont(20, new Color(0.18f, 0.11f, 0.06f, 1f));

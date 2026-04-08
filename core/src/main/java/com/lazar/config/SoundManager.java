@@ -13,7 +13,10 @@ public class SoundManager {
 
     private final Preferences prefs;
 
-    private Music backgroundMusic;
+    private Music gameMusic;
+    private Music menuMusic;
+    private Music currentMusic;
+
     private Sound cardSwapSound;
 
     private int musicVolume;
@@ -24,9 +27,14 @@ public class SoundManager {
     }
 
     public void init() {
-        if (backgroundMusic == null) {
-            backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background-music.mp3"));
-            backgroundMusic.setLooping(true);
+        if (gameMusic == null) {
+            gameMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/background-music.mp3"));
+            gameMusic.setLooping(true);
+        }
+
+        if (menuMusic == null) {
+            menuMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu.mp3"));
+            menuMusic.setLooping(true);
         }
 
         if (cardSwapSound == null) {
@@ -76,34 +84,53 @@ public class SoundManager {
         return effectsVolume / 100f;
     }
 
-    public void playBackgroundMusic() {
-        if (backgroundMusic == null) {
+    public void playGameMusic() {
+        if (gameMusic == null) {
             init();
         }
+        switchMusic(gameMusic);
+    }
 
-        applyMusicVolume();
+    public void playMenuMusic() {
+        if (menuMusic == null) {
+            init();
+        }
+        switchMusic(menuMusic);
+    }
 
-        if (musicVolume <= 0) {
-            if (backgroundMusic.isPlaying()) {
-                backgroundMusic.pause();
+    private void switchMusic(Music targetMusic) {
+        if (targetMusic == null) return;
+
+        if (currentMusic == targetMusic) {
+            applyMusicVolume();
+            if (musicVolume > 0 && !currentMusic.isPlaying()) {
+                currentMusic.play();
             }
             return;
         }
 
-        if (!backgroundMusic.isPlaying()) {
-            backgroundMusic.play();
+        if (currentMusic != null && currentMusic.isPlaying()) {
+            currentMusic.stop();
+        }
+
+        currentMusic = targetMusic;
+        currentMusic.setLooping(true);
+        currentMusic.setVolume(getMusicVolumeFloat());
+
+        if (musicVolume > 0) {
+            currentMusic.play();
         }
     }
 
     public void pauseBackgroundMusic() {
-        if (backgroundMusic != null && backgroundMusic.isPlaying()) {
-            backgroundMusic.pause();
+        if (currentMusic != null && currentMusic.isPlaying()) {
+            currentMusic.pause();
         }
     }
 
     public void stopBackgroundMusic() {
-        if (backgroundMusic != null) {
-            backgroundMusic.stop();
+        if (currentMusic != null) {
+            currentMusic.stop();
         }
     }
 
@@ -124,11 +151,13 @@ public class SoundManager {
     }
 
     private void applyMusicVolume() {
-        if (backgroundMusic != null) {
-            backgroundMusic.setVolume(getMusicVolumeFloat());
+        if (currentMusic != null) {
+            currentMusic.setVolume(getMusicVolumeFloat());
 
-            if (musicVolume <= 0 && backgroundMusic.isPlaying()) {
-                backgroundMusic.pause();
+            if (musicVolume <= 0 && currentMusic.isPlaying()) {
+                currentMusic.pause();
+            } else if (musicVolume > 0 && !currentMusic.isPlaying()) {
+                currentMusic.play();
             }
         }
     }
@@ -138,10 +167,17 @@ public class SoundManager {
     }
 
     public void dispose() {
-        if (backgroundMusic != null) {
-            backgroundMusic.dispose();
-            backgroundMusic = null;
+        if (gameMusic != null) {
+            gameMusic.dispose();
+            gameMusic = null;
         }
+
+        if (menuMusic != null) {
+            menuMusic.dispose();
+            menuMusic = null;
+        }
+
+        currentMusic = null;
 
         if (cardSwapSound != null) {
             cardSwapSound.dispose();

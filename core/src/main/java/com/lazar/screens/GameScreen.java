@@ -183,7 +183,7 @@ public class GameScreen implements Screen {
 
     private void startBackgroundMusic() {
         if (soundManager != null) {
-            soundManager.playBackgroundMusic();
+            soundManager.playGameMusic();
         }
     }
 
@@ -693,7 +693,7 @@ public class GameScreen implements Screen {
     @Override
     public void resume() {
         soundManager.reloadSettings();
-        soundManager.playBackgroundMusic();
+        soundManager.playGameMusic();
     }
 
     @Override

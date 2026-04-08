@@ -67,6 +67,8 @@ public abstract class BaseMenuScreen extends ScreenAdapter {
         Pixmap pixmap = new Pixmap(1, 1, Format.RGBA8888);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
+        game.getSoundManager().reloadSettings();
+        game.getSoundManager().playMenuMusic();
         whiteTexture = new Texture(pixmap);
         pixmap.dispose();
         whiteRegion = new TextureRegion(whiteTexture);

@@ -97,8 +97,8 @@ public class GameOverScreen implements Screen {
     }
 
     private void startBackgroundMusic() {
-        if (backgroundMusic != null && !backgroundMusic.isPlaying()) {
-            backgroundMusic.play();
+        if (game.getSoundManager() != null) {
+            game.getSoundManager().playGameMusic();
         }
     }
 
@@ -246,7 +246,11 @@ public class GameOverScreen implements Screen {
 
     @Override public void resize(int width, int height) { viewport.update(width, height, true); }
     @Override public void pause() {}
-    @Override public void resume() {}
+    @Override
+    public void resume() {
+        game.getSoundManager().reloadSettings();
+        game.getSoundManager().playGameMusic();
+    }
     @Override public void hide() {}
 
     @Override
