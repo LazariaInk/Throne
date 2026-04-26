@@ -35,6 +35,7 @@ public class StartScreen implements Screen {
     private final Rectangle startButton = new Rectangle();
     private final Rectangle recordsButton = new Rectangle();
     private final Vector3 touchPoint = new Vector3();
+    private final Rectangle menuButton = new Rectangle();
 
     public StartScreen(StartGame game) {
         this.game = game;
@@ -95,6 +96,11 @@ public class StartScreen implements Screen {
                     dispose();
                     return true;
                 }
+
+                if (menuButton.contains(touchPoint.x, touchPoint.y)) {
+                    goToMainMenu();
+                    return true;
+                }
                 return false;
             }
 
@@ -104,9 +110,18 @@ public class StartScreen implements Screen {
                     startGame();
                     return true;
                 }
+                if (keycode == Input.Keys.ESCAPE) {
+                    goToMainMenu();
+                    return true;
+                }
                 return false;
             }
         });
+    }
+
+    private void goToMainMenu() {
+        game.setScreen(new MainMenuScreen(game));
+        dispose();
     }
 
     private void startGame() {
@@ -126,11 +141,25 @@ public class StartScreen implements Screen {
         batch.setColor(0.92f, 0.86f, 0.74f, 1f);
         batch.draw(whiteRegion, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         batch.setColor(Color.WHITE);
-        titleFont.draw(batch, LocalizationManager.get("start.title"), 390, 540);
+        String title = LocalizationManager.get("start.title");
+        layout.setText(titleFont, title);
+        titleFont.draw(
+            batch,
+            title,
+            (viewport.getWorldWidth() - layout.width) / 2f,
+            540
+        );
+        float buttonWidth = 180f;
+        float buttonHeight = 54f;
+        float buttonGap = 40f;
+        float totalButtonsWidth = buttonWidth * 3f + buttonGap * 2f;
+        float groupX = (viewport.getWorldWidth() - totalButtonsWidth) / 2f;
+        float inputY = 420f;
+        float inputHeight = 56f;
         batch.setColor(0.25f, 0.16f, 0.08f, 1f);
-        batch.draw(whiteRegion, 390, 420, 500, 56);
+        batch.draw(whiteRegion, groupX, inputY, totalButtonsWidth, inputHeight);
         batch.setColor(0.93f, 0.87f, 0.73f, 1f);
-        batch.draw(whiteRegion, 393, 423, 494, 50);
+        batch.draw(whiteRegion, groupX + 3, inputY + 3, totalButtonsWidth - 6, inputHeight - 6);
         String shown = emperorName.length() == 0
             ? LocalizationManager.get("start.placeholder")
             : emperorName.toString();
@@ -139,11 +168,29 @@ public class StartScreen implements Screen {
                 ? new Color(0.35f, 0.28f, 0.20f, 0.7f)
                 : new Color(0.20f, 0.13f, 0.07f, 1f)
         );
-        bodyFont.draw(batch, shown, 410, 456);
-        startButton.set(430, 300, 180, 54);
-        recordsButton.set(670, 300, 180, 54);
+        bodyFont.draw(batch, shown, groupX + 20f, inputY + 36f);
+        float buttonY = 300f;
+        startButton.set(
+            groupX,
+            buttonY,
+            buttonWidth,
+            buttonHeight
+        );
+        recordsButton.set(
+            groupX + buttonWidth + buttonGap,
+            buttonY,
+            buttonWidth,
+            buttonHeight
+        );
+        menuButton.set(
+            groupX + (buttonWidth + buttonGap) * 2f,
+            buttonY,
+            buttonWidth,
+            buttonHeight
+        );
         drawButton(startButton, LocalizationManager.get("start.button.start"));
         drawButton(recordsButton, LocalizationManager.get("start.button.records"));
+        drawButton(menuButton, LocalizationManager.get("button.back"));
         batch.end();
     }
 
