@@ -20,7 +20,6 @@ public class EventDefinition {
     public int cooldownTurns;
     public float baseWeight;
 
-    public Array<String> tags;
     public Array<EventCondition> requires;
     public Array<EventCondition> blockedBy;
 
