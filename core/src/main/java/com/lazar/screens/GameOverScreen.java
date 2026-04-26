@@ -134,7 +134,7 @@ public class GameOverScreen implements Screen {
                     return true;
                 }
                 if (menuBounds.contains(touchPoint.x, touchPoint.y)) {
-                    game.setScreen(new StartScreen(game));
+                    game.setScreen(new MainMenuScreen(game));
                     dispose();
                     return true;
                 }
@@ -150,7 +150,7 @@ public class GameOverScreen implements Screen {
                 }
 
                 if (keycode == Input.Keys.ESCAPE) {
-                    game.setScreen(new StartScreen(game));
+                    game.setScreen(new MainMenuScreen(game));
                     dispose();
                     return true;
                 }
