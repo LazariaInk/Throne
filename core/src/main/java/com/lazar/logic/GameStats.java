@@ -30,11 +30,11 @@ public class GameStats {
         if (consequence == null) {
             return;
         }
-
-        religion = clamp(religion + consequence.religion*5);
-        people = clamp(people + consequence.population*5);
-        army = clamp(army + consequence.army*5);
-        money = clamp(money + consequence.money*5);
+        //DEBUG
+        religion = clamp(religion + consequence.religion*33);
+        people = clamp(people + consequence.population*33);
+        army = clamp(army + consequence.army*33);
+        money = clamp(money + consequence.money*33);
     }
 
     public boolean isGameOver() {

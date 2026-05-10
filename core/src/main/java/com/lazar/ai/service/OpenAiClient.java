@@ -1,5 +1,6 @@
 package com.lazar.ai.service;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.lazar.ai.model.AiDecisionPayload;
@@ -26,6 +27,10 @@ public class OpenAiClient implements AiClient {
 
         try {
             URL url = new URL(config.baseUrl + "/responses");
+            Gdx.app.log("OpenAiClient", "POST " + url);
+            Gdx.app.log("OpenAiClient", "Model: " + config.model);
+            Gdx.app.log("OpenAiClient", "API key prefix: " + maskKey(config.apiKey));
+
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setConnectTimeout(60000);
@@ -71,6 +76,7 @@ public class OpenAiClient implements AiClient {
             }
 
             int code = conn.getResponseCode();
+            String requestId = conn.getHeaderField("x-request-id");
             InputStream stream = (code >= 200 && code < 300)
                 ? conn.getInputStream()
                 : conn.getErrorStream();
@@ -78,12 +84,13 @@ public class OpenAiClient implements AiClient {
             String response = readFully(stream);
 
             if (code < 200 || code >= 300) {
-                throw new RuntimeException("OpenAI error " + code + ": " + response);
+                throw new RuntimeException("OpenAI error " + code + " requestId=" + requestId + ": " + response);
             }
 
             String outputText = extractOutputText(response);
+
             if (outputText == null || outputText.trim().isEmpty()) {
-                throw new RuntimeException("OpenAI returned empty output_text");
+                throw new RuntimeException("OpenAI returned empty output_text. Full response: " + response);
             }
 
             return parseDecisionPayload(outputText);
@@ -93,6 +100,11 @@ public class OpenAiClient implements AiClient {
                 conn.disconnect();
             }
         }
+    }
+
+    private String maskKey(String key) {
+        if (key == null || key.length() < 8) return "missing";
+        return key.substring(0, 6) + "..." + key.substring(key.length() - 4);
     }
 
     private String extractOutputText(String json) {
