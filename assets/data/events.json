@@ -1,6 +1,75 @@
 {
   "events": [
     {
+      "id": "event_castle_invasion",
+      "title": "O armată la porțile castelului",
+      "description": "Regele vecin a trimis o armată spre castel. Solul său cere 12 saci de aur pentru a se retrage. Căpitanul așteaptă porunca: plătim tributul sau pregătim apărarea?",
+      "imagePath": "images/war/siege.png",
+      "category": "ARMY_WAR",
+      "rarity": "UNCOMMON",
+      "cooldownTurns": 12,
+      "baseWeight": 5.0,
+      "requires": [{ "type": "TURN_AT_LEAST", "value": 3 }],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Plătești tributul",
+          "text": "Ai trimis aurul regelui vecin. Armata lui se retrage, iar castelul rămâne nevătămat. Pacea a costat vistieria 12 saci de aur.",
+          "religion": 0, "population": 2, "army": -2, "money": -12
+        },
+        "B": {
+          "title": "Pregătești apărarea",
+          "text": "Refuzi tributul și ridici stindardele pe ziduri. Căpitanul adună oștenii. Continuă pentru a conduce apărarea castelului în 10 confruntări.",
+          "religion": 0, "population": 0, "army": 0, "money": 0
+        },
+        "C": {
+          "title": "Clopotele fără poruncă",
+          "text": "Cuvintele tale se sting în sala tronului, iar sfetnicii își ascund neliniștea sub plecăciuni adânci. Nicio poruncă nu ajunge la porți și niciun sol cu aur nu pornește spre tabăra vrăjmașă. Luând tăcerea coroanei drept slăbiciune, regele vecin își trimite oastea asupra zidurilor; satele sunt jefuite, iar străjerii se retrag în neorânduială. Clopotele bat a primejdie, iar căpitanul îți cere să conduci apărarea înainte ca porțile să cedeze.",
+          "religion": 0, "population": -5, "army": -3, "money": -4
+        }
+      },
+      "onB": {
+        "action": "START_WAR",
+        "war": {
+          "victory": {
+            "title": "Castelul a rezistat!",
+            "text": "Ai respins asaltul. Oastea vecină abandonează tabăra, iar prada întărește vistieria. Oștenii și poporul îți laudă apărarea.",
+            "religion": 0, "population": 4, "army": 6, "money": 8
+          },
+          "draw": {
+            "title": "Armistițiu la porți",
+            "text": "Nicio oaste nu poate hotărî lupta. Negociezi retragerea inamicului. Castelul este salvat, dar răniții și reparațiile cer oameni și aur.",
+            "religion": 0, "population": -2, "army": -4, "money": -5
+          },
+          "defeat": {
+            "title": "Apărarea a fost străpunsă",
+            "text": "Oastea vecină străpunge apărarea și impune un tribut greu. Îți păstrezi coroana, dar pierzi soldați, aur și încrederea poporului.",
+            "religion": 0, "population": -8, "army": -12, "money": -15
+          }
+        }
+      },
+      "onC": {
+        "action": "START_WAR",
+        "war": {
+          "victory": {
+            "title": "Castelul a rezistat!",
+            "text": "Ai respins asaltul. Oastea vecină abandonează tabăra, iar prada întărește vistieria. Oștenii și poporul îți laudă apărarea.",
+            "religion": 0, "population": 4, "army": 6, "money": 8
+          },
+          "draw": {
+            "title": "Armistițiu la porți",
+            "text": "Nicio oaste nu poate hotărî lupta. Negociezi retragerea inamicului. Castelul este salvat, dar răniții și reparațiile cer oameni și aur.",
+            "religion": 0, "population": -2, "army": -4, "money": -5
+          },
+          "defeat": {
+            "title": "Apărarea a fost străpunsă",
+            "text": "Oastea vecină străpunge apărarea și impune un tribut greu. Îți păstrezi coroana, dar pierzi soldați, aur și încrederea poporului.",
+            "religion": 0, "population": -8, "army": -12, "money": -15
+          }
+        }
+      }
+    },
+    {
       "id": "event_001",
       "title": "Turneu în Piața Castelului",
       "description": "Căpitanul cere organizarea unui turneu pentru a ridica moralul armatei, dar episcopul cheamă la post și rugăciune. Poporul așteaptă judecata ta, Majestate.",

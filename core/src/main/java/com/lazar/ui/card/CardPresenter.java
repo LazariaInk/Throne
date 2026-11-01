@@ -94,6 +94,10 @@ public class CardPresenter {
             float flipProgress = MathUtils.clamp(flipTime / flipDuration, 0f, 1f);
             float visualScaleX = Math.abs((float) Math.cos(flipProgress * MathUtils.PI));
             boolean drawBack = flipProgress >= 0.5f;
+            if (drawBack) {
+                currentTransform.width = 460f;
+                currentTransform.height = 440f;
+            }
 
             currentTransform.visualScaleX = Math.max(0.04f, visualScaleX);
 
@@ -108,6 +112,8 @@ public class CardPresenter {
         currentTransform.visualScaleX = 1f;
 
         if (showingBackFace) {
+            currentTransform.width = 460f;
+            currentTransform.height = 440f;
             renderer.drawBack(batch, currentEvent, resolvedConsequence, currentTransform);
         } else {
             renderer.drawFront(batch, currentEvent, currentEventImage, currentTransform, true);
@@ -149,6 +155,16 @@ public class CardPresenter {
     public void cancelSubmitting() {
         waitingForBackend = false;
         blurTargetAlpha = 0f;
+    }
+
+    public void showWarOutcome(Consequence consequence, GameStats stats) {
+        resolvedConsequence = consequence;
+        currentStats = stats;
+        waitingForBackend = false;
+        canAdvance = false;
+        showingBackFace = false;
+        isFlipping = false;
+        startFlipToBack();
     }
 
     public boolean shouldRenderBlurredBackground() {

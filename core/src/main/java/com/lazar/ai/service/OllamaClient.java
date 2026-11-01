@@ -29,6 +29,7 @@ public class OllamaClient implements AiClient {
             URL url = new URL(config.baseUrl + "/api/generate");
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
+            conn.setInstanceFollowRedirects(false);
             conn.setConnectTimeout(config.timeoutSeconds * 1000);
             conn.setReadTimeout(config.timeoutSeconds * 1000);
             conn.setDoOutput(true);
@@ -57,7 +58,7 @@ public class OllamaClient implements AiClient {
             String response = readFully(stream);
 
             if (code < 200 || code >= 300) {
-                throw new RuntimeException("Ollama error " + code + ": " + response);
+                throw AiServiceException.http("Ollama", code);
             }
 
             JsonValue root = new JsonReader().parse(response);
@@ -83,13 +84,13 @@ public class OllamaClient implements AiClient {
         if (start >= 0 && end > start) {
             return text.substring(start, end + 1);
         }
-        throw new RuntimeException("Model response does not contain valid JSON: " + text);
+        throw AiServiceException.localized("ai.error.json");
     }
 
     private AiDecisionPayload parseDecisionPayload(String jsonText) {
         JsonValue root = new JsonReader().parse(jsonText);
 
-        String decisionRaw = root.getString("decision", "C");
+        String decisionRaw = root.getString("decision", "");
         String narrative = root.getString("narrative", "");
         String reason = root.getString("reason", "");
 
@@ -97,7 +98,7 @@ public class OllamaClient implements AiClient {
         try {
             decision = DecisionType.valueOf(decisionRaw.trim().toUpperCase());
         } catch (Exception e) {
-            decision = DecisionType.C;
+            throw AiServiceException.localized("ai.error.classification");
         }
 
         return new AiDecisionPayload(decision, narrative, reason);

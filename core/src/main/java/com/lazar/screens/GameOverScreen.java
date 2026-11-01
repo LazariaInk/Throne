@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -27,8 +26,6 @@ import com.lazar.config.FontManager; // 🔥 IMPORTANT
 
 public class GameOverScreen implements Screen {
 
-    private static final float GAME_OVER_TARGET_VOLUME = 0.28f;
-    private static final float GAME_OVER_FADE_IN_SPEED = 0.22f;
 
     private final StartGame game;
     private final GameOverType type;
@@ -39,8 +36,6 @@ public class GameOverScreen implements Screen {
     private Texture background;
     private Texture whiteTexture;
     private TextureRegion whiteRegion;
-    private Music backgroundMusic;
-    private float currentMusicVolume = 0f;
 
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -84,32 +79,13 @@ public class GameOverScreen implements Screen {
         hintFont = FontManager.get(16, new Color(0.20f, 0.13f, 0.07f, 0.95f));
         layout = new GlyphLayout();
         backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, null);
-        loadAudio();
         startBackgroundMusic();
         installInputProcessor();
     }
 
-    private void loadAudio() {
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/game-over.mp3"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(0f);
-        currentMusicVolume = 0f;
-    }
-
     private void startBackgroundMusic() {
         if (game.getSoundManager() != null) {
-            game.getSoundManager().playGameMusic();
-        }
-    }
-
-    private void updateMusicFadeIn(float delta) {
-        if (backgroundMusic == null || !backgroundMusic.isPlaying()) return;
-        if (currentMusicVolume < GAME_OVER_TARGET_VOLUME) {
-            currentMusicVolume += delta * GAME_OVER_FADE_IN_SPEED;
-            if (currentMusicVolume > GAME_OVER_TARGET_VOLUME) {
-                currentMusicVolume = GAME_OVER_TARGET_VOLUME;
-            }
-            backgroundMusic.setVolume(currentMusicVolume);
+            game.getSoundManager().playDefeatMusic();
         }
     }
 
@@ -162,7 +138,6 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         camera.update();
-        updateMusicFadeIn(delta);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
@@ -245,11 +220,11 @@ public class GameOverScreen implements Screen {
     }
 
     @Override public void resize(int width, int height) { viewport.update(width, height, true); }
-    @Override public void pause() {}
+    @Override public void pause() { game.getSoundManager().pauseBackgroundMusic(); }
     @Override
     public void resume() {
         game.getSoundManager().reloadSettings();
-        game.getSoundManager().playGameMusic();
+        game.getSoundManager().playDefeatMusic();
     }
     @Override public void hide() {}
 
@@ -259,6 +234,5 @@ public class GameOverScreen implements Screen {
         if (batch != null) batch.dispose();
         if (background != null) background.dispose();
         if (whiteTexture != null) whiteTexture.dispose();
-        if (backgroundMusic != null) backgroundMusic.dispose();
     }
 }

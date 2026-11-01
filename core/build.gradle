@@ -38,3 +38,52 @@ dependencies {
 jar {
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+tasks.register('warBattleTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.lazar.logic.WarBattleTest'
+}
+tasks.named('check') {
+  dependsOn 'warBattleTest'
+  dependsOn 'warEncounterTest'
+  dependsOn 'saveGameTest'
+  dependsOn 'aiConfigurationTest'
+  dependsOn 'aiLocalizationTest'
+  dependsOn 'narrativeDecisionTest'
+}
+
+tasks.register('narrativeDecisionTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath + files(rootProject.file('assets'))
+  mainClass = 'com.lazar.logic.NarrativeDecisionTest'
+  workingDir rootProject.projectDir
+}
+
+tasks.register('aiLocalizationTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath + files(rootProject.file('assets'))
+  mainClass = 'com.lazar.logic.AiLocalizationTest'
+  workingDir rootProject.projectDir
+}
+
+tasks.register('aiConfigurationTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath + files(rootProject.file('assets'))
+  mainClass = 'com.lazar.logic.AiConfigurationTest'
+  workingDir rootProject.projectDir
+}
+
+tasks.register('saveGameTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.lazar.logic.SaveGameTest'
+  workingDir rootProject.projectDir
+}
+
+tasks.register('warEncounterTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath
+  mainClass = 'com.lazar.logic.WarEncounterTest'
+  workingDir rootProject.projectDir
+}

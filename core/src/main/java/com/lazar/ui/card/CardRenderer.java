@@ -112,111 +112,27 @@ public class CardRenderer {
     }
 
     public void drawBack(
-        SpriteBatch batch,
-        EventCard event,
-        Consequence consequence,
-        CardTransform transform
+        SpriteBatch batch, EventCard event, Consequence consequence, CardTransform transform
     ) {
         Matrix4 oldTransform = applyCardTransform(batch, transform);
-
         drawCardFaceLocal(batch, transform.alpha, transform.width, transform.height);
-
-        float cardWidth = transform.width;
-        float cardHeight = transform.height;
-        float cardX = -cardWidth / 2f;
-        float cardY = -cardHeight / 2f;
-
-        float paddingX = 24f;
-        float topY = cardY + cardHeight;
-
-        String title = consequence != null && consequence.title != null && !consequence.title.isEmpty()
-            ? consequence.title
-            : "Consecinta";
-
-        String body = consequence != null && consequence.text != null && !consequence.text.isEmpty()
-            ? consequence.text
-            : "Consilierii delibereaza asupra hotararii tale.";
-
-        String statsLine = ""; // Build stats line logic if necessary.
-
-        batch.setColor(0.32f, 0.21f, 0.11f, 0.12f * transform.alpha);
-        batch.draw(resources.whiteRegion, cardX + 20f, topY - 96f, cardWidth - 40f, 54f);
-
-        batch.setColor(0.55f, 0.40f, 0.22f, 0.16f * transform.alpha);
-        batch.draw(resources.whiteRegion, cardX + 28f, topY - 124f, cardWidth - 56f, 2f);
+        float x = -transform.width / 2f;
+        float top = transform.height / 2f;
+        String title = consequence != null && consequence.title != null ? consequence.title : event.title;
+        String body = consequence != null && consequence.text != null ? consequence.text : "";
 
         resources.titleFont.setColor(0.14f, 0.08f, 0.04f, transform.alpha);
-        drawFittedWrappedText(
-            batch,
-            resources.titleFont,
-            title,
-            cardX + 22f,
-            topY - 42f,
-            cardWidth - 44f,
-            48f,
-            Align.center,
-            transform.alpha,
-            1.0f,
-            0.72f
-        );
-
-        float boxHeight = 84f;
-        float boxY = cardY + 32f;
-
-        batch.setColor(0.60f, 0.48f, 0.31f, 0.18f * transform.alpha);
-        batch.draw(resources.whiteRegion, cardX + 28f, boxY, cardWidth - 56f, boxHeight);
-
-        batch.setColor(0.42f, 0.28f, 0.14f, 0.22f * transform.alpha);
-        batch.draw(resources.whiteRegion, cardX + 28f, boxY + boxHeight - 2f, cardWidth - 56f, 2f);
-
-        resources.bodyFont.setColor(0.16f, 0.10f, 0.05f, transform.alpha);
-        layout.setText(
-            resources.bodyFont,
-            "",
-            resources.bodyFont.getColor(),
-            cardWidth - 72f,
-            Align.center,
-            true
-        );
-        resources.bodyFont.draw(batch, layout, cardX + 36f, boxY + boxHeight - 12f);
-
-        layout.setText(
-            resources.bodyFont,
-            statsLine,
-            resources.bodyFont.getColor(),
-            cardWidth - 80f,
-            Align.center,
-            true
-        );
-        resources.bodyFont.draw(batch, layout, cardX + 40f, boxY + boxHeight - 42f);
-
-        float bodyWidth = cardWidth - 52f;
-        float bodyTopY = topY - 132f;
-        float bodyBottomLimit = boxY + boxHeight + 18f;
-        float bodyMaxHeight = bodyTopY - bodyBottomLimit;
-
+        drawFittedWrappedText(batch, resources.titleFont, title,
+            x + 28f, top - 32f, transform.width - 56f, 64f,
+            Align.center, transform.alpha, 1f, 0.8f);
+        batch.setColor(0.55f, 0.40f, 0.22f, 0.35f * transform.alpha);
+        batch.draw(resources.whiteRegion, x + 28f, top - 106f, transform.width - 56f, 2f);
         resources.bodyFont.setColor(0.22f, 0.14f, 0.08f, transform.alpha);
-        drawFittedWrappedText(
-            batch,
-            resources.bodyFont,
-            body,
-            cardX + paddingX,
-            bodyTopY,
-            bodyWidth,
-            bodyMaxHeight,
-            Align.left,
-            transform.alpha,
-            1.0f,
-            0.65f
-        );
-
-        batch.setColor(0.42f, 0.28f, 0.14f, 0.20f * transform.alpha);
-        batch.draw(resources.whiteRegion, -32f, -2f, 64f, 4f);
-        batch.draw(resources.whiteRegion, -2f, -32f, 4f, 64f);
-
+        drawFittedWrappedText(batch, resources.bodyFont, body,
+            x + 28f, top - 124f, transform.width - 56f, transform.height - 154f,
+            Align.left, transform.alpha, 1f, 0.8f);
         restoreTransform(batch, oldTransform);
     }
-
     private void drawFittedWrappedText(
         SpriteBatch batch,
         BitmapFont font,

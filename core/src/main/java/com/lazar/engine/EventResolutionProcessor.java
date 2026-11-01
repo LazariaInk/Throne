@@ -8,15 +8,28 @@ import com.lazar.model.ArcStage;
 import com.lazar.model.DecisionOption;
 import com.lazar.model.DecisionResolution;
 import com.lazar.model.EventDefinition;
+import com.lazar.model.EventAction;
+import com.lazar.model.DecisionOutcomeData;
+import com.lazar.model.Consequence;
 
 public class EventResolutionProcessor {
 
     private final DoomService doomService = new DoomService();
 
     public DecisionResolution process(GameRunState state, EventDefinition event, DecisionResolution resolution) {
+        // Only the authored option owns numbers. The resolver supplies classification and prose.
+        DecisionOutcomeData authored;
+        switch (resolution.option) {
+            case A: authored = event.decisions.A; break;
+            case B: authored = event.decisions.B; break;
+            default: authored = event.decisions.C; break;
+        }
+        Consequence trusted = new Consequence(authored.title,
+            resolution.consequence == null ? authored.text : resolution.consequence.text,
+            authored.religion, authored.population, authored.army, authored.money);
         DecisionResolution adjusted = new DecisionResolution(
             resolution.option,
-            doomService.applyTurnScaling(state, event, resolution.consequence)
+            doomService.applyTurnScaling(state, event, trusted)
         );
 
         state.getStats().apply(adjusted.consequence);
@@ -52,6 +65,7 @@ public class EventResolutionProcessor {
 
         applyFlags(state, effects.flags);
         applyArcMutation(state, event, effects);
+        if (effects.action == EventAction.START_WAR) state.queueWar(effects.war);
     }
 
     private void applyFlags(GameRunState state, Array<FlagEffect> flags) {

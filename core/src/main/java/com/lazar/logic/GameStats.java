@@ -5,6 +5,17 @@ import com.lazar.model.Consequence;
 
 public class GameStats {
 
+    public void restore(int religion, int people, int army, int money) {
+        if (religion < 0 || religion > 100 || people < 0 || people > 100
+            || army < 0 || army > 100 || money < 0 || money > 100) {
+            throw new IllegalArgumentException("Invalid saved statistics");
+        }
+        this.religion = religion;
+        this.people = people;
+        this.army = army;
+        this.money = money;
+    }
+
     private int religion = 50;
     private int people = 50;
     private int army = 50;
@@ -30,11 +41,10 @@ public class GameStats {
         if (consequence == null) {
             return;
         }
-        //DEBUG
-        religion = clamp(religion + consequence.religion*33);
-        people = clamp(people + consequence.population*33);
-        army = clamp(army + consequence.army*33);
-        money = clamp(money + consequence.money*33);
+        religion = clamp(religion + consequence.religion);
+        people = clamp(people + consequence.population);
+        army = clamp(army + consequence.army);
+        money = clamp(money + consequence.money);
     }
 
     public boolean isGameOver() {

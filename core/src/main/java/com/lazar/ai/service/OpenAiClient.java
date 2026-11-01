@@ -1,6 +1,5 @@
 package com.lazar.ai.service;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.lazar.ai.model.AiDecisionPayload;
@@ -27,12 +26,10 @@ public class OpenAiClient implements AiClient {
 
         try {
             URL url = new URL(config.baseUrl + "/responses");
-            Gdx.app.log("OpenAiClient", "POST " + url);
-            Gdx.app.log("OpenAiClient", "Model: " + config.model);
-            Gdx.app.log("OpenAiClient", "API key prefix: " + maskKey(config.apiKey));
 
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
+            conn.setInstanceFollowRedirects(false);
             conn.setConnectTimeout(60000);
             conn.setReadTimeout(60000);
             conn.setDoOutput(true);
@@ -58,7 +55,8 @@ public class OpenAiClient implements AiClient {
                     + "\"enum\": [\"A\", \"B\", \"C\"]"
                     + "},"
                     + "\"narrative\": {"
-                    + "\"type\": \"string\""
+                    + "\"type\": \"string\","
+                    + "\"description\": \"Visible Romanian medieval scene, 3-4 sentences, 55-85 words, at most 700 characters. No player, option letters or classification commentary.\""
                     + "},"
                     + "\"reason\": {"
                     + "\"type\": \"string\""
@@ -76,7 +74,6 @@ public class OpenAiClient implements AiClient {
             }
 
             int code = conn.getResponseCode();
-            String requestId = conn.getHeaderField("x-request-id");
             InputStream stream = (code >= 200 && code < 300)
                 ? conn.getInputStream()
                 : conn.getErrorStream();
@@ -84,13 +81,13 @@ public class OpenAiClient implements AiClient {
             String response = readFully(stream);
 
             if (code < 200 || code >= 300) {
-                throw new RuntimeException("OpenAI error " + code + " requestId=" + requestId + ": " + response);
+                throw AiServiceException.http("OpenAI", code);
             }
 
             String outputText = extractOutputText(response);
 
             if (outputText == null || outputText.trim().isEmpty()) {
-                throw new RuntimeException("OpenAI returned empty output_text. Full response: " + response);
+                throw AiServiceException.localized("ai.error.empty");
             }
 
             return parseDecisionPayload(outputText);
@@ -100,11 +97,6 @@ public class OpenAiClient implements AiClient {
                 conn.disconnect();
             }
         }
-    }
-
-    private String maskKey(String key) {
-        if (key == null || key.length() < 8) return "missing";
-        return key.substring(0, 6) + "..." + key.substring(key.length() - 4);
     }
 
     private String extractOutputText(String json) {
@@ -134,7 +126,7 @@ public class OpenAiClient implements AiClient {
     private AiDecisionPayload parseDecisionPayload(String jsonText) {
         JsonValue root = new JsonReader().parse(jsonText);
 
-        String decisionRaw = root.getString("decision", "C");
+        String decisionRaw = root.getString("decision", "");
         String narrative = root.getString("narrative", "");
         String reason = root.getString("reason", "");
 
@@ -142,7 +134,7 @@ public class OpenAiClient implements AiClient {
         try {
             decision = DecisionType.valueOf(decisionRaw);
         } catch (Exception e) {
-            decision = DecisionType.C;
+            throw AiServiceException.localized("ai.error.classification");
         }
 
         return new AiDecisionPayload(decision, narrative, reason);

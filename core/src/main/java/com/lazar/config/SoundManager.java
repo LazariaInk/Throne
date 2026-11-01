@@ -15,6 +15,7 @@ public class SoundManager {
 
     private Music gameMusic;
     private Music menuMusic;
+    private Music defeatMusic;
     private Music currentMusic;
 
     private Sound cardSwapSound;
@@ -98,6 +99,13 @@ public class SoundManager {
         switchMusic(menuMusic);
     }
 
+    public void playDefeatMusic() {
+        if (defeatMusic == null) {
+            defeatMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/game-over.mp3"));
+        }
+        switchMusic(defeatMusic);
+    }
+
     private void switchMusic(Music targetMusic) {
         if (targetMusic == null) return;
 
@@ -109,7 +117,7 @@ public class SoundManager {
             return;
         }
 
-        if (currentMusic != null && currentMusic.isPlaying()) {
+        if (currentMusic != null) {
             currentMusic.stop();
         }
 
@@ -178,6 +186,11 @@ public class SoundManager {
         }
 
         currentMusic = null;
+
+        if (defeatMusic != null) {
+            defeatMusic.dispose();
+            defeatMusic = null;
+        }
 
         if (cardSwapSound != null) {
             cardSwapSound.dispose();

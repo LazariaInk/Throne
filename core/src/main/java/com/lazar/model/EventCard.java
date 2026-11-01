@@ -6,6 +6,7 @@ public class EventCard {
     public String description;
     public String imagePath;
     public EventDecisionData decisions;
+    public EventAction actionA, actionB, actionC;
 
     public EventCard() {
     }

@@ -33,6 +33,10 @@ public class EventDefinition {
     }
 
     public EventCard toEventCard() {
-        return new EventCard(id, title, description, imagePath, decisions);
+        EventCard card = new EventCard(id, title, description, imagePath, decisions);
+        card.actionA = onA == null ? null : onA.action;
+        card.actionB = onB == null ? null : onB.action;
+        card.actionC = onC == null ? null : onC.action;
+        return card;
     }
 }

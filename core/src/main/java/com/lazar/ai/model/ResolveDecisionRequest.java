@@ -6,6 +6,7 @@ public class ResolveDecisionRequest {
     public ConsequenceDto optionB;
     public ConsequenceDto optionC;
     public String playerInput;
+    public String actionA, actionB, actionC;
 
     public ResolveDecisionRequest() {
     }

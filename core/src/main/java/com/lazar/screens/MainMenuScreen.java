@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.lazar.StartGame;
 import com.lazar.config.LocalizationManager;
+import com.lazar.data.SaveGameManager;
+import com.lazar.data.SavedGame;
 
 public class MainMenuScreen extends BaseMenuScreen {
     private final MenuButton continueButton = new MenuButton(LocalizationManager.get("menu.continue"));
@@ -15,7 +17,8 @@ public class MainMenuScreen extends BaseMenuScreen {
     private final MenuButton creditsButton = new MenuButton(LocalizationManager.get("menu.credits"));
     private final MenuButton exitButton = new MenuButton(LocalizationManager.get("menu.exit"));
     private final Screen continueScreen;
-    private final boolean showContinue;
+    private boolean showContinue;
+    private SavedGame savedGame;
 
     public MainMenuScreen(StartGame game) {
         this(game, null);
@@ -29,16 +32,21 @@ public class MainMenuScreen extends BaseMenuScreen {
 
     @Override
     protected void onShow() {
+        savedGame = continueScreen == null ? new SaveGameManager().load() : null;
+        showContinue = continueScreen != null || savedGame != null;
         Gdx.input.setInputProcessor(new InputAdapter() {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (showContinue && touched(continueButton.bounds, screenX, screenY)) {
-                    game.setScreen(continueScreen);
+                    continueGame();
                     dispose();
                     return true;
                 }
 
                 if (touched(newGameButton.bounds, screenX, screenY)) {
+                    // Keep the disk checkpoint until a new reign actually starts, but stop
+                    // old asynchronous callbacks from overwriting a later save.
+                    if (continueScreen != null) continueScreen.dispose();
                     game.setScreen(new StartScreen(game));
                     dispose();
                     return true;
@@ -74,7 +82,7 @@ public class MainMenuScreen extends BaseMenuScreen {
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.ESCAPE) {
                     if (showContinue) {
-                        game.setScreen(continueScreen);
+                        continueGame();
                         dispose();
                     } else {
                         Gdx.app.exit();
@@ -84,6 +92,20 @@ public class MainMenuScreen extends BaseMenuScreen {
                 return false;
             }
         });
+    }
+
+    private void continueGame() {
+        if (continueScreen != null) {
+            game.setScreen(continueScreen);
+            return;
+        }
+        try {
+            game.setScreen(new GameScreen(game, savedGame));
+        } catch (IllegalArgumentException ex) {
+            Gdx.app.error("SaveGame", "Saved reign cannot be restored", ex);
+            new SaveGameManager().clear();
+            game.setScreen(new MainMenuScreen(game));
+        }
     }
 
     @Override

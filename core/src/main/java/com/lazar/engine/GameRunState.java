@@ -5,6 +5,9 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 import com.lazar.engine.arc.StoryArcState;
 import com.lazar.logic.GameStats;
 import com.lazar.model.DecisionOption;
+import com.lazar.model.Consequence;
+import com.lazar.model.WarEncounterDefinition;
+import com.lazar.logic.WarBattle;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,6 +26,96 @@ public class GameRunState {
 
     private String lastEventId;
     private DecisionOption lastDecisionOption;
+    private WarEncounterDefinition pendingWar;
+
+    public static class Snapshot {
+        public int religion, people, army, money, turn;
+        public String[] flags, recentEvents;
+        public Array<SavedArc> arcs = new Array<>();
+        public Array<SavedCooldown> cooldowns = new Array<>();
+        public String lastEventId;
+        public DecisionOption lastDecisionOption;
+        public WarEncounterDefinition pendingWar;
+    }
+
+    public static class SavedArc {
+        public String id;
+        public com.lazar.model.ArcStage stage;
+        public boolean active, resolved;
+    }
+
+    public static class SavedCooldown {
+        public String id;
+        public int until;
+    }
+
+    public Snapshot snapshot() {
+        Snapshot saved = new Snapshot();
+        saved.religion = stats.getReligion(); saved.people = stats.getPeople();
+        saved.army = stats.getArmy(); saved.money = stats.getMoney();
+        saved.turn = turn;
+        saved.flags = flags.toArray(new String[0]);
+        saved.recentEvents = recentEventIds.toArray(String.class);
+        saved.lastEventId = lastEventId;
+        saved.lastDecisionOption = lastDecisionOption;
+        saved.pendingWar = pendingWar;
+        for (StoryArcState arc : arcs.values()) {
+            SavedArc item = new SavedArc();
+            item.id = arc.arcId; item.stage = arc.currentStage;
+            item.active = arc.active; item.resolved = arc.resolved;
+            saved.arcs.add(item);
+        }
+        for (ObjectIntMap.Entry<String> entry : cooldownUntilTurn) {
+            SavedCooldown item = new SavedCooldown();
+            item.id = entry.key; item.until = entry.value;
+            saved.cooldowns.add(item);
+        }
+        return saved;
+    }
+
+    public static GameRunState restore(Snapshot saved) {
+        if (saved == null || saved.turn < 1 || saved.flags == null || saved.recentEvents == null
+            || saved.arcs == null || saved.cooldowns == null || saved.recentEvents.length > 10) {
+            throw new IllegalArgumentException("Invalid saved run state");
+        }
+        GameRunState state = new GameRunState();
+        state.stats.restore(saved.religion, saved.people, saved.army, saved.money);
+        state.turn = saved.turn;
+        for (String flag : saved.flags) state.addFlag(flag);
+        for (String id : saved.recentEvents) state.rememberEvent(id);
+        for (SavedArc arc : saved.arcs) {
+            if (arc.id == null || arc.stage == null) throw new IllegalArgumentException("Invalid saved arc");
+            StoryArcState restored = state.getOrCreateArc(arc.id);
+            restored.currentStage = arc.stage; restored.active = arc.active; restored.resolved = arc.resolved;
+        }
+        for (SavedCooldown cooldown : saved.cooldowns) {
+            if (cooldown.id == null) throw new IllegalArgumentException("Invalid saved cooldown");
+            state.cooldownUntilTurn.put(cooldown.id, cooldown.until);
+        }
+        state.setLastDecision(saved.lastEventId, saved.lastDecisionOption);
+        if (saved.pendingWar != null) state.queueWar(saved.pendingWar);
+        return state;
+    }
+
+    public boolean hasPendingWar() { return pendingWar != null; }
+
+    public void queueWar(WarEncounterDefinition war) {
+        if (pendingWar != null) throw new IllegalStateException("A war is already pending");
+        if (war == null || war.victory == null || war.draw == null || war.defeat == null) {
+            throw new IllegalArgumentException("War requires all three outcomes");
+        }
+        pendingWar = war;
+    }
+
+    /** Consumes the pending encounter before applying it, preventing duplicate rewards. */
+    public Consequence resolveWar(int wins) {
+        if (wins < 0 || wins > WarBattle.TOTAL_ROUNDS) throw new IllegalArgumentException("Invalid war score");
+        if (pendingWar == null) return null;
+        Consequence consequence = pendingWar.consequenceFor(wins);
+        pendingWar = null;
+        stats.apply(consequence);
+        return consequence;
+    }
 
     public GameStats getStats() {
         return stats;

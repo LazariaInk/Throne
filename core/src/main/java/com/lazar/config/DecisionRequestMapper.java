@@ -9,7 +9,7 @@ import com.lazar.model.EventCard;
 public class DecisionRequestMapper {
 
     public ResolveDecisionRequest toRequest(EventCard event, String playerInput) {
-        return new ResolveDecisionRequest(
+        ResolveDecisionRequest request = new ResolveDecisionRequest(
             new EventCardDto(
                 event.id,
                 event.title,
@@ -21,6 +21,10 @@ public class DecisionRequestMapper {
             toDto(event.decisions != null ? event.decisions.C : null),
             playerInput
         );
+        request.actionA = event.actionA == null ? "NONE" : event.actionA.name();
+        request.actionB = event.actionB == null ? "NONE" : event.actionB.name();
+        request.actionC = event.actionC == null ? "NONE" : event.actionC.name();
+        return request;
     }
 
     private ConsequenceDto toDto(DecisionOutcomeData data) {

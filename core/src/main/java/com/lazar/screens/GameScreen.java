@@ -22,10 +22,14 @@ import com.lazar.ai.service.*;
 import com.lazar.config.*;
 import com.lazar.data.RecordEntry;
 import com.lazar.data.RecordsManager;
+import com.lazar.data.SaveGameManager;
+import com.lazar.data.SavedGame;
+import com.lazar.data.EventRepository;
 import com.lazar.engine.GameEngine;
 import com.lazar.engine.GameOverType;
 import com.lazar.logic.GameStats;
 import com.lazar.model.DecisionResolution;
+import com.lazar.model.Consequence;
 import com.lazar.model.EventCard;
 import com.lazar.ui.background.BlurBackgroundRenderer;
 import com.lazar.ui.card.CardPresenter;
@@ -84,11 +88,13 @@ public class GameScreen implements Screen {
     private CardPresenter cardPresenter;
     private final DecisionResolver decisionResolver;
     private final GameEngine gameEngine;
+    private final SaveGameManager saves = new SaveGameManager();
     private final StringBuilder typedMessage = new StringBuilder();
     private final Rectangle sendButtonBounds = new Rectangle();
     private final Rectangle inputBounds = new Rectangle();
     private final Vector3 touchPoint = new Vector3();
     private boolean initialized = false;
+    private boolean disposed;
     private boolean showCaret = true;
     private float caretTimer = 0f;
     private boolean requestInFlight = false;
@@ -105,15 +111,14 @@ public class GameScreen implements Screen {
     private final StartGame game;
     private final String emperorName;
     private final SoundManager soundManager;
-    private Texture tournamentButtonTexture;
-    private Texture warButtonTexture;
-    private final Rectangle tournamentButtonBounds = new Rectangle();
-    private final Rectangle warButtonBounds = new Rectangle();
-    private boolean hoverTournament = false;
-    private boolean hoverWar = false;
 
     public GameScreen(StartGame game, String emperorName) {
-        this(game, emperorName, createDecisionResolver(), new GameEngine());
+        this(game, emperorName, createDecisionResolver(game), new GameEngine());
+    }
+
+    public GameScreen(StartGame game, SavedGame saved) {
+        this(game, saved.emperorName, createDecisionResolver(game),
+            new GameEngine(new EventRepository().loadFromJson("data/events.json"), saved));
     }
 
     public GameScreen(StartGame game, String emperorName, DecisionResolver decisionResolver, GameEngine gameEngine) {
@@ -129,12 +134,8 @@ public class GameScreen implements Screen {
         if (!initialized) {
             batch = new SpriteBatch();
             background = new Texture(Gdx.files.internal("images/background.png"));
-            tournamentButtonTexture = new Texture(Gdx.files.internal("images/ui/tournament.png"));
-            warButtonTexture = new Texture(Gdx.files.internal("images/ui/war.png"));
             settingsButtonTexture = new Texture(Gdx.files.internal("images/ui/settings.png"));
             settingsButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            tournamentButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            warButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             gameEngine.setEmperorName(emperorName);
             moneyIcon = new Texture(Gdx.files.internal("images/ui/money.png"));
             armyIcon = new Texture(Gdx.files.internal("images/ui/army.png"));
@@ -150,8 +151,6 @@ public class GameScreen implements Screen {
             armyIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             peopleIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             religionIcon.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            tournamentButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            warButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             settingsButtonTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             camera = new OrthographicCamera();
             viewport = new FitViewport(1280, 720, camera);
@@ -171,15 +170,32 @@ public class GameScreen implements Screen {
             CardRenderer cardRenderer = new CardRenderer(cardRenderResources);
             cardPresenter = new CardPresenter(cardRenderer);
             backgroundRenderer = new BlurBackgroundRenderer(background, whiteRegion, blurShader);
-            EventCard firstCard = gameEngine.nextCard();
+            EventCard firstCard = gameEngine.getCurrentEvent() == null
+                ? gameEngine.nextCard() : gameEngine.getCurrentEvent().toEventCard();
             cardPresenter.showNewEvent(firstCard, gameEngine.getRunState().getStats());
+            if (gameEngine.getLastResolution() != null) {
+                cardPresenter.showWarOutcome(gameEngine.getLastResolution().consequence, gameEngine.getRunState().getStats());
+            }
             lastStats = gameEngine.getRunState().getStats().copy();
             initialized = true;
+            saveRun();
         } else {
             soundManager.reloadSettings();
             startBackgroundMusic();
         }
         installInputProcessor();
+        if (gameEngine.getSavedBattle() != null && gameEngine.getRunState().hasPendingWar()) {
+            Gdx.app.postRunnable(() -> {
+                if (game.getScreen() == GameScreen.this && gameEngine.getSavedBattle() != null
+                    && gameEngine.getRunState().hasPendingWar()) openWar();
+            });
+        }
+    }
+
+    private void saveRun() {
+        if (!disposed && initialized && gameOverType == null && !gameEngine.getRunState().getStats().isGameOver()) {
+            saves.save(gameEngine.snapshot());
+        }
     }
 
     private void startBackgroundMusic() {
@@ -237,14 +253,6 @@ public class GameScreen implements Screen {
                     advanceToNextCard();
                     return true;
                 }
-                if (tournamentButtonBounds.contains(worldX, worldY)) {
-                    game.setScreen(new TournamentScreen(game, GameScreen.this));
-                    return true;
-                }
-                if (warButtonBounds.contains(worldX, worldY)) {
-                    game.setScreen(new WarScreen(game, GameScreen.this));
-                    return true;
-                }
                 if (settingsButtonBounds.contains(worldX, worldY)) {
                     game.setScreen(new MainMenuScreen(game, GameScreen.this));
                     return true;
@@ -271,8 +279,6 @@ public class GameScreen implements Screen {
                 float worldX = touchPoint.x;
                 float worldY = touchPoint.y;
                 hoverSettings = settingsButtonBounds.contains(worldX, worldY);
-                hoverTournament = tournamentButtonBounds.contains(worldX, worldY);
-                hoverWar = warButtonBounds.contains(worldX, worldY);
                 return false;
             }
         });
@@ -289,20 +295,13 @@ public class GameScreen implements Screen {
         gameEngine.submitPlayerText(decisionResolver, message, new DecisionResolver.Callback() {
             @Override
             public void onSuccess(DecisionResolution resolution) {
+                if (disposed) return;
                 requestInFlight = false;
                 playCardSwapSound();
                 cardPresenter.resolveFromBackend(resolution, gameEngine.getRunState().getStats());
                 gameEngine.onTurnCompleted();
-                gameOverType = gameEngine.checkGameOver();
-                if (gameOverType != null) {
-                    soundManager.stopBackgroundMusic();
-                    RecordsManager recordsManager = new RecordsManager();
-                    recordsManager.saveRecord(new RecordEntry(gameEngine.getEmperorName(), gameEngine.getYearsRuledText(), gameOverType.name()));
-
-                    game.setScreen(new GameOverScreen(game, gameOverType, gameEngine.getEmperorName(), gameEngine.getYearsRuledText()));
-                    dispose();
-                    return;
-                }
+                if (finishIfGameOver()) return;
+                saveRun();
 
                 final GameStats newStats = gameEngine.getRunState().getStats();
                 Gdx.app.postRunnable(() -> {
@@ -313,6 +312,7 @@ public class GameScreen implements Screen {
 
             @Override
             public void onError(String message) {
+                if (disposed) return;
                 requestInFlight = false;
                 cardPresenter.cancelSubmitting();
                 uiMessage = message;
@@ -322,11 +322,43 @@ public class GameScreen implements Screen {
 
     private void advanceToNextCard() {
         if (!cardPresenter.canAdvanceCard() || gameOverType != null) return;
+        if (gameEngine.getRunState().hasPendingWar()) {
+            openWar();
+            return;
+        }
         playCardSwapSound();
         EventCard nextCard = gameEngine.nextCard();
         cardPresenter.showNewEvent(nextCard, gameEngine.getRunState().getStats());
         typedMessage.setLength(0);
         uiMessage = null;
+        saveRun();
+    }
+
+    private void openWar() {
+        game.setScreen(new WarScreen(game, this, wins -> {
+            Consequence outcome = gameEngine.resolveWar(wins);
+            if (outcome == null || finishIfGameOver()) return;
+            saveRun();
+            cardPresenter.showWarOutcome(outcome, gameEngine.getRunState().getStats());
+            spawnStatDeltas(gameEngine.getRunState().getStats(), viewport.getWorldWidth(), viewport.getWorldHeight());
+            lastStats = gameEngine.getRunState().getStats().copy();
+            typedMessage.setLength(0);
+        }, gameEngine.getSavedBattle(), saved -> {
+            gameEngine.setSavedBattle(saved);
+            saveRun();
+        }));
+    }
+
+    private boolean finishIfGameOver() {
+        gameOverType = gameEngine.checkGameOver();
+        if (gameOverType == null) return false;
+        saves.clear();
+        soundManager.stopBackgroundMusic();
+        new RecordsManager().saveRecord(new RecordEntry(gameEngine.getEmperorName(),
+            gameEngine.getYearsRuledText(), gameOverType.name()));
+        game.setScreen(new GameOverScreen(game, gameOverType, gameEngine.getEmperorName(), gameEngine.getYearsRuledText()));
+        dispose();
+        return true;
     }
 
     @Override
@@ -354,7 +386,6 @@ public class GameScreen implements Screen {
             drawLoadingHint(viewport.getWorldWidth());
         }
         drawReignInfo(viewport.getWorldWidth(), viewport.getWorldHeight());
-        drawSideActionButtons(viewport.getWorldHeight());
         drawBottomRightSettingsButton(viewport.getWorldWidth());
         if (uiMessage != null && !uiMessage.isEmpty()) {
             drawUiMessage(viewport.getWorldWidth());
@@ -362,19 +393,6 @@ public class GameScreen implements Screen {
         batch.end();
     }
 
-    private void drawSideActionButtons(float worldHeight) {
-        float buttonSize = 68f;
-        float gap = 16f;
-        float x = 24f;
-        float totalHeight = buttonSize * 2f + gap;
-        float startY = worldHeight / 2f - totalHeight / 2f;
-
-        tournamentButtonBounds.set(x, startY + buttonSize + gap, buttonSize, buttonSize);
-        warButtonBounds.set(x, startY, buttonSize, buttonSize);
-
-        drawActionButton(tournamentButtonBounds.x, tournamentButtonBounds.y, tournamentButtonBounds.width, tournamentButtonBounds.height, tournamentButtonTexture, hoverTournament);
-        drawActionButton(warButtonBounds.x, warButtonBounds.y, warButtonBounds.width, warButtonBounds.height, warButtonTexture, hoverWar);
-    }
 
     private void drawActionButton(float x, float y, float w, float h, Texture icon, boolean hovered) {
         float offset = hovered ? 2f : 0f;
@@ -544,7 +562,8 @@ public class GameScreen implements Screen {
     }
 
     private void drawNextHint(float worldWidth) {
-        String hint = LocalizationManager.get("game.next_hint");
+        String hint = LocalizationManager.get(gameEngine.getRunState().hasPendingWar()
+            ? "game.start_war_hint" : "game.next_hint");
         hintFont.setColor(0.25f, 0.16f, 0.08f, 0.95f);
         layout.setText(hintFont, hint);
         hintFont.draw(batch, hint, (worldWidth - layout.width) / 2f, 44f);
@@ -688,6 +707,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        saveRun();
         soundManager.pauseBackgroundMusic();
     }
 
@@ -699,6 +719,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
+        saveRun();
         soundManager.pauseBackgroundMusic();
     }
 
@@ -711,6 +732,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        if (disposed) return;
+        saveRun();
+        disposed = true;
         if (cardPresenter != null) cardPresenter.dispose();
         if (backgroundRenderer != null) backgroundRenderer.dispose();
         if (batch != null) batch.dispose();
@@ -721,28 +745,20 @@ public class GameScreen implements Screen {
         if (peopleIcon != null) peopleIcon.dispose();
         if (religionIcon != null) religionIcon.dispose();
         if (sendButtonTexture != null) sendButtonTexture.dispose();
-        if (tournamentButtonTexture != null) tournamentButtonTexture.dispose();
-        if (warButtonTexture != null) warButtonTexture.dispose();
         if (blurShader != null) blurShader.dispose();
         if (ovalMaskShader != null) ovalMaskShader.dispose();
         if (settingsButtonTexture != null) settingsButtonTexture.dispose();
     }
 
-    private static DecisionResolver createDecisionResolver() {
-        String apiKey = "OPEN-AI-KEY";
-        if (apiKey == null || apiKey.isEmpty()) {
-            throw new RuntimeException("OPENAI_API_KEY lipseste");
-        }
-
-        OpenAiClient aiClient = new OpenAiClient(
-            new OpenAiConfig(
-                "https://api.openai.com/v1",
-                apiKey,
-                "gpt-4.1-mini"
-            )
-        );
-
-        GameDecisionService service = new GameDecisionService(aiClient, new PromptFactory());
-        return new AiDecisionResolver(service);
+    private static DecisionResolver createDecisionResolver(StartGame game) {
+        return (event, input, callback) -> {
+            try {
+                AiClient client = game.getAiSettings().createClient();
+                new AiDecisionResolver(new GameDecisionService(client, new PromptFactory()))
+                    .resolveDecision(event, input, callback);
+            } catch (AiServiceException error) {
+                callback.onError(error.getMessage());
+            }
+        };
     }
 }

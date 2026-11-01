@@ -1,6 +1,7 @@
 package com.lazar.ai.service;
 
 import com.badlogic.gdx.Gdx;
+import com.lazar.config.LocalizationManager;
 import com.lazar.ai.model.ResolveDecisionRequest;
 import com.lazar.ai.model.ResolveDecisionResponse;
 import com.lazar.config.ConsequenceMapper;
@@ -28,19 +29,19 @@ public class AiDecisionResolver implements DecisionResolver {
     public void resolveDecision(EventCard event, String playerInput, Callback callback) {
         ResolveDecisionRequest requestBody = requestMapper.toRequest(event, playerInput);
 
-        new Thread(() -> {
+        Thread worker = new Thread(() -> {
             try {
                 ResolveDecisionResponse response = gameDecisionService.resolve(requestBody);
 
                 Gdx.app.postRunnable(() -> {
                     if (response == null || response.consequence == null || response.resolvedOption == null) {
-                        callback.onError("Raspuns invalid de la AI");
+                        callback.onError(LocalizationManager.get("ai.error.invalid"));
                         return;
                     }
 
                     Consequence consequence = consequenceMapper.fromDto(response.consequence);
                     if (consequence == null) {
-                        callback.onError("Consecinta invalida");
+                        callback.onError(LocalizationManager.get("ai.error.invalid"));
                         return;
                     }
 
@@ -48,16 +49,17 @@ public class AiDecisionResolver implements DecisionResolver {
                         DecisionOption option = DecisionOption.valueOf(response.resolvedOption.trim().toUpperCase());
                         callback.onSuccess(new DecisionResolution(option, consequence));
                     } catch (Exception ex) {
-                        callback.onError("Optiune invalida primita de la AI");
+                        callback.onError(LocalizationManager.get("ai.error.classification"));
                     }
                 });
 
             } catch (Exception e) {
                 Gdx.app.postRunnable(() -> {
-                    Gdx.app.error("AiDecisionResolver", "Resolve failed", e);
-                    callback.onError("Nu s-a putut analiza raspunsul");
+                    callback.onError(AiServiceException.messageFor(e));
                 });
             }
-        }).start();
+        }, "throne-ai-decision");
+        worker.setDaemon(true);
+        worker.start();
     }
 }
