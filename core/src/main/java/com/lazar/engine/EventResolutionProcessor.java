@@ -97,11 +97,13 @@ public class EventResolutionProcessor {
             arc.resolved = true;
             arc.active = false;
             arc.currentStage = ArcStage.OUTCOME;
+            arc.stageEnteredTurn = state.getTurn();
             return;
         }
 
         if (effects.nextArcStage != null) {
             arc.currentStage = ArcStage.valueOf(effects.nextArcStage);
+            arc.stageEnteredTurn = state.getTurn();
             arc.active = true;
             return;
         }
@@ -135,5 +137,6 @@ public class EventResolutionProcessor {
                 arc.resolved = true;
                 break;
         }
+        arc.stageEnteredTurn = state.getTurn();
     }
 }

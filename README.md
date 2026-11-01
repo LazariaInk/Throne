@@ -2,7 +2,7 @@
 
 Throne este un joc narativ de conducere a unui regat medieval, construit în Java cu libGDX. Joci rolul unui conducător care răspunde în scris cererilor curții, bisericii, armatei și poporului. Hotărârile schimbă echilibrul regatului și influențează evenimentele viitoare. Scopul este să rămâi pe tron cât mai mult timp.
 
-Documentul descrie codul existent la **1 noiembrie 2026**. Stadiul actual este de **prototip cu bucla principală implementată**, cu funcționalități secundare încă în dezvoltare. Modulul `core` și testele războiului au fost compilate direct cu JDK 21. Build-ul Gradle este blocat în acest mediu de configurarea Android (`C:\.android`); fluxul vizual complet necesită verificare în joc.
+Documentul descrie codul existent la **2 noiembrie 2026**. Stadiul actual este de **prototip cu bucla principală implementată**, cu funcționalități secundare încă în dezvoltare. Modulul `core` și testele logicii jocului au fost compilate direct cu JDK 21. Build-ul Gradle este blocat în acest mediu de configurarea Android (`C:\.android`); fluxul vizual complet necesită verificare în joc.
 
 ## Cum se joacă
 
@@ -19,7 +19,7 @@ AI-ul interpretează textul și formulează o scurtă narațiune. Efectele numer
 ## Ce poate face acum
 
 - Flux complet în cod: eveniment → răspuns → consecință → actualizarea regatului → următorul eveniment sau game over.
-- **54 de evenimente și 14 arcuri narative**, în `assets/data/events.json`, despre biserică, nobili, populație, armată, trezorerie și diplomație.
+- **72 de evenimente și 17 arcuri narative**, în `assets/data/events.json`, despre biserică, nobili, populație, armată, trezorerie și diplomație.
 - Selecție ponderată după starea regatului, raritate, condiții, evenimente recente și cooldown.
 - Flag-uri și progresie prin etapele `SEED`, `COMMITMENT`, `ESCALATION`, `CRISIS`, `OUTCOME`; pornirea unor noi arcuri este limitată când sunt deja trei active.
 - Escaladarea unor consecințe după turele 40 și 80, prin `DoomService`.
@@ -80,7 +80,7 @@ Apelul AI rulează pe un thread separat. Rezultatul revine pe thread-ul aplicaț
 | Zonă | Stadiu în cod |
 | --- | --- |
 | Partida narativă | Bucla principală implementată; necesită validare prin rulare și echilibrare. |
-| Conținut | 54 de evenimente; textele lor sunt în română, separat de traducerile UI. |
+| Conținut | 72 de evenimente; textele lor sunt în română, separat de traducerile UI. |
 | AI | Două variante configurabile din interfață: cheia OpenAI a jucătorului sau Ollama local. Implicit: Ollama. |
 | Configurare AI | Valorile implicite sunt citite din `assets/ai-config.json`; furnizorul și modelele se salvează local, cheia rămâne doar în sesiune. |
 | Echilibrare | Multiplicatorul de debug ×33 a fost eliminat; efectele se aplică direct, iar echilibrarea necesită playtesting. |
@@ -216,3 +216,13 @@ Statisticile nu sunt transmise numeric în promptul naratorului și nu sunt citi
 La `event_castle_invasion`, numai plata tributului (A) evită războiul. Apărarea (B) și eschivarea (C) au `START_WAR` în datele evenimentului. Exemplul „îmi bag picioru, eu mă culc” este explicat în prompt drept abandonarea hotărârii, nu apărare deliberată. C descrie o curte rămasă fără poruncă și un rege vecin care profită de ezitare: se aplică efectele C și apoi începe bătălia, fără a anunța rezultatul ei în avans. Clasificarea inițială C rămâne C și după luptă / salvare.
 
 Testul `.\gradlew.bat core:narrativeDecisionTest`, inclus în `core:check`, verifică filtrarea explicațiilor tehnice, delimitarea mesajului jucătorului, cifrele autoritative, declanșarea războiului din C și reluarea sa. Testele folosesc clienți simulați, fără apeluri API. Tranziția carte C → război → consecință și afișarea textului lung au fost verificate în aplicația desktop; calitatea efectivă a modelului ales necesită o probă cu configurația jucătorului.
+
+## Crizele coroanei și severitatea lui C
+
+Au fost adăugate 18 cărți în trei arcuri cu etape și ramificații: **Coroana amanetată**, **Iarna cenușii** și **Jurământul rupt**. Continuările eligibile primesc prioritate după trei ture; ordinea etapelor și momentul schimbării lor sunt păstrate la salvare. Poveștile încheiate nu repornesc.
+
+Varianta C a fost rescrisă în întregul catalog ca evitare a hotărârii și produce pierderi în toate cele patru statistici, fără bonusuri numerice. În crize pierderile sunt mai mari. La invazie, C costă acum 3 religie, 10 populație, 8 armată și 9 aur înaintea bătăliei. Compromisurile A/B din vechiul catalog au fost întărite în date, păstrând tributul invaziei la 12 aur.
+
+În simulări de 300 de domnii pe strategie, C repetat a redus durata mediană de la 54 la 7 ture. O strategie de echilibrare care produce C în 10% dintre ture ajunge la o mediană de 53 de ture. Acestea sunt simulări fără AI, cu efecte cunoscute și rezultate de război presupuse, nu o estimare a comportamentului jucătorilor reali.
+
+Metodologia, traseele poveștilor și rezultatele sunt în [raportul de echilibrare](docs/balance-2026-11-02.md). Verificările se execută cu `.\gradlew.bat core:crisisArcTest`, inclus în `core:check`.

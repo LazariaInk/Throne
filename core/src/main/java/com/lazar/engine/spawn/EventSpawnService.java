@@ -20,6 +20,8 @@ public class EventSpawnService {
 
     public EventDefinition drawNext(GameRunState state) {
         Array<ScoredEvent> eligible = new Array<>();
+        Array<ScoredEvent> urgent = new Array<>();
+        int oldestUrgency = Integer.MIN_VALUE;
 
         for (EventDefinition event : allEvents) {
             if (!isEligible(event, state)) {
@@ -28,13 +30,24 @@ public class EventSpawnService {
 
             float score = calculateScore(event, state);
             if (score > 0f) {
-                eligible.add(new ScoredEvent(event, score));
+                ScoredEvent candidate = new ScoredEvent(event, score);
+                eligible.add(candidate);
+                StoryArcState arc = event.arcId == null ? null : state.getArc(event.arcId);
+                if (event.strictArcOrder && event.arcStage != ArcStage.SEED && arc != null
+                    && event.followUpMaxWaitTurns > 0) {
+                    int overdue = state.getTurn() - arc.stageEnteredTurn - event.followUpMaxWaitTurns;
+                    if (overdue >= 0) {
+                        if (overdue > oldestUrgency) { urgent.clear(); oldestUrgency = overdue; }
+                        if (overdue == oldestUrgency) urgent.add(candidate);
+                    }
+                }
             }
         }
 
         if (eligible.size == 0) {
             return fallback();
         }
+        if (urgent.size > 0) eligible = urgent;
 
         float total = 0f;
         for (ScoredEvent item : eligible) {
@@ -55,6 +68,14 @@ public class EventSpawnService {
     }
 
     private boolean isEligible(EventDefinition event, GameRunState state) {
+        if (event.strictArcOrder) {
+            StoryArcState arc = state.getArc(event.arcId);
+            if (event.arcStage == ArcStage.SEED) {
+                if (arc != null) return false;
+            } else if (arc == null || !arc.active || arc.resolved || arc.currentStage != event.arcStage) {
+                return false;
+            }
+        }
         if (state.isOnCooldown(event.id)) {
             return false;
         }
@@ -68,7 +89,8 @@ public class EventSpawnService {
         }
 
         if (event.arcId != null && event.arcStage == ArcStage.SEED && state.activeArcCount() >= 3) {
-            return false;
+            StoryArcState existing = state.getArc(event.arcId);
+            if (existing == null || !existing.active) return false;
         }
 
         if (event.rarity == EventRarity.CRISIS && state.hasArcInCrisis()) {
@@ -200,11 +222,11 @@ public class EventSpawnService {
 
     private EventDefinition fallback() {
         for (EventDefinition event : allEvents) {
-            if (event.rarity == EventRarity.COMMON) {
+            if (!event.strictArcOrder && event.rarity == EventRarity.COMMON) {
                 return event;
             }
         }
-        return allEvents.first();
+        throw new IllegalStateException("No eligible event or standalone fallback available");
     }
 
     private static class ScoredEvent {

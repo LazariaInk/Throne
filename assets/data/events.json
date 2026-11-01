@@ -9,23 +9,37 @@
       "rarity": "UNCOMMON",
       "cooldownTurns": 12,
       "baseWeight": 5.0,
-      "requires": [{ "type": "TURN_AT_LEAST", "value": 3 }],
+      "requires": [
+        {
+          "type": "TURN_AT_LEAST",
+          "value": 3
+        }
+      ],
       "blockedBy": [],
       "decisions": {
         "A": {
           "title": "Plătești tributul",
           "text": "Ai trimis aurul regelui vecin. Armata lui se retrage, iar castelul rămâne nevătămat. Pacea a costat vistieria 12 saci de aur.",
-          "religion": 0, "population": 2, "army": -2, "money": -12
+          "religion": 0,
+          "population": 2,
+          "army": -2,
+          "money": -12
         },
         "B": {
           "title": "Pregătești apărarea",
           "text": "Refuzi tributul și ridici stindardele pe ziduri. Căpitanul adună oștenii. Continuă pentru a conduce apărarea castelului în 10 confruntări.",
-          "religion": 0, "population": 0, "army": 0, "money": 0
+          "religion": 0,
+          "population": 0,
+          "army": 0,
+          "money": 0
         },
         "C": {
           "title": "Clopotele fără poruncă",
           "text": "Cuvintele tale se sting în sala tronului, iar sfetnicii își ascund neliniștea sub plecăciuni adânci. Nicio poruncă nu ajunge la porți și niciun sol cu aur nu pornește spre tabăra vrăjmașă. Luând tăcerea coroanei drept slăbiciune, regele vecin își trimite oastea asupra zidurilor; satele sunt jefuite, iar străjerii se retrag în neorânduială. Clopotele bat a primejdie, iar căpitanul îți cere să conduci apărarea înainte ca porțile să cedeze.",
-          "religion": 0, "population": -5, "army": -3, "money": -4
+          "religion": -3,
+          "population": -10,
+          "army": -8,
+          "money": -9
         }
       },
       "onB": {
@@ -34,17 +48,26 @@
           "victory": {
             "title": "Castelul a rezistat!",
             "text": "Ai respins asaltul. Oastea vecină abandonează tabăra, iar prada întărește vistieria. Oștenii și poporul îți laudă apărarea.",
-            "religion": 0, "population": 4, "army": 6, "money": 8
+            "religion": 0,
+            "population": 4,
+            "army": 6,
+            "money": 8
           },
           "draw": {
             "title": "Armistițiu la porți",
             "text": "Nicio oaste nu poate hotărî lupta. Negociezi retragerea inamicului. Castelul este salvat, dar răniții și reparațiile cer oameni și aur.",
-            "religion": 0, "population": -2, "army": -4, "money": -5
+            "religion": 0,
+            "population": -2,
+            "army": -4,
+            "money": -5
           },
           "defeat": {
             "title": "Apărarea a fost străpunsă",
             "text": "Oastea vecină străpunge apărarea și impune un tribut greu. Îți păstrezi coroana, dar pierzi soldați, aur și încrederea poporului.",
-            "religion": 0, "population": -8, "army": -12, "money": -15
+            "religion": 0,
+            "population": -8,
+            "army": -12,
+            "money": -15
           }
         }
       },
@@ -54,17 +77,26 @@
           "victory": {
             "title": "Castelul a rezistat!",
             "text": "Ai respins asaltul. Oastea vecină abandonează tabăra, iar prada întărește vistieria. Oștenii și poporul îți laudă apărarea.",
-            "religion": 0, "population": 4, "army": 6, "money": 8
+            "religion": 0,
+            "population": 4,
+            "army": 6,
+            "money": 8
           },
           "draw": {
             "title": "Armistițiu la porți",
             "text": "Nicio oaste nu poate hotărî lupta. Negociezi retragerea inamicului. Castelul este salvat, dar răniții și reparațiile cer oameni și aur.",
-            "religion": 0, "population": -2, "army": -4, "money": -5
+            "religion": 0,
+            "population": -2,
+            "army": -4,
+            "money": -5
           },
           "defeat": {
             "title": "Apărarea a fost străpunsă",
             "text": "Oastea vecină străpunge apărarea și impune un tribut greu. Îți păstrezi coroana, dar pierzi soldați, aur și încrederea poporului.",
-            "religion": 0, "population": -8, "army": -12, "money": -15
+            "religion": 0,
+            "population": -8,
+            "army": -12,
+            "money": -15
           }
         }
       }
@@ -81,47 +113,66 @@
       "crisisBias": 0.0,
       "cooldownTurns": 3,
       "baseWeight": 1.0,
-      "tags": ["church", "army", "court"],
+      "tags": [
+        "church",
+        "army",
+        "court"
+      ],
       "requires": [],
       "blockedBy": [],
       "decisions": {
         "A": {
           "title": "Turnirul are loc",
           "text": "Ai poruncit sa fie ridicata arena chiar in piata cetatii. Nobilii aplauda, oamenii se aduna, iar soldatii isi recapata mandria. Episcopul mustra curtea pentru trufie.",
-          "religion": -1,
-          "population": 1,
-          "army": 2,
-          "money": -2
+          "religion": -2,
+          "population": 2,
+          "army": 4,
+          "money": -4
         },
         "B": {
           "title": "Regatul intra in post",
           "text": "Ai ascultat glasul episcopului si ai chemat regatul la post si rugaciune. Biserica iti binecuvanteaza tronul, dar soldatii murmura, iar curtea ramane fara sarbatoare.",
-          "religion": 2,
-          "population": -1,
-          "army": -1,
+          "religion": 4,
+          "population": -2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Majestatea ramane neclara",
-          "text": "Curtea ramane uluita de raspunsul tau nehotarat. Nobilii, clerul si poporul pleaca mai nelinistiti decat au venit.",
-          "religion": -1,
-          "population": -1,
-          "army": -1,
-          "money": -1
+          "title": "Piața fără poruncă",
+          "text": "Fără hotărârea coroanei, cavalerii cer plată pentru o arenă goală, iar episcopul vestește că tronul și-a uitat datoria. Mulțimea se împrăștie între huiduieli, dregătorii risipesc pregătirile și oștenii pleacă rușinați din piață.",
+          "religion": -8,
+          "population": -4,
+          "army": -2,
+          "money": -3
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "church_humiliated" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "church_humiliated"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "church_favored" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "church_favored"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "crown_indecisive" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crown_indecisive"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       }
@@ -138,49 +189,72 @@
       "crisisBias": 0.0,
       "cooldownTurns": 4,
       "baseWeight": 1.0,
-      "tags": ["church", "tax", "privileges"],
+      "tags": [
+        "church",
+        "tax",
+        "privileges"
+      ],
       "requires": [
-        { "type": "FLAG", "flag": "church_favored", "expected": true }
+        {
+          "type": "FLAG",
+          "flag": "church_favored",
+          "expected": true
+        }
       ],
       "blockedBy": [],
       "decisions": {
         "A": {
           "title": "Privilegiile sunt acordate",
           "text": "Ai intarit pozitia Bisericii. Clerul te binecuvanteaza, dar vistieria simte imediat povara concesiilor.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Privilegiile sunt refuzate",
           "text": "Ai aparat tezaurul si autoritatea coroanei, dar episcopii vorbesc deja despre mandria lumii.",
-          "religion": -2,
+          "religion": -4,
           "population": 0,
-          "army": 1,
-          "money": 1
+          "army": 2,
+          "money": 2
         },
         "C": {
-          "title": "Biserica pleaca nelamurita",
-          "text": "Raspunsul tau a fost atat de alunecos incat nimeni nu stie daca ai promis ceva sau ai refuzat totul.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": -1
+          "title": "Biruri sub pecetea tăcerii",
+          "text": "Episcopii pleacă fără răspuns și încasează singuri birurile disputate. Judecătorii lor închid porțile înaintea slujbașilor tăi, iar oamenii plătesc de două ori și blestemă coroana.",
+          "religion": -10,
+          "population": -5,
+          "army": -3,
+          "money": -4
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "church_privileges_granted" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "church_privileges_granted"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "church_denied" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "church_denied"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "church_confusion" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "church_confusion"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       }
@@ -197,49 +271,72 @@
       "crisisBias": 0.2,
       "cooldownTurns": 5,
       "baseWeight": 1.0,
-      "tags": ["church", "preachers", "court"],
+      "tags": [
+        "church",
+        "preachers",
+        "court"
+      ],
       "requires": [
-        { "type": "FLAG", "flag": "church_denied", "expected": true }
+        {
+          "type": "FLAG",
+          "flag": "church_denied",
+          "expected": true
+        }
       ],
       "blockedBy": [],
       "decisions": {
         "A": {
           "title": "Predicatorii sunt redusi la tacere",
           "text": "Garzile i-au imprastiat, iar curtea rasufla usurata. Totusi, unii ii socotesc deja martiri.",
-          "religion": -1,
-          "population": -1,
-          "army": 1,
+          "religion": -2,
+          "population": -2,
+          "army": 2,
           "money": 0
         },
         "B": {
           "title": "Predicatorii sunt tolerati",
           "text": "Ai lasat cuvintele sa curga. Unii te cred intelept, altii slab.",
-          "religion": 1,
-          "population": 1,
-          "army": -1,
+          "religion": 2,
+          "population": 2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Curtea raspunde in dodii",
-          "text": "Nici predicatorii, nici episcopii, nici poporul nu stiu ce ai vrut sa spui.",
-          "religion": -1,
-          "population": -1,
-          "army": -1,
-          "money": 0
+          "title": "Amvonul judecă tronul",
+          "text": "Nicio veste nu răspunde predicilor, iar zvonul ține loc de lege. Preoții numesc tăcerea ta mărturisire a păcatului, negoțul se oprește și garda nu mai știe pe cine să asculte.",
+          "religion": -12,
+          "population": -6,
+          "army": -3,
+          "money": -5
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "preachers_silenced" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "preachers_silenced"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "preachers_tolerated" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "preachers_tolerated"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "religious_confusion" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "religious_confusion"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       }
@@ -256,49 +353,73 @@
       "crisisBias": 1.2,
       "cooldownTurns": 6,
       "baseWeight": 1.0,
-      "tags": ["church", "heresy", "crisis"],
+      "tags": [
+        "church",
+        "heresy",
+        "crisis"
+      ],
       "requires": [
-        { "type": "STAT", "stat": "RELIGION", "op": "LT", "value": 35 }
+        {
+          "type": "STAT",
+          "stat": "RELIGION",
+          "op": "LT",
+          "value": 35
+        }
       ],
       "blockedBy": [],
       "decisions": {
         "A": {
           "title": "Erezia este zdrobita",
           "text": "Ai trimis sabia acolo unde cuvantul nu a mai fost ascultat. Linistea se intoarce, dar satele nu uita.",
-          "religion": 1,
-          "population": -2,
-          "army": 1,
-          "money": -1
+          "religion": 2,
+          "population": -4,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Erezia este tolerata",
           "text": "Ai preferat pacea de moment in locul sabiei. Tensiunea scade acum, dar unitatea credintei se fisureaza.",
-          "religion": -2,
-          "population": 1,
+          "religion": -4,
+          "population": 2,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Nehotararea hraneste erezia",
-          "text": "Lipsa unei directii limpezi face ca glasurile neascultarii sa para mai puternice in fiecare sat.",
-          "religion": -2,
-          "population": -1,
-          "army": -1,
-          "money": -1
+          "title": "Credința se rupe în două",
+          "text": "Nicio poruncă nu ajunge în provincie, iar predicatorii rivali își ridică altare. Satele își izgonesc preoții, bisericile ard și drumurile sunt tăiate înainte ca vistieria să mai poată cumpăra pacea.",
+          "religion": -16,
+          "population": -8,
+          "army": -4,
+          "money": -6
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "heresy_crushed" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "heresy_crushed"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "heresy_tolerated" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "heresy_tolerated"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "heresy_spreads" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "heresy_spreads"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       }
@@ -315,7 +436,11 @@
       "crisisBias": 0.0,
       "cooldownTurns": 3,
       "baseWeight": 1.0,
-      "tags": ["famine", "peasants", "grain"],
+      "tags": [
+        "famine",
+        "peasants",
+        "grain"
+      ],
       "requires": [],
       "blockedBy": [],
       "decisions": {
@@ -323,39 +448,54 @@
           "title": "Granarele se deschid",
           "text": "Ai deschis hambarele coroanei si ai trimis care cu grau spre sud. Taranii se roaga pentru tine, dar rezervele scad.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Granarele raman inchise",
           "text": "Ai ales prudenta pentru iarna ce vine. Satele simt insa ca au fost parasite.",
           "religion": 0,
-          "population": -2,
+          "population": -4,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Sudul ramane fara raspuns limpede",
-          "text": "Ai rostit cuvinte care nu lamuresc daca hambarele se deschid ori raman zavorate.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Fântânile nu așteaptă",
+          "text": "Solii satelor se întorc fără ajutor și fără poruncă. Puțurile seacă, țăranii își vând vitele pe o pâine, iar din sud nu mai vin nici biruri, nici recruți.",
+          "religion": -3,
+          "population": -8,
+          "army": -2,
+          "money": -4
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "grain_opened" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "grain_opened"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "grain_withheld" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "grain_withheld"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "southern_unrest" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "southern_unrest"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       }
@@ -372,9 +512,17 @@
       "crisisBias": 0.0,
       "cooldownTurns": 3,
       "baseWeight": 1.0,
-      "tags": ["famine", "bread", "guilds"],
+      "tags": [
+        "famine",
+        "bread",
+        "guilds"
+      ],
       "requires": [
-        { "type": "FLAG", "flag": "grain_withheld", "expected": true }
+        {
+          "type": "FLAG",
+          "flag": "grain_withheld",
+          "expected": true
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -382,39 +530,54 @@
           "title": "Pretul painii este plafonat",
           "text": "Ai lovit specula, iar orasenii te lauda. Breslele privesc insa hotararea ca pe un atac.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Piata ramane libera",
           "text": "Ai aparat comertul, dar poporul simte greutatea preturilor in fiecare zi.",
           "religion": 0,
-          "population": -2,
+          "population": -4,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Negustorii pleaca fara raspuns clar",
-          "text": "Nimeni nu intelege daca ai amenintat, ai promis sau doar ai amanat hotararea.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": -1
+          "title": "Pâinea celor fără glas",
+          "text": "Negustorii nu primesc nici limită, nici învoială și închid magaziile. Mulțimea răstoarnă tarabele, garda lovește fără rânduială, iar dregătorii își umplu pungile în locul vistieriei.",
+          "religion": -3,
+          "population": -5,
+          "army": -4,
+          "money": -10
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "bread_capped" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "bread_capped"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "bread_market_free" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "bread_market_free"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "bread_confusion" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "bread_confusion"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       }
@@ -431,9 +594,18 @@
       "crisisBias": 0.3,
       "cooldownTurns": 4,
       "baseWeight": 1.0,
-      "tags": ["famine", "migration", "peasants"],
+      "tags": [
+        "famine",
+        "migration",
+        "peasants"
+      ],
       "requires": [
-        { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 35 }
+        {
+          "type": "STAT",
+          "stat": "POPULATION",
+          "op": "LT",
+          "value": 35
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -441,39 +613,54 @@
           "title": "Migratii sunt asezati cu forta",
           "text": "Ai redirectionat oamenii si ai impus ordine. Drumurile se limpezesc, dar nemultumirea ramane.",
           "religion": 0,
-          "population": 1,
-          "army": 1,
-          "money": -1
+          "population": 2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Ii lasi sa plece unde pot",
           "text": "Ai evitat constrangerea, dar ogoarele raman goale si ordinea se subtiaza.",
           "religion": 0,
-          "population": -1,
-          "army": -1,
+          "population": -2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Nehotararea imprastie si mai mult lumea",
-          "text": "Satele se golesc, orasele se umplu, iar nimeni nu stie cine raspunde pentru haos.",
-          "religion": -1,
-          "population": -2,
-          "army": -1,
-          "money": 0
+          "title": "Drumuri fără întoarcere",
+          "text": "Nimeni nu le arată pribegilor unde pot rămâne și ce ogoare mai pot lucra. Satele se golesc, cetele flămânde iau cu sila ce găsesc, iar soldații părăsesc drumurile înaintea iernii.",
+          "religion": -5,
+          "population": -12,
+          "army": -3,
+          "money": -6
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "migrants_resettled" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "migrants_resettled"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "roads_abandoned" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "roads_abandoned"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "vagrancy_spreads" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "vagrancy_spreads"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       }
@@ -490,9 +677,18 @@
       "crisisBias": 1.5,
       "cooldownTurns": 6,
       "baseWeight": 1.0,
-      "tags": ["famine", "crisis", "bandits"],
+      "tags": [
+        "famine",
+        "crisis",
+        "bandits"
+      ],
       "requires": [
-        { "type": "STAT", "stat": "POPULATION", "op": "LT", "value": 20 }
+        {
+          "type": "STAT",
+          "stat": "POPULATION",
+          "op": "LT",
+          "value": 20
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -500,39 +696,54 @@
           "title": "Jafurile sunt zdrobite prin forta",
           "text": "Ai trimis soldatii pe drumuri si ai spanzurat talharii. Linistea revine, dar foametea ramane.",
           "religion": 0,
-          "population": -2,
-          "army": 1,
-          "money": -1
+          "population": -4,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Trimiti ajutor si paza",
           "text": "Ai incercat sa hranesti si sa protejezi in acelasi timp. Curtea ofteaza, dar oamenii traiesc inca.",
           "religion": 0,
-          "population": 2,
-          "army": -1,
-          "money": -2
+          "population": 4,
+          "army": -2,
+          "money": -4
         },
         "C": {
-          "title": "Regatul priveste, iar drumurile ard",
-          "text": "Neclaritatea ta lasa loc foamei si sabiei sa lucreze impreuna.",
-          "religion": -1,
-          "population": -2,
-          "army": -1,
-          "money": -1
+          "title": "Foamea poartă o coroană",
+          "text": "Tronul nu dă poruncă, dar foamea o dă în locul lui. Magaziile sunt luate cu asalt, dregătorii fug cu ultimele care de grâne și armata nu mai poate strânge oamenii risipiți.",
+          "religion": -6,
+          "population": -16,
+          "army": -4,
+          "money": -8
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "famine_crushed_by_force" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "famine_crushed_by_force"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "famine_aid_sent" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "famine_aid_sent"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "famine_ignored" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "famine_ignored"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       }
@@ -549,9 +760,18 @@
       "crisisBias": 0.0,
       "cooldownTurns": 3,
       "baseWeight": 1.0,
-      "tags": ["debt", "treasury", "money"],
+      "tags": [
+        "debt",
+        "treasury",
+        "money"
+      ],
       "requires": [
-        { "type": "STAT", "stat": "MONEY", "op": "LT", "value": 35 }
+        {
+          "type": "STAT",
+          "stat": "MONEY",
+          "op": "LT",
+          "value": 35
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -559,39 +779,54 @@
           "title": "Taxele cresc",
           "text": "Ai strans aur pentru coroana, dar targurile si hanurile murmura.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
-          "money": 2
+          "money": 4
         },
         "B": {
           "title": "Cheltuielile sunt taiate",
           "text": "Ai salvat tezaurul pe moment, dar oamenii curtii si garnizoanele simt imediat lipsurile.",
           "religion": 0,
           "population": 0,
-          "army": -1,
-          "money": 1
+          "army": -2,
+          "money": 2
         },
         "C": {
-          "title": "Vistieria ramane in suspin",
-          "text": "Raspunsul tau nu a multumit pe nimeni si nu a inchis nicio gaura in tezaur.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": -1
+          "title": "Cheile unei vistierii goale",
+          "text": "Trezorierul așteaptă până se sting lumânările și pleacă fără hotărâre. Dobânzile cresc, slujbașii își iau singuri plata din biruri și furnizorii nu mai primesc pecetea regelui.",
+          "religion": -2,
+          "population": -4,
+          "army": -3,
+          "money": -8
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "taxes_raised" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "taxes_raised"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "spending_cut" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "spending_cut"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "treasury_neglected" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "treasury_neglected"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       }
@@ -608,7 +843,11 @@
       "crisisBias": 0.0,
       "cooldownTurns": 3,
       "baseWeight": 1.0,
-      "tags": ["nobles", "privilege", "court"],
+      "tags": [
+        "nobles",
+        "privilege",
+        "court"
+      ],
       "requires": [],
       "blockedBy": [],
       "decisions": {
@@ -616,39 +855,54 @@
           "title": "Privilegiul este acordat",
           "text": "Ai lasat baronii sa pastreze o parte mai mare din puterea lor. Curtea te lauda, dar coroana pare mai slaba.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -1
+          "population": -2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Privilegiul este refuzat",
           "text": "Ai amintit nobililor ca legea coroanei este mai veche decat orice titlu.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Curtea primeste un raspuns vag",
-          "text": "Nobilii pleaca fara sa stie daca au castigat sau au pierdut.",
-          "religion": -1,
-          "population": 0,
-          "army": 0,
-          "money": 0
+          "title": "Privilegii smulse în tăcere",
+          "text": "Nobilii socotesc lipsa poruncii drept încuviințare și își scriu singuri privilegiile. Pământurile coroanei trec în registre străine, străjerii rămân fără leafă și țăranii află că palatul nu-i mai ocrotește.",
+          "religion": -3,
+          "population": -4,
+          "army": -5,
+          "money": -5
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "nobles_empowered" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_empowered"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "nobles_offended" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_offended"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "court_uncertain" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "court_uncertain"
+          }
+        ],
         "nextArcStage": "COMMITMENT",
         "resolveArc": false
       }
@@ -665,9 +919,17 @@
       "crisisBias": 0.0,
       "cooldownTurns": 4,
       "baseWeight": 1.0,
-      "tags": ["nobles", "army", "power"],
+      "tags": [
+        "nobles",
+        "army",
+        "power"
+      ],
       "requires": [
-        { "type": "FLAG", "flag": "nobles_empowered", "expected": true }
+        {
+          "type": "FLAG",
+          "flag": "nobles_empowered",
+          "expected": true
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -676,38 +938,53 @@
           "text": "Curtea devine un loc al steagurilor rivale.",
           "religion": 0,
           "population": 0,
-          "army": 1,
+          "army": 2,
           "money": 0
         },
         "B": {
           "title": "Le ordoni sa le desfiinteze",
           "text": "Ai amintit tuturor cine poarta sabia regatului.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Astepti sa vezi ce se intampla",
-          "text": "Nimeni nu stie daca tronul vegheaza sau doarme.",
-          "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Gărzi fără rege",
+          "text": "Baronii își înarmează oamenii cât timp solii tăi așteaptă în anticameră. La poduri se ridică vămi noi, birurile se opresc în castele străine și soldații coroanei sunt întorși din drum.",
+          "religion": -4,
+          "population": -5,
+          "army": -6,
+          "money": -6
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "noble_private_armies" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "noble_private_armies"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "nobles_restrained" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_restrained"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "nobles_ignored" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_ignored"
+          }
+        ],
         "nextArcStage": "ESCALATION",
         "resolveArc": false
       }
@@ -724,9 +1001,16 @@
       "crisisBias": 0.3,
       "cooldownTurns": 4,
       "baseWeight": 1.0,
-      "tags": ["nobles", "alliance"],
+      "tags": [
+        "nobles",
+        "alliance"
+      ],
       "requires": [
-        { "type": "FLAG", "flag": "noble_private_armies", "expected": true }
+        {
+          "type": "FLAG",
+          "flag": "noble_private_armies",
+          "expected": true
+        }
       ],
       "blockedBy": [],
       "decisions": {
@@ -736,37 +1020,52 @@
           "religion": 0,
           "population": 0,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Declari alianta ilegala",
           "text": "Curtea fierbe de tensiune.",
           "religion": 0,
           "population": 0,
-          "army": 1,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Nu intervii",
-          "text": "Umbra unei ligi nobiliare creste peste regat.",
-          "religion": 0,
-          "population": -1,
-          "army": -1,
-          "money": 0
+          "title": "Masa la care tronul lipsește",
+          "text": "Liga se adună fără împotrivire și fiecare baron își retrage oamenii din oastea regală. Birurile nu mai pleacă spre palat, iar curtenii nu pot ascunde tăcerea clopotelor din provincie.",
+          "religion": -5,
+          "population": -6,
+          "army": -8,
+          "money": -8
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "nobles_coopted" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_coopted"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "nobles_defiant" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "nobles_defiant"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "noble_league_grows" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "noble_league_grows"
+          }
+        ],
         "nextArcStage": "CRISIS",
         "resolveArc": false
       }
@@ -783,7 +1082,10 @@
       "crisisBias": 1.3,
       "cooldownTurns": 6,
       "baseWeight": 1.0,
-      "tags": ["nobles", "rebellion"],
+      "tags": [
+        "nobles",
+        "rebellion"
+      ],
       "requires": [],
       "blockedBy": [],
       "decisions": {
@@ -791,39 +1093,54 @@
           "title": "Trimiti armata",
           "text": "Castelele se inchid sub asediu.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -2
+          "population": -2,
+          "army": 2,
+          "money": -4
         },
         "B": {
           "title": "Negociezi cu liga",
           "text": "Coroana accepta compromisuri grele.",
           "religion": 0,
-          "population": 1,
-          "army": -1,
-          "money": -1
+          "population": 2,
+          "army": -2,
+          "money": -2
         },
         "C": {
-          "title": "Astepti",
-          "text": "Fiecare baron devine propriul sau rege.",
-          "religion": 0,
-          "population": -2,
-          "army": -1,
-          "money": 0
+          "title": "Hotare în jurul coroanei",
+          "text": "Baronii împart ținuturile în timp ce sfetnicii încă așteaptă porunca. Drumurile se închid, garnizoanele jură altor stăpâni și în sala tronului rămâne o coroană care stăpânește tot mai puțină țară.",
+          "religion": -6,
+          "population": -8,
+          "army": -10,
+          "money": -10
         }
       },
       "onA": {
-        "flags": [{ "action": "ADD", "flag": "noble_revolt_crushed" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "noble_revolt_crushed"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onB": {
-        "flags": [{ "action": "ADD", "flag": "noble_compromise" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "noble_compromise"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       },
       "onC": {
-        "flags": [{ "action": "ADD", "flag": "realm_fragmenting" }],
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "realm_fragmenting"
+          }
+        ],
         "nextArcStage": "OUTCOME",
         "resolveArc": true
       }
@@ -851,26 +1168,26 @@
         "A": {
           "title": "Il primesti la curte",
           "text": "Astrologul primeste o camera aproape de sala tronului. Curtenii soptesc, iar episcopul priveste cu gheata in ochi.",
-          "religion": -1,
+          "religion": -2,
           "population": 0,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Il alungi din cetate",
           "text": "L-ai trimis dincolo de ziduri. Biserica aproba, dar zvonul creste tocmai fiindca ai vrut sa-l opresti.",
-          "religion": 1,
-          "population": -1,
+          "religion": 2,
+          "population": -2,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Il lasi sa vorbeasca doar in piete",
-          "text": "Nu l-ai binecuvantat, dar nici nu l-ai zdrobit. Curtea il dispretuieste, poporul il cauta.",
-          "religion": 0,
-          "population": 1,
-          "army": 0,
-          "money": 0
+          "title": "Profeția iese în piață",
+          "text": "Fără răspuns de la curte, astrologul își duce vorbele printre tarabe și numește tăcerea ta binecuvântare. Oamenii părăsesc munca pentru făgăduieli, iar slujbașii trimiși să-l oprească sunt izgoniți din piață.",
+          "religion": -3,
+          "population": -4,
+          "army": -5,
+          "money": -5
         }
       },
       "onA": {
@@ -933,26 +1250,26 @@
         "A": {
           "title": "Ordoni ritualuri de purificare",
           "text": "Ai umplut curtea de fum, psalmi si torte. Oamenii se linistesc putin, dar tezaurul plateste pentru frica lor.",
-          "religion": 1,
-          "population": 1,
+          "religion": 2,
+          "population": 2,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Declari ca e doar o piatra pe cer",
           "text": "Ai ras in fata panicii. Unii te numesc puternic, altii spun ca sfidezi semnele.",
-          "religion": -1,
-          "population": -1,
-          "army": 1,
+          "religion": -2,
+          "population": -2,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Il lasi pe astrolog sa talcuiasca semnul",
-          "text": "Ai dat glas unui om care traieste din spaima altora. Curtea asculta si tremura.",
-          "religion": -1,
-          "population": 0,
-          "army": 0,
-          "money": -1
+          "title": "Steaua vândută spaimei",
+          "text": "Astrologul tâlcuiește singur semnul și își pune vorbele sub numele coroanei. Preoții se dezic de palat, negustorii închid prăvăliile și soldații cer argint ca să mai rămână de strajă.",
+          "religion": -4,
+          "population": -5,
+          "army": -6,
+          "money": -6
         }
       },
       "onA": {
@@ -1016,25 +1333,25 @@
           "title": "Schimbi garda palatului",
           "text": "Ai indepartat visatorii si ai pus oameni noi la porti. Palatul rasufla, dar zvonurile ies pe sub usi.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -1
+          "population": -2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Chemi calugari sa-i asculte",
           "text": "Ai tratat visul ca pe o rana a sufletului. Biserica se apropie, dar armata se simte judecata.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
-          "army": -1,
-          "money": -1
+          "army": -2,
+          "money": -2
         },
         "C": {
-          "title": "Te prefaci ca nu ai auzit",
-          "text": "Tacerea ta face visul mai mare decat orice decret. Pana si slujitorii il soptesc.",
-          "religion": -1,
-          "population": -1,
-          "army": -1,
-          "money": 0
+          "title": "Somnul celor de strajă",
+          "text": "Paznicii nu primesc lămurire și schimbă povești în loc de parole. Unii își părăsesc posturile, alții cer plată îndoită, iar zvonul intră în cetate înaintea zorilor.",
+          "religion": -5,
+          "population": -6,
+          "army": -8,
+          "money": -8
         }
       },
       "onA": {
@@ -1091,26 +1408,26 @@
         "A": {
           "title": "Il iei sub protectia coroanei",
           "text": "Ai inchis copilul intre ziduri si l-ai numit oaspete al tronului. Poporul e impresionat, dar curtea vede o umbra crescand langa tine.",
-          "religion": 1,
-          "population": 2,
-          "army": -1,
-          "money": -1
+          "religion": 2,
+          "population": 4,
+          "army": -2,
+          "money": -2
         },
         "B": {
           "title": "Il dai Bisericii",
           "text": "Ai lasat altarul sa poarte greutatea semnului. Credinta se intareste, dar multi vor spune ca ai cedat din frica.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Risipi multimile cu forta",
-          "text": "Ai spart profetia cu lanci si copite. Linistea se intoarce, insa nu si uitarea.",
-          "religion": -2,
-          "population": -2,
-          "army": 1,
-          "money": -1
+          "title": "Copilul și piața însângerată",
+          "text": "În lipsa hotărârii, căpeteniile gărzii răspund singure mulțimii și copilul dispare în îmbulzeală. Predicatorii numără răniții în fața bisericilor, iar fiecare familie aduce o nouă învinuire împotriva tronului.",
+          "religion": -6,
+          "population": -8,
+          "army": -10,
+          "money": -10
         }
       },
       "onA": {
@@ -1168,25 +1485,25 @@
           "title": "Investesti in mine mai adanci",
           "text": "Ai aruncat aur dupa argintul care poate inca traieste in stanca. Muncitorii te binecuvanteaza, vistieria sughite.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Tai costurile si inchizi galerii",
           "text": "Ai inchis porti si ai stins focuri. Tezaurul respira, dar satele miniere incep sa urasca tronul.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Astepti sa vezi daca stanca se indura",
-          "text": "Nu ai salvat nimic si nu ai taiat nimic. Nesiguranta patrunde pana in taverne.",
-          "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": -1
+          "title": "Târnăcoapele amuțesc",
+          "text": "Minerii așteaptă până se termină pâinea, apoi sting focurile topitoriilor. Paznicii își vând armele pentru merinde, iar de pe dealuri nu mai coboară argint, ci oameni care cer socoteală coroanei.",
+          "religion": -2,
+          "population": -4,
+          "army": -3,
+          "money": -8
         }
       },
       "onA": {
@@ -1250,25 +1567,25 @@
           "title": "Le stergi o parte din datorii",
           "text": "Ai dat satelor miniere o gura de aer. Trezorierul plange pe pergamente.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Le ceri sa rabde pentru regat",
           "text": "Ai pastrat ordinea cifrelor, dar chipurile din fata portii se intuneca.",
           "religion": 0,
-          "population": -2,
+          "population": -4,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Promiti o cercetare lunga",
-          "text": "I-ai tinut in frigul curtii cu vorbe care nu umplu nici o masa.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Petiția îngropată sub praf",
+          "text": "Slujbașii plimbă cererea între odăi și cer fiecărui sol încă o taxă. Minerii își aduc morții la poartă, garda pierde ascultarea târgului și argintul promis nu mai vine.",
+          "religion": -3,
+          "population": -5,
+          "army": -4,
+          "money": -10
         }
       },
       "onA": {
@@ -1331,26 +1648,26 @@
         "A": {
           "title": "Continui exploatarea cu orice pret",
           "text": "Ai ales bogatia din piatra in locul fricii. Argintul urca, sicriele la fel.",
-          "religion": -1,
-          "population": -2,
+          "religion": -2,
+          "population": -4,
           "army": 0,
-          "money": 2
+          "money": 4
         },
         "B": {
           "title": "Sigilezi galeria si chemi clerul",
           "text": "Ai inchis comoara sub rugaciuni si lacate. Credinta se intareste, negustorii ofteaza.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Lasati minerii sa aleaga singuri",
-          "text": "Ai lasat frica si foamea sa negocieze fara tine. Nimeni nu te uita pentru asta.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Filonul fără stăpân",
+          "text": "Fără poruncă, unii sapă pe ascuns, iar alții fug de blestem. O galerie nepăzită se surpă, argintul trece în mâini străine și coroana plătește pentru o mină pe care nu o mai stăpânește.",
+          "religion": -3,
+          "population": -6,
+          "army": -5,
+          "money": -12
         }
       },
       "onA": {
@@ -1407,26 +1724,26 @@
         "A": {
           "title": "Trimiti salvatori si provizii",
           "text": "Ai ales vietile, chiar daca aurul va intarzia. Poporul te priveste altfel.",
-          "religion": 1,
-          "population": 2,
-          "army": -1,
-          "money": -2
+          "religion": 2,
+          "population": 4,
+          "army": -2,
+          "money": -4
         },
         "B": {
           "title": "Inchizi zona si pazesti comoara",
           "text": "Ai aparat ce a ramas din mine, nu pe cei ingropati in ea. Randuiala sta in picioare, inimile nu.",
-          "religion": -1,
-          "population": -2,
-          "army": 1,
-          "money": 1
+          "religion": -2,
+          "population": -4,
+          "army": 2,
+          "money": 2
         },
         "C": {
-          "title": "Lasi stapanii minelor sa raspunda",
-          "text": "Ai impins povara spre altii. Nobilii si negustorii se cearta peste morti.",
-          "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Cei rămași sub munte",
+          "text": "Stăpânii își leapădă vina cât timp nimeni de la palat nu le cere socoteală. Salvatorii rămân fără grinzi și pâine, iar garda ajunge să apere registrele datoriilor de familiile celor îngropați.",
+          "religion": -4,
+          "population": -8,
+          "army": -6,
+          "money": -16
         }
       },
       "onA": {
@@ -1484,9 +1801,9 @@
           "title": "Le deschizi porturile",
           "text": "Ai ales aurul adus de valuri. Negustorii jubileaza, iar mestesugarii tai devin nelinistiti.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": 2
+          "money": 4
         },
         "B": {
           "title": "Le oferi doar gazduire temporara",
@@ -1497,12 +1814,12 @@
           "money": 0
         },
         "C": {
-          "title": "Ii trimiti inapoi cu politeuri reci",
-          "text": "Ai pazit pamantul de influente straine. Porturile tale raman ale tale, dar pungile lor pleaca spre alt rege.",
-          "religion": 1,
-          "population": -1,
-          "army": 0,
-          "money": -1
+          "title": "Darurile pleacă odată cu solii",
+          "text": "Oaspeții așteaptă până când tăcerea curții li se pare o insultă. Își strâng darurile, închid drumurile negustorești și lasă familiile portului în grija unei vistierii tot mai sărace.",
+          "religion": -2,
+          "population": -4,
+          "army": -6,
+          "money": -5
         }
       },
       "onA": {
@@ -1568,23 +1885,23 @@
           "religion": 0,
           "population": 0,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "B": {
           "title": "Aperi piata libera",
           "text": "Ai ales belsugul din porturi in locul orgoliului breslelor. Orasul castiga, atelierele scrasnesc.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Promiti o hotarare mai tarziu",
-          "text": "Ai pastrat pacea pentru o zi si ai cumparat manie pentru alta.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Breslele închid obloanele",
+          "text": "Meșterii nu primesc judecată și închid atelierele împreună. Ucenicii ies în stradă, mărfurile sunt arse și birurile se împuținează în timp ce plata gărzii crește.",
+          "religion": -3,
+          "population": -5,
+          "army": -4,
+          "money": -10
         }
       },
       "onA": {
@@ -1649,24 +1966,24 @@
           "text": "Ai aratat ca porturile tale nu sunt nevandute. Comertul ingheata pentru o clipa, respectul creste.",
           "religion": 0,
           "population": 0,
-          "army": 1,
-          "money": -1
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Accepti explicatia solilor",
           "text": "Ai ales pacea drumurilor de apa. Unii vad intelepciune, altii slabiciune.",
           "religion": 0,
-          "population": 1,
-          "army": -1,
-          "money": 1
+          "population": 2,
+          "army": -2,
+          "money": 2
         },
         "C": {
-          "title": "Ii urmaresti in taina",
-          "text": "Ai lasat corabia sa plece sub ochi ascunsi. Adevarul poate veni mai tarziu, dar si primejdia.",
-          "religion": 0,
-          "population": 0,
-          "army": 0,
-          "money": 0
+          "title": "Hărțile pleacă pe mare",
+          "text": "Urmăriți fără ordine limpezi, spionii află ce le lipsea și scapă înaintea arestării. Straja este schimbată în grabă, negustorii fug și dinspre mare vin tot mai multe întrebări despre zidurile tale.",
+          "religion": -3,
+          "population": -6,
+          "army": -9,
+          "money": -8
         }
       },
       "onA": {
@@ -1724,25 +2041,25 @@
           "title": "Mobilizezi portul si arcasii",
           "text": "Ai raspuns valurilor cu fier. Comertul se opreste, dar nimeni nu iti mai rade de hotare.",
           "religion": 0,
-          "population": -1,
-          "army": 2,
-          "money": -2
+          "population": -2,
+          "army": 4,
+          "money": -4
         },
         "B": {
           "title": "Trimiti o delegatie cu daruri si avertismente",
           "text": "Ai ales vorba inaintea sagetii. Tensiunea scade, dar numai daca vor si ei sa scada.",
           "religion": 0,
-          "population": 1,
-          "army": -1,
-          "money": -1
+          "population": 2,
+          "army": -2,
+          "money": -2
         },
         "C": {
-          "title": "Lasi negustorii sa trateze",
-          "text": "Ai pus pungile orasului intre tine si tunetele marii. Daca pacea vine, nu va fi din demnitate.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": 1
+          "title": "Negustori în fața tunetului",
+          "text": "Negustorii tratează în numele tău fără să știe ce pot făgădui. Flota cere mai mult la fiecare sol, marinarii debarcă și coroana pierde portul înainte să hotărască dacă îl apără.",
+          "religion": -4,
+          "population": -8,
+          "army": -12,
+          "money": -10
         }
       },
       "onA": {
@@ -1799,26 +2116,26 @@
         "A": {
           "title": "Pui manastirea sub pavaza coroanei",
           "text": "Ai trimis sigiliu, judecatori si o mica garda. Calugarii canta numele tau, iar nobilul local se incrunta.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
-          "army": -1,
-          "money": -1
+          "army": -2,
+          "money": -2
         },
         "B": {
           "title": "Las-o sub grija episcopiei",
           "text": "Ai pastrat mana coroanei departe. Biserica primeste raspunderea, tu pastrezi distanta.",
-          "religion": 1,
+          "religion": 2,
           "population": 0,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Ceri taxa in schimbul ocrotirii",
-          "text": "Ai amestecat altarul cu registrul de plata. Manastirea poate plati, dar nu va uita.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 1
+          "title": "Ocrotire vândută fără poruncă",
+          "text": "Dregătorii cer bani mănăstirii pentru o pază pe care nimeni nu o trimite. După primul jaf, călugării arată mulțimii chitanțele tale, satele refuză birul și altarul își întoarce fața de la tron.",
+          "religion": -8,
+          "population": -4,
+          "army": -2,
+          "money": -3
         }
       },
       "onA": {
@@ -1881,8 +2198,8 @@
         "A": {
           "title": "Confirmi dreptul manastirii",
           "text": "Ai taiat pretentiile nobilului in numele sfinteniei. Clerul te lauda, curtea feudala scrasneste.",
-          "religion": 2,
-          "population": 1,
+          "religion": 4,
+          "population": 2,
           "army": 0,
           "money": 0
         },
@@ -1892,15 +2209,15 @@
           "religion": 0,
           "population": 0,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Dai castig de cauza nobilului",
-          "text": "Ai pus sabia deasupra relicvelor. Manastirea tace, dar numai cu gura.",
-          "religion": -2,
-          "population": -1,
-          "army": 1,
-          "money": 1
+          "title": "Pământ luat înainte de judecată",
+          "text": "Nobilul își mută hotarele cât timp cererea rămâne fără răspuns. Oamenii mănăstirii sunt alungați, hambarele golite și preoții numesc tăcerea coroanei începutul jafului.",
+          "religion": -10,
+          "population": -5,
+          "army": -3,
+          "money": -4
         }
       },
       "onA": {
@@ -1963,26 +2280,26 @@
         "A": {
           "title": "Trimiti judecatori si oaste pe drum",
           "text": "Ai impus randuiala intre mir si noroi. Pelerinii ajung mai sigur, dar tronul plateste drumul.",
-          "religion": 1,
-          "population": 1,
-          "army": -1,
-          "money": -1
+          "religion": 2,
+          "population": 2,
+          "army": -2,
+          "money": -2
         },
         "B": {
           "title": "Lasi manastirea sa se gospodareasca singura",
           "text": "Ai pazit coroana de costuri, nu drumul de nelegiuiri.",
-          "religion": -1,
-          "population": -1,
-          "army": 0,
-          "money": 1
-        },
-        "C": {
-          "title": "Taxezi pelerinii pentru paza",
-          "text": "Ai transformat evlavia in drum cu plata. Banii vin, cinstea nu neaparat.",
-          "religion": -1,
-          "population": 0,
+          "religion": -2,
+          "population": -2,
           "army": 0,
           "money": 2
+        },
+        "C": {
+          "title": "Drumul fără ocrotire",
+          "text": "Vameșii strâng bani de pază fără să aștepte poruncă, dar pelerinii rămân singuri pe drum. Cei scăpați de jaf duc vestea din altar în altar, iar argintul slujbașilor nu ajunge la vistierie.",
+          "religion": -12,
+          "population": -6,
+          "army": -3,
+          "money": -5
         }
       },
       "onA": {
@@ -2040,25 +2357,25 @@
           "title": "Inchizi manastirea si cauti hotul",
           "text": "Ai pus lacate pe rugaciune ca sa salvezi credinta. Ordinea revine, pelerinii gem la porti.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -1
+          "population": -2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Declari ca relicva a fost luata la cer",
           "text": "Ai ales o minune in locul unei anchete. Credinta se aprinde, dar adevarul fuge de tine.",
-          "religion": 2,
-          "population": 1,
-          "army": -1,
+          "religion": 4,
+          "population": 2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Invinovatesti nobilul si ii confisti averea",
-          "text": "Ai gasit repede un vinovat si un cufar plin. Multi aplauda, multi se tem ca maine urmeaza ei.",
-          "religion": 1,
-          "population": 0,
-          "army": 1,
-          "money": 2
+          "title": "Vinovatul ales de tăcere",
+          "text": "Curtenii îl învinuiesc pe nobil înainte de judecată și îi pradă casa sub pecete regală. Rudele lui ridică oamenii la arme, relicva rămâne negăsită și mulțimea vede o curte care jefuiește fără să poată judeca.",
+          "religion": -16,
+          "population": -8,
+          "army": -4,
+          "money": -6
         }
       },
       "onA": {
@@ -2117,24 +2434,24 @@
           "text": "Ai cumparat liniste cu aur greu. Oastea isi tine sabia, vistieria isi tine respiratia.",
           "religion": 0,
           "population": 0,
-          "army": 2,
-          "money": -2
+          "army": 4,
+          "money": -4
         },
         "B": {
           "title": "Le promiti pamant in loc de bani",
           "text": "Ai schimbat aurul lipsa pe pamant viitor. Unii soldati viseaza deja garduri, altii numai prada.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
+          "population": -2,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Le ceri rabdare pentru binele regatului",
-          "text": "Ai intins o rugaminte peste o datorie. Sabiile nu iubesc predicile.",
-          "religion": 0,
-          "population": 0,
-          "army": -2,
-          "money": 1
+          "title": "Solda amânată se face ură",
+          "text": "Căpitanul se întoarce fără leafă sau făgăduială limpede. Soldații își iau hrana din sate, vând locurile de la poartă și răspund tot mai puțini când clopotele cheamă straja.",
+          "religion": -2,
+          "population": -3,
+          "army": -8,
+          "money": -4
         }
       },
       "onA": {
@@ -2198,25 +2515,25 @@
           "title": "Ii angajezi pentru un an",
           "text": "Ai pus fier strain intre tron si propriii tai oameni. Siguranta creste, increderea scade.",
           "religion": 0,
-          "population": -1,
-          "army": 2,
-          "money": -2
+          "population": -2,
+          "army": 4,
+          "money": -4
         },
         "B": {
           "title": "Refuzi si mizezi pe trupele tale",
           "text": "Ai ales mandria oastei regatului. Daca ea cade, vei cadea cu ea.",
           "religion": 0,
           "population": 0,
-          "army": -1,
-          "money": 1
+          "army": -2,
+          "money": 2
         },
         "C": {
-          "title": "Ii platesti sa pazeasca doar drumurile",
-          "text": "Ai cumparat o sabie cu jumatate de teaca. Destul cat sa strice pacea, prea putin cat sa-ti asigure somnul.",
-          "religion": 0,
-          "population": 0,
-          "army": 1,
-          "money": -1
+          "title": "Săbii cumpărate de alții",
+          "text": "Fără învoiala coroanei, mercenarii iau bani de la baroni și se așază pe drumuri. Oastea pierde oameni atrași de solde străine, iar vistieria pierde negustorii care o hrăneau.",
+          "religion": -3,
+          "population": -4,
+          "army": -10,
+          "money": -5
         }
       },
       "onA": {
@@ -2280,25 +2597,25 @@
           "title": "Muti taranii cu despagubiri",
           "text": "Ai tinut juramantul fata de oaste, dar cu un pret greu si lacrimi pe drum.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -2
+          "population": -2,
+          "army": 2,
+          "money": -4
         },
         "B": {
           "title": "Rupi promisiunea facuta veteranilor",
           "text": "Ai salvat satul si ai ranit onoarea sabiei. Soldatii nu uita astfel de rani.",
           "religion": 0,
-          "population": 1,
-          "army": -2,
+          "population": 2,
+          "army": -4,
           "money": 0
         },
         "C": {
-          "title": "Ii obligi sa imparta pamantul",
-          "text": "Ai presat doua mizerii sa incapa in acelasi hotar. Poate creste pace, poate numai ura.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": 0
+          "title": "Hotarul tras cu sânge",
+          "text": "Veteranii și sătenii nu primesc judecată, iar slujbașii îi înghesuie pe același pământ. Prima brazdă este păzită cu sulițe și primul hambar arde înainte ca cineva să mai creadă în cuvântul coroanei.",
+          "religion": -3,
+          "population": -5,
+          "army": -12,
+          "money": -6
         }
       },
       "onA": {
@@ -2356,25 +2673,25 @@
           "title": "Te duci singur in tabara",
           "text": "Ai intrat intre focuri si ai vorbit cu chipul descoperit. Curajul poate stinge flacara sau poate hrani flacara cea mare.",
           "religion": 0,
-          "population": 1,
-          "army": 1,
+          "population": 2,
+          "army": 2,
           "money": 0
         },
         "B": {
           "title": "Izolezi capii si trimiti mercenarii",
           "text": "Ai raspuns necredintei cu sabii fara radacini. Tabara tace, dar tacerea are dinti.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Anunti o plata viitoare si o amnistie",
-          "text": "Ai cumparat timp cu promisiuni. Uneori timpul e rege, alteori doar amanarea caderii.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": -1
+          "title": "Steagurile se întorc spre palat",
+          "text": "Poruncile întârzie și căpeteniile făgăduiesc singure plata pe care tronul nu o hotărăște. Când un steag se ridică împotriva altuia, vistieria și satele sunt jefuite de aceiași oameni care trebuiau să le apere.",
+          "religion": -4,
+          "population": -6,
+          "army": -16,
+          "money": -8
         }
       },
       "onA": {
@@ -2432,25 +2749,25 @@
           "title": "Interzici taierea fara sigiliu regal",
           "text": "Ai inchis padurea sub lege. Vanatul si lemnul raman, dar satele murmura in frig.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "B": {
           "title": "Permiti satelor sa ia lemn cu masura",
           "text": "Ai dat oamenilor foc in vetre si aer pe iarna. Padurea pierde putin, tronul castiga rasuflare.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Vinzi dreptul de exploatare unui baron",
-          "text": "Ai facut aur din copaci pe care nici nu i-ai numarat. Cand padurea va geme, numele tau va fi pe secure.",
-          "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": 2
+          "title": "Pădurea intră în zestrea baronului",
+          "text": "Baronul își trece singur dreptul de tăiere în registre și intră în pădure fără să plătească coroanei. Gardienii fug, satele rămân fără foc și numele tău este scris pe fiecare secure.",
+          "religion": -3,
+          "population": -8,
+          "army": -2,
+          "money": -4
         }
       },
       "onA": {
@@ -2513,26 +2830,26 @@
         "A": {
           "title": "Ii spanzuri si consacri locul",
           "text": "Ai ales legea si frica. Padurea tace, dar nu neaparat din pace.",
-          "religion": 1,
-          "population": -2,
+          "religion": 2,
+          "population": -4,
           "army": 0,
           "money": 0
         },
         "B": {
           "title": "Ii ierti si eliberezi cerbul",
           "text": "Ai pus mila deasupra randuielii. Satele te lauda, padurarii iti numara slabiciunile.",
-          "religion": 1,
-          "population": 2,
-          "army": -1,
+          "religion": 2,
+          "population": 4,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Ii trimiti la munca in slujba coroanei",
-          "text": "Ai schimbat sangele pe sudoare. Nimeni nu canta, nimeni nu jeleste prea tare.",
-          "religion": 0,
-          "population": 0,
-          "army": 1,
-          "money": 1
+          "title": "Cerbul și oamenii luați cu sila",
+          "text": "Paznicii primesc tăcere și îi trimit singuri pe prinși la muncă pentru coroană. Rudele lor atacă escorta, povestea cerbului alb devine chemare la răzbunare și drumurile se închid slujbașilor tăi.",
+          "religion": -4,
+          "population": -10,
+          "army": -3,
+          "money": -5
         }
       },
       "onA": {
@@ -2596,25 +2913,25 @@
           "title": "Rupi contractul cu baronul",
           "text": "Ai taiat o intelegere profitabila ca sa opresti o rana mai mare. Satele te binecuvanteaza, baronul te invinovateste.",
           "religion": 0,
-          "population": 2,
-          "army": -1,
-          "money": -2
+          "population": 4,
+          "army": -2,
+          "money": -4
         },
         "B": {
           "title": "Trimiti strajile sa curete padurea",
           "text": "Ai raspuns fumului cu fier. Lemnul ramane al coroanei, iar satele invata ura.",
           "religion": 0,
-          "population": -2,
-          "army": 1,
+          "population": -4,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Tolerezi furtul cat tine iarna",
-          "text": "Ai ales mila pe ascuns si legea pe jumatate. Daca vei fi iertat, nu va fi de toti.",
-          "religion": 0,
-          "population": 1,
-          "army": -1,
-          "money": -1
+          "title": "Iarna ia locul legii",
+          "text": "Nimeni nu lămurește cine poate lua lemn și cine trebuie să-l păzească. Sătenii sunt pândiți, garda vinde trecerea ambelor tabere și coroana pierde birul și încrederea celor rămași fără case.",
+          "religion": -5,
+          "population": -12,
+          "army": -3,
+          "money": -6
         }
       },
       "onA": {
@@ -2671,26 +2988,26 @@
         "A": {
           "title": "Mobilizezi tot regatul pentru stingere",
           "text": "Ai chemat sat, manastire si oaste la aceeasi galeata. Focul musca inca, dar regatul simte o singura porunca.",
-          "religion": 1,
-          "population": 1,
-          "army": -1,
-          "money": -2
+          "religion": 2,
+          "population": 2,
+          "army": -2,
+          "money": -4
         },
         "B": {
           "title": "Salvezi doar satele si lasi padurea sa cada",
           "text": "Ai ales oamenii in locul lemnului si vanatului. O paguba mare, un pacat mai mic.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Pazesti drumurile si lasi focul sa-si termine foamea",
-          "text": "Ai salvat ordinea, nu radacina. Cenusa va vorbi despre tine mult timp.",
-          "religion": -1,
-          "population": -2,
-          "army": 1,
-          "money": 0
+          "title": "Cenușa nu cere încuviințare",
+          "text": "Focul trece de a treia colină înainte să vină porunca. Paznicii își apără pungile de leafă, satele pierd adăpostul și fumul îngroapă veniturile unei ierni întregi.",
+          "religion": -6,
+          "population": -16,
+          "army": -4,
+          "money": -8
         }
       },
       "onA": {
@@ -2756,17 +3073,17 @@
           "title": "Ii rupi pretentia in fata tuturor",
           "text": "Ai lovit repede si tare. Tronul pare neclintit, dar unii iubesc mai mult martirii decat regii.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
+          "population": -2,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Il trimiti intr-o manastire pana la lamurire",
-          "text": "Ai ales sa-l scoti din sala, nu si din mintea oamenilor. Tacerea poate fi lespede sau incubator.",
-          "religion": 1,
-          "population": 0,
-          "army": 0,
-          "money": -1
+          "title": "Oaspetele care devine pricină",
+          "text": "Curtenii îl ascund pe pretendent într-o mănăstire fără judecată. Pelerinii îi poartă vorbele în târg, baronii îi cercetează pecetea și fiecare zi fără hotărâre îi aduce oameni pe seama coroanei.",
+          "religion": -3,
+          "population": -4,
+          "army": -5,
+          "money": -5
         }
       },
       "onA": {
@@ -2830,25 +3147,25 @@
           "title": "Interzici cantecul sub pedeapsa",
           "text": "Ai vrut sa tai limba zvonului. El sangereaza putin, dar se inmulteste in soapte.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
+          "population": -2,
+          "army": 2,
           "money": 0
         },
         "B": {
           "title": "Platesti cantareti sa cante despre tine",
           "text": "Ai raspuns povestii cu alta poveste. Curtea zambeste, vistieria ofteaza, iar poporul decide singur ce refren tine minte.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Lasi cantecul sa se stinga singur",
-          "text": "Ai ales sa dispretuiesti un foc mic. Uneori el moare in cenusa, alteori gaseste uscaciune.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": 0
+          "title": "Cântecul trece de porți",
+          "text": "Nu vine nicio poruncă, iar cântecul pretendentului ajunge în gura străjii. Negustorii îi pun portretul lângă cântar și baronii își opresc birurile până la lămurire.",
+          "religion": -4,
+          "population": -5,
+          "army": -6,
+          "money": -6
         }
       },
       "onA": {
@@ -2912,25 +3229,25 @@
           "title": "Asediezi cetatea imediat",
           "text": "Ai ales sa zdrobesti samanta inainte sa devina padure. Fierul costa, dar nepasarea ar costa mai mult.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -2
+          "population": -2,
+          "army": 2,
+          "money": -4
         },
         "B": {
           "title": "Promiti iertare daca deschid portile",
           "text": "Ai lasat mila sa mearga inaintea tunetului. Poate intoarce oameni, dar si incuraja incercari noi.",
           "religion": 0,
-          "population": 1,
-          "army": -1,
+          "population": 2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Trimiti spioni, nu osti",
-          "text": "Ai vrut sa cunosti radacina inainte sa lovesti trunchiul. Adevarul vine mai incet decat o flacara.",
-          "religion": 0,
-          "population": 0,
-          "army": 0,
-          "money": -1
+          "title": "Cetatea învață nesupunerea",
+          "text": "Spionii pleacă fără sprijin și mărturiile celor prinși ajung în piață înaintea veștilor tale. Alte garnizoane află că nesupunerea aduce doar tăcere și încep să numere oamenii pretendentului.",
+          "religion": -5,
+          "population": -6,
+          "army": -8,
+          "money": -8
         }
       },
       "onA": {
@@ -2988,25 +3305,25 @@
           "title": "Pornesti o campanie de nimicire",
           "text": "Ai ales sa raspunzi coroanei false cu toata greutatea celei adevarate. Daca vei castiga, vei domni peste o rana adanca.",
           "religion": 0,
-          "population": -2,
-          "army": 2,
-          "money": -2
+          "population": -4,
+          "army": 4,
+          "money": -4
         },
         "B": {
           "title": "Propui casatorie si impacare de sange",
           "text": "Ai incercat sa inghiti otrava ca pe un leac. Unii vor vedea intelepciune, altii capitulare.",
-          "religion": 1,
-          "population": 1,
-          "army": -1,
-          "money": -1
+          "religion": 2,
+          "population": 2,
+          "army": -2,
+          "money": -2
         },
         "C": {
-          "title": "Chemi Biserica sa-l anathematizeze",
-          "text": "Ai pus altarul intre tine si sabia lui. Daca sufletele il parasesc, trupurile il vor urma poate.",
-          "religion": 2,
-          "population": 0,
-          "army": 0,
-          "money": 0
+          "title": "Coroana din afara palatului",
+          "text": "Curtenii cer anatema, dar episcopii refuză judecata pe care regele o ocolește. Pretendentul este ridicat pe scut și cei care încă te apărau își strâng familiile, birurile și jurămintele pentru alt tron.",
+          "religion": -6,
+          "population": -8,
+          "army": -10,
+          "money": -10
         }
       },
       "onA": {
@@ -3064,9 +3381,9 @@
           "title": "Inchizi targurile de animale",
           "text": "Ai oprit drumul bolii, dar si drumul banilor. Pastorii plang, dregatorii aproba.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Lasi schimburile sa continue",
@@ -3074,15 +3391,15 @@
           "religion": 0,
           "population": 0,
           "army": 0,
-          "money": 1
+          "money": 2
         },
         "C": {
-          "title": "Chemi preoti si tamaduitori in pasuni",
-          "text": "Ai raspuns cu rugaciune si ierburi unei morti care poate asculta doar focul. Oamenii se simt vazuti, nu neaparat salvati.",
-          "religion": 1,
-          "population": 1,
-          "army": 0,
-          "money": -1
+          "title": "Rugăciuni peste turme moarte",
+          "text": "Preoții merg în pășuni fără o poruncă de carantină sau ajutor. Animalele bolnave sunt vândute pe ascuns, boala intră în târguri și coroana pierde hrana și încrederea celor rămași fără nimic.",
+          "religion": -3,
+          "population": -8,
+          "army": -2,
+          "money": -4
         }
       },
       "onA": {
@@ -3146,25 +3463,25 @@
           "title": "Pecetluiesti macelariile suspecte",
           "text": "Ai inchis usi si ai deschis scandaluri. Oamenii se simt aparati, breslele te socotesc dusman.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Ceri doar inspectii si amenzi",
           "text": "Ai ales mana usoara pe un gat poate putred. Poti pastra comertul, dar nu si increderea deplina.",
           "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": 1
-        },
-        "C": {
-          "title": "Negi zvonurile ca sa eviti panica",
-          "text": "Ai acoperit o masa urata cu o fata de masa frumoasa. Daca putreziciunea iese, va iesi mai tare.",
-          "religion": -1,
           "population": -2,
           "army": 0,
-          "money": 0
+          "money": 2
+        },
+        "C": {
+          "title": "Sarea nu ascunde moartea",
+          "text": "Nicio cercetare nu vine, iar măcelarii îngroapă marfa stricată sub sare. Când boala ajunge la mesele orașului, zvonul tăgăduit devine învinuire și garda nu mai poate păzi toate piețele.",
+          "religion": -3,
+          "population": -5,
+          "army": -4,
+          "money": -10
         }
       },
       "onA": {
@@ -3228,25 +3545,25 @@
           "title": "Le dai lucru la drumuri si poduri",
           "text": "Ai schimbat mila in munca si foamea in datorie catre coroana. Costisitor, dar curat.",
           "religion": 0,
-          "population": 2,
+          "population": 4,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Ii impingi inapoi spre pasuni",
           "text": "Ai pastrat orasele linistite si campiile disperate. Foamea merge prost pe jos, dar merge.",
           "religion": 0,
-          "population": -2,
-          "army": 1,
+          "population": -4,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Lasi cetatile sa se descurce singure",
-          "text": "Ai rupt legatura dintre tron si poarta. Orasele vor tine minte cine i-a lasat sa aleaga singure intre mila si teama.",
-          "religion": 0,
-          "population": -1,
-          "army": -1,
-          "money": 0
+          "title": "Porțile lăsate singure",
+          "text": "Cetățile nu primesc hrană sau poruncă și își închid porțile după bunul plac. Pribegii îngheață sub ziduri, străjerii vând intrarea și familiile celor morți învață să învinuiască palatul înaintea iernii.",
+          "religion": -5,
+          "population": -12,
+          "army": -3,
+          "money": -6
         }
       },
       "onA": {
@@ -3304,25 +3621,25 @@
           "title": "Trimiti garda si restabilesti ordinea",
           "text": "Ai pus fier peste o piata flamanda. Negustorii iti multumesc, mamele nu.",
           "religion": 0,
-          "population": -2,
-          "army": 1,
-          "money": -1
+          "population": -4,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Deschizi provizii si ierti unele datorii",
           "text": "Ai incercat sa stingi focul cu paine si iertare. Scump, dar mai bland decat cenusa.",
-          "religion": 1,
-          "population": 2,
-          "army": -1,
-          "money": -2
+          "religion": 2,
+          "population": 4,
+          "army": -2,
+          "money": -4
         },
         "C": {
-          "title": "Lasati breslele sa negocieze cu multimea",
-          "text": "Ai pus pungile in fata furiei. Daca va fi pace, va fi cumparata, nu castigata.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": 0
+          "title": "Târgul fără stăpân",
+          "text": "Breslele cumpără singure liniștea, dar mulțimea ia pungile și apoi magaziile. Soldații fug, iar fumul târgului arată fiecărui sat cât valorează o cerere lăsată fără răspuns.",
+          "religion": -6,
+          "population": -16,
+          "army": -4,
+          "money": -8
         }
       },
       "onA": {
@@ -3380,9 +3697,9 @@
           "title": "Le finantezi turnul",
           "text": "Ai ales noutatea si prestigiul. Orasul viseaza mare, vistieria viseaza mai putin.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": -2
+          "money": -4
         },
         "B": {
           "title": "Le ceri sa lucreze pentru breasla locala",
@@ -3390,15 +3707,15 @@
           "religion": 0,
           "population": 0,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Ii refuzi ca pe o frivolitate scumpa",
-          "text": "Ai aparat punga de minuni mecanice. Unii iti spun cumpatat, altii orb la vremuri noi.",
-          "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": 1
+          "title": "Meșterii pleacă odată cu bronzul",
+          "text": "Meșterii așteaptă până când slujbașii le iau materialele drept taxe. Pleacă împreună cu ucenicii, breslele opresc lucrul și vistieria plătește un șantier gol.",
+          "religion": -2,
+          "population": -4,
+          "army": -3,
+          "money": -8
         }
       },
       "onA": {
@@ -3461,26 +3778,26 @@
         "A": {
           "title": "Asezi ceasul sub binecuvantarea Bisericii",
           "text": "Ai uns noutatea cu ulei sfant. Clerul ofteaza, dar nu mai poate spune ca e o fiara fara altar.",
-          "religion": 1,
-          "population": 1,
+          "religion": 2,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Spui ca orasul va bate orele lui",
           "text": "Ai ridicat cetatea alaturi de clopot, nu sub el. Mesterii te iubesc, preotii te masoara rece.",
-          "religion": -1,
-          "population": 1,
+          "religion": -2,
+          "population": 2,
           "army": 0,
           "money": 0
         },
         "C": {
-          "title": "Amani lucrarile pana la pace intre parti",
-          "text": "Ai oprit rotile inainte sa porneasca. Toti castiga timp si toti pierd avantul.",
-          "religion": 0,
-          "population": -1,
-          "army": 0,
-          "money": 0
+          "title": "Clopote împotriva tronului",
+          "text": "Lucrările se opresc fără judecată, iar ambele tabere se socotesc trădate. Meșterii cer plata schelelor, preoții cer ispășire și oamenii sparg pietrele adunate în piață.",
+          "religion": -10,
+          "population": -5,
+          "army": -3,
+          "money": -4
         }
       },
       "onA": {
@@ -3544,7 +3861,7 @@
           "title": "Alegi mesterii straini si alungi breasla",
           "text": "Ai pus lucrarea mai presus de mandria orasului. Ceasul poate urca mai repede, pacea nu.",
           "religion": 0,
-          "population": -1,
+          "population": -2,
           "army": 0,
           "money": 0
         },
@@ -3552,17 +3869,17 @@
           "title": "Dai lucrarea breslei locale",
           "text": "Ai mangaiat orgoliul cetatii, dar ai riscat sa faci din minune o copie greoaie.",
           "religion": 0,
-          "population": 1,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Pui garda sa supravegheze ambele tabere",
-          "text": "Ai cumparat disciplina pentru un santier care voia inspiratie. Fierul pazeste, dar nu construieste.",
-          "religion": 0,
-          "population": 0,
-          "army": -1,
-          "money": -1
+          "title": "Straja dintre două mulțimi",
+          "text": "Garda urcă pe schele fără să știe ce trebuie să apere și ambele tabere o socotesc dușmană. Lemnul cedează sub îmbulzeală, iar familiile răniților aduc plângeri și pietre la palat.",
+          "religion": -3,
+          "population": -6,
+          "army": -5,
+          "money": -12
         }
       },
       "onA": {
@@ -3619,26 +3936,26 @@
         "A": {
           "title": "Deschizi turnul si arati mecanismul tuturor",
           "text": "Ai raspuns fricii cu roti, axe si maini murdare de ulei. Adevarul convinge unii, pe ceilalti doar ii jigneste.",
-          "religion": -1,
-          "population": 1,
+          "religion": -2,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "B": {
           "title": "Chemi clerul sa exorcizeze locul",
           "text": "Ai pus tamaie peste bronz si rugaciune peste zgomot. Orasul se linisteste, mesterii se simt scuipati.",
-          "religion": 2,
-          "population": 1,
+          "religion": 4,
+          "population": 2,
           "army": 0,
-          "money": -1
+          "money": -2
         },
         "C": {
-          "title": "Darami partea superioara a turnului",
-          "text": "Ai ales sa omori mandria orasului ca sa ingropi teama. Sigur, brutal si imposibil de uitat.",
-          "religion": 0,
-          "population": -2,
-          "army": 1,
-          "money": -2
+          "title": "Turnul doborât de teamă",
+          "text": "Curtenii poruncesc singuri dărâmarea turnului ca să ascundă lipsa hotărârii. Piatra cade peste prăvălii, bronzul este furat și orașul îi învinuiește pe cei ascunși în sala tronului.",
+          "religion": -6,
+          "population": -8,
+          "army": -10,
+          "money": -10
         }
       },
       "onA": {
@@ -3695,26 +4012,26 @@
         "A": {
           "title": "Ridici steagul in sala tronului",
           "text": "Ai adus rana aceea de departe in inima curtii. Credinta se inflameaza, pacea nu.",
-          "religion": 2,
+          "religion": 4,
           "population": 0,
-          "army": 1,
+          "army": 2,
           "money": 0
         },
         "B": {
           "title": "Il trimiti la altar, nu la tron",
           "text": "Ai mutat povara spre sfinti si preoti. Curtea respira, cavalerii se simt poate tradati.",
-          "religion": 1,
+          "religion": 2,
           "population": 0,
-          "army": -1,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Ascunzi relicva ca sa eviti febra",
-          "text": "Ai ales linistea palatului in fata memoriei sabiei. Ceea ce ascunzi de oameni, ei vor invata sa viseze.",
-          "religion": -1,
-          "population": -1,
-          "army": -1,
-          "money": 0
+          "title": "Relicva din anticameră",
+          "text": "Sfetnicii ascund steagul cât timp nimeni nu hotărăște ce trebuie făcut cu el. Cavalerul pleacă umilit, pelerinii se adună în afara cetății și birurile sunt oprite până la arătarea relicvei.",
+          "religion": -2,
+          "population": -3,
+          "army": -8,
+          "money": -4
         }
       },
       "onA": {
@@ -3777,26 +4094,26 @@
         "A": {
           "title": "Le dai binecuvantare si oameni",
           "text": "Ai deschis poarta unei glorii posibile si a unei hemoragii sigure. Curtea jubileaza, satele incep sa numere fiii.",
-          "religion": 1,
-          "population": -1,
-          "army": -1,
-          "money": -2
+          "religion": 2,
+          "population": -2,
+          "army": -2,
+          "money": -4
         },
         "B": {
           "title": "Le ordoni sa apere doar hotarele tale",
           "text": "Ai intors ravna spre folosul apropiat. Cei inflacarati iti spun mic, cei isteti iti spun rege.",
           "religion": 0,
           "population": 0,
-          "army": 1,
+          "army": 2,
           "money": 0
         },
         "C": {
-          "title": "Interzici chemarea la arme",
-          "text": "Ai stins o flacara deodata. Ea poate muri sau poate cauta paie in alta parte.",
-          "religion": -1,
-          "population": 1,
-          "army": -1,
-          "money": 0
+          "title": "Chemarea fără răspuns",
+          "text": "Tinerii nobili nu primesc binecuvântare sau opreliște și își strâng singuri oamenii. Satele sunt golite de merinde, iar oastea coroanei pierde soldați care pleacă după alte steaguri.",
+          "religion": -3,
+          "population": -4,
+          "army": -10,
+          "money": -5
         }
       },
       "onA": {
@@ -3859,26 +4176,26 @@
         "A": {
           "title": "Pui oastea sa-i dezarmeze",
           "text": "Ai aparat drumurile de oameni care se credeau mai aproape de cer decat de lege. Sabia ta va fi numita si dreapta, si sacrilega.",
-          "religion": -1,
-          "population": 1,
-          "army": 1,
-          "money": -1
+          "religion": -2,
+          "population": 2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Le dai provizii si ii grabesti spre hotar",
           "text": "Ai ales sa platesti haosul ca sa-l muti mai departe. Drumurile se linistesc, precedentul ramane.",
-          "religion": 1,
+          "religion": 2,
           "population": 0,
-          "army": -1,
-          "money": -2
+          "army": -2,
+          "money": -4
         },
         "C": {
-          "title": "Ceri Bisericii sa-i disciplineze",
-          "text": "Ai dat altarului o sarcina plina de noroi. Daca reuseste, castiga el; daca esueaza, pierzi tu.",
-          "religion": 1,
-          "population": 0,
-          "army": 0,
-          "money": 0
+          "title": "Altarul primește sabia altuia",
+          "text": "Curtenii lasă Bisericii povara fără pază sau învoială și pelerinii înarmați refuză mustrarea. Jaful continuă, victimele învinuiesc altarul și coroana, iar soldații tăi sunt pândiți pe drum.",
+          "religion": -3,
+          "population": -5,
+          "army": -12,
+          "money": -6
         }
       },
       "onA": {
@@ -3936,25 +4253,25 @@
           "title": "Declari furt si inchizi orasul",
           "text": "Ai ales ordinea rece in fata extazului popular. Vei gasi poate vinovati, dar si nervi intinsi pana la rupere.",
           "religion": 0,
-          "population": -1,
-          "army": 1,
-          "money": -1
+          "population": -2,
+          "army": 2,
+          "money": -2
         },
         "B": {
           "title": "Declari minune si zi de post",
           "text": "Ai facut din lipsa o prezenta si din nedumerire o procesiune. Credinta urca, adevarul coboara in pivnite.",
-          "religion": 2,
-          "population": 1,
-          "army": -1,
+          "religion": 4,
+          "population": 2,
+          "army": -2,
           "money": 0
         },
         "C": {
-          "title": "Invinovatesti cavalerul care l-a adus",
-          "text": "Ai aruncat greutatea pe un singur om, repede si public. Curtea iubeste claritatea, dreptatea nu intotdeauna.",
-          "religion": -1,
-          "population": 0,
-          "army": 1,
-          "money": 0
+          "title": "Vinovăție sub pecetea fricii",
+          "text": "Curtenii îl arată pe cavaler mulțimii drept hoț înaintea oricărei judecăți. Tovarășii lui își leapădă jurământul, pelerinii sparg porțile altarului și relicva rămâne negăsită.",
+          "religion": -16,
+          "population": -8,
+          "army": -4,
+          "money": -6
         }
       },
       "onA": {
@@ -3982,6 +4299,1455 @@
           {
             "action": "ADD",
             "flag": "holy_banner_bearer_blamed"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "crisis_debt_01",
+      "title": "Argint sub pecete neagră",
+      "description": "Un creditor oferă aur pentru solde, dar cere drept asupra vămilor dacă întârzii plata. Trezorierul propune în schimb un bir de urgență. Primești împrumutul sau strângi birul de la supuși?",
+      "imagePath": "images/events/creditors.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "COMMON",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "SEED",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 3.5,
+      "requires": [
+        {
+          "type": "TURN_AT_LEAST",
+          "value": 5
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Împrumutul cu pecete neagră",
+          "text": "Pui pecetea pe împrumut și solda ajunge la garnizoane înainte de răscoală. Creditorul își lasă omul lângă vistierie, cu registrele deschise. Aurul îți cumpără răgaz, dar dobânda are deja o dată scrisă.",
+          "religion": -1,
+          "population": -3,
+          "army": 0,
+          "money": 8
+        },
+        "B": {
+          "title": "Birul ultimei pungi",
+          "text": "Oamenii plătesc un bir de urgență sub paza gărzii. Trezorierul își poate ține făgăduielile, dar prin sate se vând vite pentru argint. Creditorul pleacă fără învoială și cumpără pe ascuns datoriile dregătorilor tăi.",
+          "religion": -3,
+          "population": -6,
+          "army": 2,
+          "money": 4
+        },
+        "C": {
+          "title": "Alții semnează în numele tău",
+          "text": "Solul nu primește hotărâre, iar vistieria ratează plata soldei. Dregătorii iau bani în numele coroanei fără să ceară învoială. Când aduc registrele la tron, dobânda a înghițit deja o parte din biruri și creditorul cere să fie primit ca stăpân, nu ca oaspete.",
+          "religion": -3,
+          "population": -5,
+          "army": -5,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_01_a"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_01_b"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_01_c"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_debt_02",
+      "title": "Vama pusă în balanță",
+      "description": "Datoriile cumpărate de creditor ajung la scadență. Poți pune vama portului drept chezășie sau poți bate monedă mai săracă în argint pentru a plăti. Dai portul în gaj ori poruncești moneda nouă?",
+      "imagePath": "images/events/creditors.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "COMMITMENT",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_pawned_crown",
+          "arcStage": "COMMITMENT"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Cheile portului drept chezășie",
+          "text": "Omul creditorului primește cheile vămii, iar aurul intră din nou în vistierie. Negustorii plătesc două însemne pe aceeași ladă și căpitanul portului își mușcă vorbele. Datoria respiră mai ușor; coroana, mai greu.",
+          "religion": 0,
+          "population": -5,
+          "army": -2,
+          "money": 10
+        },
+        "B": {
+          "title": "Argintul întins în cupru",
+          "text": "Monetăria bate bani noi și datoriile sunt plătite la greutate de lege. Breslele cântăresc însă monedele și văd ce lipsește. Pentru o vreme registrele se închid, dar fiecare cumpărătură pregătește următoarea ceartă.",
+          "religion": -4,
+          "population": -4,
+          "army": 0,
+          "money": 8
+        },
+        "C": {
+          "title": "Pecetea trece din mână în mână",
+          "text": "Nimeni nu poruncește cum să fie plătită datoria și slujbașii falsifică în grabă însemnele monetăriei. Soldații primesc monedă pe care târgul o refuză. Creditorul numără fiecare zi, iar oamenii se îmbulzesc la porțile vistieriei.",
+          "religion": -4,
+          "population": -7,
+          "army": -6,
+          "money": -12
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_02_a"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_02_b"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_02_c"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_debt_03_port",
+      "title": "Lanțul de fier peste port",
+      "description": "Vameșii creditorului au oprit corăbiile până la plata unei dobânzi noi. Poți răscumpăra imediat lanțul portului sau îl poți rupe cu garda și confisca mărfurile creditorului. Plătești ori folosești forța?",
+      "imagePath": "images/events/creditors.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "RARE",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_pawned_crown",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_debt_02_a",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Răscumperi lanțul",
+          "text": "Trimiți aurul și corăbiile pot ieși din port. Căpitanul primește din nou ascultarea cheiurilor, dar vistieria arată prețul fiecărei zale. Creditorul păstrează contractul și vestește că mai există o datorie.",
+          "religion": 0,
+          "population": 4,
+          "army": 3,
+          "money": -10
+        },
+        "B": {
+          "title": "Lanțul cade sub secure",
+          "text": "Garda rupe lanțul și ia mărfurile puse sub pecetea creditorului. Lăzile umplu vistieria, dar negustorii se tem de ziua în care le vei numi și pe ale lor pradă. O parte din port se închide în semn de împotrivire.",
+          "religion": -3,
+          "population": -9,
+          "army": -3,
+          "money": 8
+        },
+        "C": {
+          "title": "Portul lucrează pentru alt stăpân",
+          "text": "La palat nu se hotărăște nimic, iar lanțul rămâne întins peste apă. Corăbiile pleacă spre alte cetăți și căpitanul nu-și mai poate plăti oamenii. Creditorul își ridică însemnul deasupra vămii, sub privirile supușilor tăi.",
+          "religion": -5,
+          "population": -9,
+          "army": -8,
+          "money": -16
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_port_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_port_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_port_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_debt_03_mint",
+      "title": "Moneda refuzată la cântar",
+      "description": "Breslele nu mai primesc moneda coroanei și târgul stă închis. Poți topi argintul altarelor pentru a răscumpăra banii sau poți obliga negustorii să-i primească sub paza gărzii. Rebați moneda ori impui cursul cu forța?",
+      "imagePath": "images/events/bread_price.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "RARE",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_pawned_crown",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_debt_02_a",
+          "expected": false
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Argint curat, altare goale",
+          "text": "Moneda își recapătă greutatea din vasele luate de la altare și din aurul rămas coroanei. Piețele se deschid, dar episcopul cere socoteală pentru potire. Oamenii pot cumpăra pâine; nimeni nu uită de unde a venit argintul.",
+          "religion": -5,
+          "population": 7,
+          "army": 2,
+          "money": -8
+        },
+        "B": {
+          "title": "Prețuri păzite cu sulița",
+          "text": "Garda deschide tarabele și silește primirea monedei. Vistieria încasează din nou, iar căpitanii își sporesc puterea. Mărfurile bune dispar însă sub tejghele și mulțimea află că un preț poruncit nu umple o cămară.",
+          "religion": -3,
+          "population": -12,
+          "army": 6,
+          "money": 5
+        },
+        "C": {
+          "title": "Târgul își bate propriul ban",
+          "text": "Negustorii nu primesc răspuns și încep să plătească între ei cu însemne străine. Soldații jefuiesc tarabe care nu le mai primesc solda. Când slujbașii aduc birul la palat, o parte din regat a încetat deja să creadă în pecetea ta.",
+          "religion": -5,
+          "population": -11,
+          "army": -8,
+          "money": -14
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_mint_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_mint_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_03_mint_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_debt_04",
+      "title": "Coroana pe masa creditorilor",
+      "description": "Creditorul cere acum bijuteriile coroanei și dreptul de a sta în sfatul regal. Poți vinde podoabele pentru a-l scoate din sfat sau îi poți oferi un loc alături de marile bresle, în schimbul unui nou răgaz. Vinzi podoabele ori împarți puterea?",
+      "imagePath": "images/events/creditors.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "CRISIS",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "CRISIS",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_pawned_crown",
+          "arcStage": "CRISIS"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Aurul coroanei plătește jurământul",
+          "text": "Podoabele părăsesc palatul în lăzi sigilate și creditorul își retrage omul din sfat. Mulțimea vede o coroană sărăcită, dar încă a ta. Registrele arată că libertatea aceasta a costat aproape tot aurul rămas.",
+          "religion": 3,
+          "population": 8,
+          "army": -2,
+          "money": -15
+        },
+        "B": {
+          "title": "Scaunul de lângă tron",
+          "text": "Îi îngădui creditorului și breslelor să șadă în sfat, iar plata este amânată. Cuferele primesc un ultim răgaz, dar căpitanul nu mai poate porunci fără să fie întrebat cât costă. Oamenii află că hotărârile coroanei au început să poarte mai multe peceți.",
+          "religion": -4,
+          "population": -10,
+          "army": -4,
+          "money": 12
+        },
+        "C": {
+          "title": "Sechestrul sub ochii curții",
+          "text": "Nicio poruncă nu împiedică intrarea oamenilor creditorului. Ei numără podoabele, iau caii palatului și își plătesc singuri paza din vistierie. Curtenii fug cu ce pot ascunde, iar numele regelui ajunge pe lista celor care nu-și mai țin cuvântul.",
+          "religion": -8,
+          "population": -12,
+          "army": -10,
+          "money": -20
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_04_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_04_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_04_c"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_debt_05",
+      "title": "Ultima pecete pe registru",
+      "description": "Datoria poate fi închisă numai dacă portul primește o cartă nouă sau dacă strângi un bir de răscumpărare din ținuturi. Carta costă aur acum și lasă negustorilor libertate; birul umple vistieria, dar cade pe familiile deja sărăcite. Alegi carta sau birul?",
+      "imagePath": "images/events/creditors.png",
+      "category": "TREASURY_TRADE",
+      "rarity": "RARE",
+      "arcId": "arc_pawned_crown",
+      "arcStage": "OUTCOME",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_pawned_crown",
+          "arcStage": "OUTCOME"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Carta răscumpărării",
+          "text": "Semnezi carta și plătești închiderea registrelor. Negustorii își redeschid drumurile, iar creditorul părăsește sfatul cu ultima lui ladă. Coroana rămâne săracă și cu mai puțini oameni de pază, dar cu dreptul de a porunci singură.",
+          "religion": 2,
+          "population": 8,
+          "army": -4,
+          "money": -8
+        },
+        "B": {
+          "title": "Birul care închide datoria",
+          "text": "Argintul ținuturilor stinge ultima învoială, iar garda duce creditorul până la hotar. În sate se împart unelte în loc de moșteniri și preoții numără familiile plecate. Ai închis registrul, dar ai scris prețul lui în viețile supușilor.",
+          "religion": -4,
+          "population": -12,
+          "army": 2,
+          "money": 10
+        },
+        "C": {
+          "title": "Țara trecută la cheltuieli",
+          "text": "Registrele rămân nesemnate și creditorii își împart singuri veniturile coroanei. Garnizoanele refuză hârtia fără aur, ținuturile își opresc birurile și curtea se golește. Dacă tronul mai poate fi păstrat, va trebui păstrat cu mult mai puțin regat în jurul lui.",
+          "religion": -5,
+          "population": -10,
+          "army": -8,
+          "money": -20
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_05_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_05_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_debt_05_c"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "crisis_winter_01",
+      "title": "Cenușă peste hambarele iernii",
+      "description": "Un incendiu a mistuit grânele din trei sate înaintea primului ger. Poți cumpăra hrană de peste hotar sau poți deschide rațiile garnizoanelor. Trimiți aur negustorilor ori împarți hrana soldaților?",
+      "imagePath": "images/events/famine_crisis.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "COMMON",
+      "arcId": "arc_ash_winter",
+      "arcStage": "SEED",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 3.5,
+      "requires": [
+        {
+          "type": "TURN_AT_LEAST",
+          "value": 9
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Care cumpărate înainte de ger",
+          "text": "Trimiți aurul și câteva care intră în sate înainte să înghețe drumul. Preoții deschid curțile bisericilor pentru împărțire. Oamenii se întorc la case, dar ceea ce ai cumpărat este răgaz, nu o iarnă întreagă.",
+          "religion": 1,
+          "population": 6,
+          "army": 0,
+          "money": -8
+        },
+        "B": {
+          "title": "Pâinea din cazărmi",
+          "text": "Porțile magaziilor militare se deschid și satele primesc rațiile soldaților. Garnizoanele cârtesc, dar oamenii nu mai pleacă din ținut. Trezorierul păstrează câțiva saci de aur pentru următoarea cerere.",
+          "religion": -1,
+          "population": 4,
+          "army": -6,
+          "money": 2
+        },
+        "C": {
+          "title": "Primul ger găsește porțile închise",
+          "text": "Solii pleacă fără poruncă și sătenii își caută grânele prin cenușă. Familiile pornesc spre cetăți, străjerii iau hrana cu sila și birul de iarnă nu mai vine. Înaintea zăpezii, coroana a pierdut deja oameni pe care nu-i va putea înlocui.",
+          "religion": -3,
+          "population": -10,
+          "army": -4,
+          "money": -5
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_01_a"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_01_b"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_01_c"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_winter_02",
+      "title": "Cheile hambarelor boierești",
+      "description": "Baronii păstrează grâne în hambare păzite, iar episcopul oferă cantine dacă primește dreptul de a judeca ajutoarele. Poți rechiziționa hambarele nobililor sau poți încredința hrana Bisericii. Iei grânele cu pecete regală ori lași altarul să împartă?",
+      "imagePath": "images/events/famine_crisis.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_ash_winter",
+      "arcStage": "COMMITMENT",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_ash_winter",
+          "arcStage": "COMMITMENT"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Grâne sub pecetea coroanei",
+          "text": "Garda pune pecetea pe hambarele baronilor și trimite primele care spre sate. Coroana încasează grâne și taxe, dar țăranii se tem de soldații care le numără sacii. Nobilimea promite că își va cere socoteala când drumurile se vor dezgheța.",
+          "religion": -3,
+          "population": -5,
+          "army": 3,
+          "money": 4
+        },
+        "B": {
+          "title": "Mese sub clopot",
+          "text": "Cantinele se deschid în curțile bisericilor și episcopul primește registrele ajutoarelor. Mulțimea îi sărută mâna, în timp ce vistieria plătește hrana și escortele. Oamenii mănâncă, dar numele coroanei se aude tot mai rar la împărțire.",
+          "religion": 7,
+          "population": 5,
+          "army": -2,
+          "money": -8
+        },
+        "C": {
+          "title": "Fiecare hambar își alege legea",
+          "text": "Fără hotărâre, baronii ascund grânele și slujbașii vând puținele chei rămase. Preoții închid mesele goale înaintea mulțimii. Când începe bătaia la porți, nimeni nu mai poate spune unde se află hrana coroanei.",
+          "religion": -5,
+          "population": -12,
+          "army": -6,
+          "money": -7
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_02_a"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_02_b"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_02_c"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_winter_03_seized",
+      "title": "Sulițe în jurul carelor cu pâine",
+      "description": "Nobilii blochează carele luate din hambarele lor, iar mulțimea le înconjoară. Poți despăgubi baronii ca pâinea să ajungă la sate sau poți trimite oastea să rupă blocada. Plătești despăgubirea ori deschizi drumul cu forța?",
+      "imagePath": "images/events/noble_guards.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_ash_winter",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_ash_winter",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_winter_02_a",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Drumul răscumpărat",
+          "text": "Aurul schimbă mâinile și carele pornesc înainte să fie răsturnate. Mulțimea primește pâinea, dar garda își vede porunca răscumpărată de la oameni care trebuiau să o asculte. Nimeni nu numește asta pace fără să privească spre vistierie.",
+          "religion": -2,
+          "population": 10,
+          "army": -3,
+          "money": -12
+        },
+        "B": {
+          "title": "Pâine trecută prin sulițe",
+          "text": "Oastea rupe blocada și își recapătă glasul în ținut. În îmbulzeală sunt loviți și oamenii veniți după hrană. Carele trec, dar satele văd mai întâi sângele și abia apoi pâinea.",
+          "religion": -4,
+          "population": -12,
+          "army": 8,
+          "money": -3
+        },
+        "C": {
+          "title": "Carele se întorc goale",
+          "text": "Oștenii nu primesc ordin și mulțimea atacă singură piedica. Grânele se varsă în noroi, caii fug și baronii își numără răniții ca pe o datorie a regelui. Din pâinea promisă rămân câteva roți arse pe marginea drumului.",
+          "religion": -6,
+          "population": -16,
+          "army": -8,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_seized_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_seized_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_seized_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_winter_03_road",
+      "title": "Felinare stinse pe drumul grânelor",
+      "description": "Carele rămase dispar între sate, iar escortele refuză să mai plece fără ajutor. Poți lua soldați din garnizoane pentru drumuri sau poți lăsa un baron să păzească hrana în schimbul vămii. Trimiți straja regală ori primești paza baronului?",
+      "imagePath": "images/events/shepherd_refugees.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_ash_winter",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_ash_winter",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_winter_02_a",
+          "expected": false
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Straja merge prin zăpadă",
+          "text": "Garnizoanele se subțiază, dar primele escorte ajung la sate cu carele întregi. Oamenii îi adăpostesc pe soldați și aprind din nou felinare pe drum. Prețul este plătit în aur și în ziduri rămase cu prea puțini paznici.",
+          "religion": 1,
+          "population": 9,
+          "army": -8,
+          "money": -5
+        },
+        "B": {
+          "title": "Drumul păzit de alt însemn",
+          "text": "Baronul aduce oameni și hrană, apoi își ridică vama la răscruce. Oastea și vistieria primesc un răgaz, dar familiile plătesc trecerea cu ultimele bunuri. În ținut se învață că pâinea vine acum sub alt steag.",
+          "religion": -3,
+          "population": -10,
+          "army": 6,
+          "money": 5
+        },
+        "C": {
+          "title": "Urme care nu se mai întorc",
+          "text": "Nicio escortă nu pleacă și nimeni nu caută carele dispărute. Pelerinii găsesc saci sfârtecați lângă felinare stinse, iar satele iau cu sila proviziile garnizoanelor. Gerul păzește mai bine decât coroana ceea ce a rămas pe drum.",
+          "religion": -6,
+          "population": -16,
+          "army": -9,
+          "money": -9
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_road_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_road_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_03_road_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_winter_04",
+      "title": "Pâinea de la poarta cazărmii",
+      "description": "Mulțimea flămândă cere ultimele rații din cetate, iar căpitanul spune că soldații nu pot păzi zidurile nemâncați. Poți împărți grânele cu oamenii sau poți păstra rațiile pentru oaste. Deschizi magazia ori închizi poarta?",
+      "imagePath": "images/events/wool_market_riot.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "CRISIS",
+      "arcId": "arc_ash_winter",
+      "arcStage": "CRISIS",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_ash_winter",
+          "arcStage": "CRISIS"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Magazia se deschide",
+          "text": "Oamenii primesc pâinea și se îndepărtează de poartă fără să spargă zidul. Soldații împart o masă mai săracă și privesc spre tine înainte de a privi spre dușman. Ai liniștit piața cu puterea pe care o țineai în cazărmi.",
+          "religion": -2,
+          "population": 12,
+          "army": -8,
+          "money": -8
+        },
+        "B": {
+          "title": "Zidurile mănâncă primele",
+          "text": "Căpitanul păstrează rațiile și își întărește straja. În piață, familiile își arată bolnavii înaintea bisericii și cer numele celui care a închis poarta. Oastea rămâne în picioare, dar ținutul de sub ziduri îți întoarce spatele.",
+          "religion": -5,
+          "population": -14,
+          "army": 10,
+          "money": 2
+        },
+        "C": {
+          "title": "Poarta cade între două foame",
+          "text": "Nici magazia, nici poarta nu primesc poruncă. Mulțimea intră, soldații încearcă să-și salveze rațiile și cetatea se umple de răniți. Pâinea este risipită, birurile dispar și clopotele nu mai pot acoperi strigătele din piață.",
+          "religion": -8,
+          "population": -20,
+          "army": -12,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_04_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_04_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_04_c"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_winter_05",
+      "title": "Semințele de sub ultima zăpadă",
+      "description": "Iarna lasă ogoare fără oameni și cetăți fără provizii. Poți trimite sămânță și soldați la sate sau poți muta familiile lângă forturi, unde oastea le poate controla hrana și munca. Refaci satele ori întărești așezările militare?",
+      "imagePath": "images/events/veteran_settlement.png",
+      "category": "PEASANTRY_COMMON_FOLK",
+      "rarity": "RARE",
+      "arcId": "arc_ash_winter",
+      "arcStage": "OUTCOME",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_ash_winter",
+          "arcStage": "OUTCOME"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Ogoare în locul cazărmilor",
+          "text": "Soldații duc sămânța și rămân să ridice gospodăriile părăsite. Satele reîncep să semene, dar garnizoanele și vistieria trebuie să ducă încă un anotimp greu. Iarna se încheie cu un regat mai viu și o coroană cu mai puțină putere la ziduri.",
+          "religion": 2,
+          "population": 10,
+          "army": -8,
+          "money": -6
+        },
+        "B": {
+          "title": "Case sub umbra forturilor",
+          "text": "Familiile sunt adunate lângă oaste și primesc hrană în schimbul muncii. Căpitanii își întăresc așezările, în timp ce vechile sate rămân goale. Ai păstrat brațe pentru ziduri, cu prețul unor oameni care nu se mai simt acasă.",
+          "religion": -2,
+          "population": -6,
+          "army": 8,
+          "money": -3
+        },
+        "C": {
+          "title": "Primăvara fără semănători",
+          "text": "Cererea rămâne fără hotărâre până când se topește zăpada. Sămânța este mâncată, familiile pleacă și soldații închid ultimele magazii. Când pământul poate fi lucrat, prea puțini mai au puterea sau încrederea să o facă.",
+          "religion": -8,
+          "population": -20,
+          "army": -10,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_05_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_05_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_winter_05_c"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      }
+    },
+    {
+      "id": "crisis_oath_01",
+      "title": "Solda legată cu fir roșu",
+      "description": "Soldații au legat cererile neplătite de sulițe cu fir roșu. Poți achita solda restantă din vistierie sau le poți făgădui pământ din satele coroanei. Plătești în aur ori în pământ?",
+      "imagePath": "images/events/unpaid_soldiers.png",
+      "category": "ARMY_WAR",
+      "rarity": "COMMON",
+      "arcId": "arc_broken_oath",
+      "arcStage": "SEED",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 3.5,
+      "requires": [
+        {
+          "type": "TURN_AT_LEAST",
+          "value": 13
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Aur pentru jurământ",
+          "text": "Pungile ajung în tabără și firele roșii sunt desfăcute de pe sulițe. Satele își primesc drumul înapoi, iar căpitanul îți întoarce salutul. Sub masă rămân însă cererile ofițerilor, mai vechi decât ale soldaților.",
+          "religion": 0,
+          "population": 1,
+          "army": 6,
+          "money": -7
+        },
+        "B": {
+          "title": "Oșteni trecuți în hotare",
+          "text": "Promiți pământ și soldații își pleacă sulițele în fața peceții. Țăranii află că gospodăriile lor au devenit plată pentru o datorie a coroanei. Vistieria respiră, iar tabăra așteaptă acum mai mult decât aur.",
+          "religion": -1,
+          "population": -5,
+          "army": 5,
+          "money": 3
+        },
+        "C": {
+          "title": "Firul ajunge pe poarta palatului",
+          "text": "Soldații nu primesc răspuns și își leagă cererile chiar de poarta regelui. Unii iau hrana satelor, alții vând parolele străjii pentru soldă. Căpitanul așteaptă în sala tronului, dar oamenii lui nu mai așteaptă nicăieri.",
+          "religion": -3,
+          "population": -5,
+          "army": -10,
+          "money": -5
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_01_a"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_01_b"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_01_c"
+          }
+        ],
+        "nextArcStage": "COMMITMENT",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_oath_02",
+      "title": "Petiția căpitanilor fără săbii",
+      "description": "Ofițerii intră fără săbii și cer iertare pentru abuzurile taberei, în schimbul unui nou jurământ. Poți primi învoiala sau poți înlocui căpeteniile cu oameni ai curții. Îi ierți ori schimbi comanda?",
+      "imagePath": "images/events/army_muster_crisis.png",
+      "category": "ARMY_WAR",
+      "rarity": "UNCOMMON",
+      "arcId": "arc_broken_oath",
+      "arcStage": "COMMITMENT",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_broken_oath",
+          "arcStage": "COMMITMENT"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Iertare sub ochii oastei",
+          "text": "Primești noul jurământ și plătești închiderea plângerilor. Căpitanii își recapătă oamenii și se întorc în tabără mai uniți decât au venit. Familiile celor păgubiți află că ascultarea poate cumpăra uitarea.",
+          "religion": -2,
+          "population": -2,
+          "army": 8,
+          "money": -6
+        },
+        "B": {
+          "title": "Comandă schimbată peste noapte",
+          "text": "Oamenii curții primesc săbiile și însemnele vechilor căpitani. În sate se vorbește despre judecată, iar în tabără despre umilință. Ai pus comanda în mâini credincioase, dar nu ai putut muta odată cu ea și încrederea soldaților.",
+          "religion": 2,
+          "population": 5,
+          "army": -5,
+          "money": -6
+        },
+        "C": {
+          "title": "Jurământul rostit în alt cort",
+          "text": "Ofițerii pleacă fără hotărâre și își lasă săbiile în mâinile celor care îi așteaptă. În aceeași noapte, ordinele curții sunt citite în glumă lângă focuri. Oastea își alege singură glasurile, iar satele plătesc pentru fiecare poruncă neascultată.",
+          "religion": -5,
+          "population": -7,
+          "army": -12,
+          "money": -6
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_02_a"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_02_b"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_02_c"
+          }
+        ],
+        "nextArcStage": "ESCALATION",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_oath_03_pardoned",
+      "title": "O tabără care ascultă un singur om",
+      "description": "Căpitanii iertați primesc mai multe saluturi decât solii coroanei. Poți despărți oastea între garnizoane sau îl poți înălța pe cel mai puternic dintre ei și cere un nou legământ. Împarți tabăra ori întărești comanda unică?",
+      "imagePath": "images/events/black_company.png",
+      "category": "ARMY_WAR",
+      "rarity": "RARE",
+      "arcId": "arc_broken_oath",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_broken_oath",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_oath_02_a",
+          "expected": true
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Steaguri despărțite pe drumuri",
+          "text": "Trimiți cetele în garnizoane îndepărtate și plătești drumurile în aur și hrană. Satele primesc pază, dar oastea pierde puterea de a răspunde împreună. Căpitanul se înclină la plecare fără să-ți arate ce a scris oamenilor săi.",
+          "religion": 1,
+          "population": 6,
+          "army": -6,
+          "money": -4
+        },
+        "B": {
+          "title": "Sabia cea mare de lângă tron",
+          "text": "Îi dai căpitanului un însemn pe care nicio altă sabie nu îl poartă. Oastea se strânge din nou la primul lui cuvânt, iar dregătorii îi cer voie înainte să ceară coroanei. Jurământul este mai puternic, dar glasul care îl ține nu mai este al tău.",
+          "religion": -3,
+          "population": -8,
+          "army": 10,
+          "money": -2
+        },
+        "C": {
+          "title": "Însemnul apare fără încuviințare",
+          "text": "Tăcerea curții este luată drept teamă și căpitanul își ridică singur însemnul. Soldații nu mai deschid porțile solilor tăi, iar birurile sunt oprite pentru hrana taberei. Coroana a păstrat sabia aproape și a pierdut mâna care o ținea.",
+          "religion": -6,
+          "population": -9,
+          "army": -16,
+          "money": -9
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_pardoned_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_pardoned_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_pardoned_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_oath_03_divided",
+      "title": "Focuri stinse dincolo de strajă",
+      "description": "Cete rupte de comandă pândesc carele cu provizii și cer iertare pentru întoarcere. Poți cumpăra revenirea lor cu hrană și soldă sau poți trimite garda să-i prindă. Îi primești înapoi ori îi vânezi?",
+      "imagePath": "images/events/forest_night_raids.png",
+      "category": "ARMY_WAR",
+      "rarity": "RARE",
+      "arcId": "arc_broken_oath",
+      "arcStage": "ESCALATION",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_broken_oath",
+          "arcStage": "ESCALATION"
+        },
+        {
+          "type": "FLAG",
+          "flag": "crisis_oath_02_a",
+          "expected": false
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Locuri la foc pentru cei întorși",
+          "text": "Trimiți hrană și soldă, iar câteva cete se întorc înainte să închidă drumurile. Oastea își recapătă brațele și satele își văd carele trecând. Banii cumpără întoarcerea, nu și uitarea celor jefuiți.",
+          "religion": -2,
+          "population": 2,
+          "army": 7,
+          "money": -8
+        },
+        "B": {
+          "title": "Parole schimbate cu lanțuri",
+          "text": "Garda îi prinde pe cei găsiți și căpitanii își recapătă porunca. În sate sunt luate și rudele celor fugiți, iar potecile se umplu de oameni fără casă. Tabăra ascultă din nou, dar ținutul o privește ca pe o pedeapsă.",
+          "religion": -3,
+          "population": -9,
+          "army": 8,
+          "money": 2
+        },
+        "C": {
+          "title": "Drumul rămas fără stăpân",
+          "text": "Nici iertarea, nici urmărirea nu sunt poruncite, iar cetele iau asta drept încuviințare. Carele sunt jefuite, garnizoanele rămân nemâncate și satele își ascund oamenii de orice steag. Când căpitanul cere întăriri, registrele nu mai găsesc pe cine să cheme.",
+          "religion": -6,
+          "population": -10,
+          "army": -16,
+          "money": -8
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_divided_a"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_divided_b"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_03_divided_c"
+          }
+        ],
+        "nextArcStage": "CRISIS",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_oath_04",
+      "title": "Poarta închisă dinăuntru",
+      "description": "Garnizoana închide poarta și cere o amnistie plătită, în vreme ce locuitorii oferă să ridice o miliție a orașului. Poți răscumpăra jurământul oastei sau poți sprijini oamenii cetății împotriva ei. Alegi amnistia ori miliția?",
+      "imagePath": "images/events/noble_revolt.png",
+      "category": "ARMY_WAR",
+      "rarity": "CRISIS",
+      "arcId": "arc_broken_oath",
+      "arcStage": "CRISIS",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_broken_oath",
+          "arcStage": "CRISIS"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Jurământ răscumpărat la poartă",
+          "text": "Amnistia și aurul deschid poarta fără un asalt. Oastea își reia straja, dar oamenii cetății sunt obligați să uite răul făcut sub zidurile ei. Căpitanii au învățat cât poate plăti un rege ca să fie ascultat.",
+          "religion": -2,
+          "population": -7,
+          "army": 12,
+          "money": -10
+        },
+        "B": {
+          "title": "Cheile ajung la cetățeni",
+          "text": "Dai oamenilor arme și drept de strajă, iar garnizoana este scoasă din cetate. Piața îți rostește numele, dar soldații pleacă purtând vestea că ai ales mulțimea împotriva lor. Ai redeschis poarta cu o altă putere în mâinile celor de dedesubt.",
+          "religion": 3,
+          "population": 10,
+          "army": -12,
+          "money": -5
+        },
+        "C": {
+          "title": "Straja își alege răspunsul",
+          "text": "Nicio hotărâre nu ajunge la poartă, iar soldații intră în oraș după hrană și plată. Locuitorii îi întâmpină cu unelte, ulițele ard și căpitanii nu mai pot opri ceea ce au început. Slujbașii fug înainte să afle dacă mai există o poruncă regală.",
+          "religion": -8,
+          "population": -12,
+          "army": -20,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_04_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_04_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_04_c"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": false
+      }
+    },
+    {
+      "id": "crisis_oath_05",
+      "title": "Cui se jură sabia",
+      "description": "După răscoală trebuie scris un legământ nou. Poți pune oastea sub judecata cetăților sau îi poți da privilegii proprii în schimbul credinței personale. Alegi judecata civilă ori legământul militar?",
+      "imagePath": "images/events/veteran_settlement.png",
+      "category": "ARMY_WAR",
+      "rarity": "RARE",
+      "arcId": "arc_broken_oath",
+      "arcStage": "OUTCOME",
+      "strictArcOrder": true,
+      "followUpMaxWaitTurns": 3,
+      "crisisBias": 1.6,
+      "cooldownTurns": 12,
+      "baseWeight": 2.0,
+      "requires": [
+        {
+          "type": "ARC_STAGE",
+          "arcId": "arc_broken_oath",
+          "arcStage": "OUTCOME"
+        }
+      ],
+      "blockedBy": [],
+      "decisions": {
+        "A": {
+          "title": "Sabia răspunde în fața cetății",
+          "text": "Noul legământ pune plângerile împotriva soldaților în fața judecătorilor. Familiile se întorc și preoții citesc învoiala în piețe. Oastea își pierde din putere, dar coroana nu mai are nevoie de aceeași sabie la fiecare poartă.",
+          "religion": 1,
+          "population": 10,
+          "army": -8,
+          "money": -3
+        },
+        "B": {
+          "title": "Privilegiile celor care poartă fier",
+          "text": "Soldații primesc drepturi și îți jură credință în fața noilor însemne. Vistieria încasează birurile cu sprijinul lor, iar satele învață să tacă înaintea cazărmilor. Ai legat oastea de tine și regatul de oaste.",
+          "religion": -5,
+          "population": -10,
+          "army": 10,
+          "money": 4
+        },
+        "C": {
+          "title": "Jurământul rămâne fără rege",
+          "text": "Nimeni nu scrie legământul și fiecare căpetenie își adună oamenii sub propriul nume. Garnizoanele nu se mai ajută, satele își cumpără paza și birurile se pierd între tabere. Coroana rămâne cu săbii pe zid, dar fără oameni care să le poarte pentru ea.",
+          "religion": -8,
+          "population": -10,
+          "army": -20,
+          "money": -10
+        }
+      },
+      "onA": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_05_a"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onB": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_05_b"
+          }
+        ],
+        "nextArcStage": "OUTCOME",
+        "resolveArc": true
+      },
+      "onC": {
+        "flags": [
+          {
+            "action": "ADD",
+            "flag": "crisis_oath_05_c"
           }
         ],
         "nextArcStage": "OUTCOME",

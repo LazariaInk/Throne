@@ -51,6 +51,14 @@ tasks.named('check') {
   dependsOn 'aiConfigurationTest'
   dependsOn 'aiLocalizationTest'
   dependsOn 'narrativeDecisionTest'
+  dependsOn 'crisisArcTest'
+}
+
+tasks.register('crisisArcTest', JavaExec) {
+  dependsOn testClasses
+  classpath = sourceSets.test.runtimeClasspath + files(rootProject.file('assets'))
+  mainClass = 'com.lazar.logic.CrisisArcTest'
+  workingDir rootProject.projectDir
 }
 
 tasks.register('narrativeDecisionTest', JavaExec) {

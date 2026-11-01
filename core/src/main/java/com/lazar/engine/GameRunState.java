@@ -42,6 +42,7 @@ public class GameRunState {
         public String id;
         public com.lazar.model.ArcStage stage;
         public boolean active, resolved;
+        public int stageEnteredTurn;
     }
 
     public static class SavedCooldown {
@@ -63,6 +64,7 @@ public class GameRunState {
             SavedArc item = new SavedArc();
             item.id = arc.arcId; item.stage = arc.currentStage;
             item.active = arc.active; item.resolved = arc.resolved;
+            item.stageEnteredTurn = arc.stageEnteredTurn;
             saved.arcs.add(item);
         }
         for (ObjectIntMap.Entry<String> entry : cooldownUntilTurn) {
@@ -87,6 +89,7 @@ public class GameRunState {
             if (arc.id == null || arc.stage == null) throw new IllegalArgumentException("Invalid saved arc");
             StoryArcState restored = state.getOrCreateArc(arc.id);
             restored.currentStage = arc.stage; restored.active = arc.active; restored.resolved = arc.resolved;
+            restored.stageEnteredTurn = arc.stageEnteredTurn > 0 ? arc.stageEnteredTurn : saved.turn;
         }
         for (SavedCooldown cooldown : saved.cooldowns) {
             if (cooldown.id == null) throw new IllegalArgumentException("Invalid saved cooldown");
@@ -155,6 +158,7 @@ public class GameRunState {
         StoryArcState state = arcs.get(arcId);
         if (state == null) {
             state = new StoryArcState(arcId);
+            state.stageEnteredTurn = turn;
             arcs.put(arcId, state);
         }
         return state;

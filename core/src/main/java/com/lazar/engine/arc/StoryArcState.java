@@ -7,6 +7,7 @@ public class StoryArcState {
     public ArcStage currentStage;
     public boolean active;
     public boolean resolved;
+    public int stageEnteredTurn = 1;
 
     public StoryArcState(String arcId) {
         this.arcId = arcId;

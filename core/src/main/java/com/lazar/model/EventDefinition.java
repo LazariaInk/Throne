@@ -15,6 +15,8 @@ public class EventDefinition {
 
     public String arcId;
     public ArcStage arcStage;
+    public boolean strictArcOrder;
+    public int followUpMaxWaitTurns;
 
     public float crisisBias;
     public int cooldownTurns;
